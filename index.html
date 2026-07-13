@@ -136,7 +136,6 @@
         @keyframes pulseGlow { 0%,100% { opacity:0.2; transform:scale(1); } 50% { opacity:0.5; transform:scale(1.05); } }
         @keyframes shimmerLogo { 0% { filter:brightness(1); } 50% { filter:brightness(1.08); } 100% { filter:brightness(1); } }
         @keyframes floatParticle { 0% { transform:translateY(0) rotate(0deg) scale(1); } 100% { transform:translateY(-100vh) rotate(720deg) scale(1.5); } }
-        @keyframes borderPulse { 0%,100% { border-color:var(--border-color); } 50% { border-color:var(--nilofor-gold); } }
         .animate-fade-up { animation:fadeUp 0.8s ease forwards; }
         .delay-1 { animation-delay:0.1s; } .delay-2 { animation-delay:0.2s; } .delay-3 { animation-delay:0.3s; }
 
@@ -402,7 +401,7 @@
         .marquee-track .brand:hover { opacity:1; color:var(--text-primary); }
         .marquee-track .brand .gold { color:var(--nilofor-gold); }
 
-        /* ===== PRODUCTS (خالی) ===== */
+        /* ===== PRODUCTS ===== */
         .product-page-section { padding-top:30px; min-height:60vh; }
         .product-page-header {
             display:flex; justify-content:space-between; align-items:center;
@@ -1069,8 +1068,7 @@
                     <h3>🦷 <span class="gold">نیلوفر</span></h3>
                     <p>مرجع تخصصی محصولات با کیفیت. با بیش از ۲۵ سال تجربه در خدمت شما.</p>
                     <div class="contact-info" style="margin-top:14px;">
-                        <div class="contact-row"><i class="fas fa-store"></i> آدرس فروشگاه ۱: مشهد، خیابان امام رضا، دانش ۱۱، سرای بلور، فروشگاه نیلوفر</div>
-                        <div class="contact-row"><i class="fas fa-store"></i> آدرس فروشگاه ۲: پاساژ بلور، پلاک ۱۵</div>
+                        <div class="contact-row"><i class="fas fa-store"></i> آدرس فروشگاه: مشهد، خیابان امام رضا، دانش ۱۱، سرای بلور، فروشگاه نیلوفر</div>
                         <div class="contact-row"><i class="fas fa-phone"></i> ۰۵۱-۳۸۵۱۶۱۶۲ · ۰۵۱-۳۸۵۱۱۰۶۵</div>
                         <div class="contact-row"><i class="fas fa-mobile-alt"></i> سفارش: ۰۹۱۵۳۱۶۵۰۹۰</div>
                         <div class="contact-row"><i class="fas fa-user-tie"></i> مدیریت: ۰۹۱۲۴۸۳۴۴۷۶</div>
@@ -1142,7 +1140,7 @@
 
     <script>
         // ============================================================
-        //  فروشگاه نیلوفر - نسخه مدرن مینیمال (بدون دستیار هوشمند)
+        //  فروشگاه نیلوفر - نسخه مدرن مینیمال
         // ============================================================
 
         // ===== STATE =====
@@ -1184,7 +1182,6 @@
                 'footerWhatsappIcon': socialLinks.whatsapp,
             };
             for (const [id, url] of Object.entries(map)) { const el = document.getElementById(id); if (el) el.href = url; }
-            // لوگوی روبیکا
             const rubikaElements = document.querySelectorAll('.rubika, .rubika-link');
             if (rubikaLogo) {
                 rubikaElements.forEach(el => {
@@ -1201,7 +1198,6 @@
                     }
                 });
             }
-            // هدر
             if (heroImage) {
                 document.querySelector('.hero').style.setProperty('--hero-bg', `url(${heroImage}) center/cover no-repeat, radial-gradient(ellipse at 70% 20%, rgba(200,169,106,0.06), transparent 60%), radial-gradient(ellipse at 30% 80%, rgba(200,169,106,0.04), transparent 50%), var(--bg-primary)`);
             }
@@ -1762,7 +1758,7 @@
         });
 
         // ============================================================
-        //  ADMIN PANEL FUNCTIONS (ساده‌شده)
+        //  ADMIN PANEL FUNCTIONS
         // ============================================================
 
         function renderDashboard() {
@@ -2525,11 +2521,8 @@
         //  INIT
         // ============================================================
         async function init() {
-            // حذف محصولات قبلی
             localStorage.removeItem('nilofor_products_v2');
             productsData = [];
-
-            // بارگذاری نظرات نمونه
             loadSampleReviews();
 
             const savedLinks = localStorage.getItem('nilofor_social_links');
@@ -2554,9 +2547,9 @@
 
             console.log('🦷 فروشگاه نیلوفر — نسخه مدرن مینیمال');
             console.log('🔑 پنل ادمین با رمز 1212');
-            console.log('📍 مشهد، خیابان امام رضا، دانش ۱۱، سرای بلور');
+            console.log('📍 آدرس فروشگاه: مشهد، خیابان امام رضا، دانش ۱۱، سرای بلور');
             console.log('📞 ۰۵۱-۳۸۵۱۶۱۶۲ · ۰۵۱-۳۸۵۱۱۰۶۵');
-            console.log('📥 واردات محصولات از فایل در پنل ادمین (تب واردات)');
+            console.log('📥 واردات محصولات از فایل اکسل در پنل ادمین (تب واردات)');
         }
 
         init();
