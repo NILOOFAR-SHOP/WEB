@@ -2,8 +2,8 @@ name: Scrape Limon Products
 
 on:
   schedule:
-    - cron: '0 8 * * *'        # اجرا هر روز ساعت ۸ صبح
-  workflow_dispatch:            # اجرای دستی
+    - cron: '0 8 * * *'
+  workflow_dispatch:
 
 jobs:
   scrape:
@@ -12,44 +12,57 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          persist-credentials: true
-          
+        
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+          
+      - name: Install Chrome and ChromeDriver
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y wget unzip
+          wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+          sudo dpkg -i google-chrome-stable_current_amd64.deb || sudo apt-get -f install -y
+          google-chrome --version
           
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
           
-      - name: Run scraper
+      - name: Run scraper (with Selenium)
         id: scraper
         run: |
-          python scraper/main.py
-          echo "status=success" >> $GITHUB_OUTPUT
+          python scraper/main_selenium.py
         continue-on-error: true
         
-      - name: Check for changes
-        id: check_changes
+      - name: Check if products.json exists
+        id: check_file
         run: |
-          if git diff --quiet data/products.json; then
-            echo "changes=false" >> $GITHUB_OUTPUT
+          if [ -f "data/products.json" ]; then
+            echo "exists=true" >> $GITHUB_OUTPUT
+            echo "✅ products.json found"
           else
-            echo "changes=true" >> $GITHUB_OUTPUT
+            echo "exists=false" >> $GITHUB_OUTPUT
+            echo "❌ products.json not found"
           fi
           
       - name: Commit and push changes
-        if: steps.check_changes.outputs.changes == 'true'
+        if: steps.check_file.outputs.exists == 'true'
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add data/products.json
-          git commit -m "Auto-update products data $(date +'%Y-%m-%d %H:%M')"
+          git diff --staged --quiet || git commit -m "Auto-update products data $(date +'%Y-%m-%d %H:%M')"
           git push
+          
+      - name: Upload artifact for manual download
+        if: steps.check_file.outputs.exists == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: products-data
+          path: data/products.json
           
       - name: Send notification on failure
         if: failure()
