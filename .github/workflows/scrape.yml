@@ -1,0 +1,33 @@
+name: Scrape Limon Products
+
+on:
+  schedule:
+    - cron: '0 8 * * *'        # اجرا هر روز ساعت ۸ صبح
+  workflow_dispatch:            # امکان اجرای دستی از گیت‌هاب
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+        
+      - name: Run scraper
+        run: python scraper/main.py
+        
+      - name: Commit and push changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add data/products.json
+          git diff --staged --quiet || git commit -m "Auto-update products data $(date +'%Y-%m-%d')"
+          git push
