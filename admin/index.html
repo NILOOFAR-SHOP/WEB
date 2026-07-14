@@ -5,8 +5,93 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>مدیریت نیلوفر</title>
     <link rel="stylesheet" href="https://unpkg.com/netlify-cms@^2.10.0/dist/cms.css" />
+    <style>
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background: #f5efe6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            direction: rtl;
+        }
+        .login-box {
+            background: #fff;
+            padding: 40px 30px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            max-width: 360px;
+            width: 100%;
+            text-align: center;
+        }
+        .login-box h2 { color: #3d2c1b; margin-bottom: 8px; font-size: 1.5rem; }
+        .login-box h2 .gold { color: #c8a96a; }
+        .login-box .sub { color: #6b5a4a; font-size: 0.85rem; margin-bottom: 20px; }
+        .login-box input {
+            width: 100%; padding: 12px 16px; border-radius: 60px;
+            border: 1px solid #e8ddd0; background: #fbf7f0;
+            font-size: 1rem; margin-bottom: 14px;
+            direction: ltr; text-align: center;
+        }
+        .login-box input:focus { border-color: #c8a96a; outline: none; box-shadow: 0 0 0 3px rgba(200,169,106,0.2); }
+        .login-box .btn {
+            width: 100%; padding: 12px; border-radius: 60px;
+            background: #c8a96a; color: #fff;
+            font-weight: 600; font-size: 1rem; border: none; cursor: pointer;
+            transition: all 0.3s;
+        }
+        .login-box .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(200,169,106,0.3); }
+        .login-box .error { color: #ef4444; font-size: 0.85rem; margin-top: 8px; display: none; }
+        #cmsContainer { display: none; }
+        .lock-icon { font-size: 2.5rem; color: #c8a96a; margin-bottom: 10px; display: block; }
+    </style>
 </head>
 <body>
-    <script src="https://unpkg.com/netlify-cms@^2.10.0/dist/netlify-cms.js"></script>
+
+    <div id="loginBox" class="login-box">
+        <span class="lock-icon">🔐</span>
+        <h2><span class="gold">نیلوفر</span> مدیریت</h2>
+        <p class="sub">برای ورود به پنل مدیریت رمز را وارد کنید</p>
+        <input type="password" id="passwordInput" placeholder="رمز عبور" autofocus />
+        <button class="btn" id="loginBtn">ورود</button>
+        <div class="error" id="loginError">❌ رمز عبور اشتباه است!</div>
+    </div>
+
+    <div id="cmsContainer">
+        <script src="https://unpkg.com/netlify-cms@^2.10.0/dist/netlify-cms.js"></script>
+    </div>
+
+    <script>
+        const CORRECT_PASSWORD = '1212';
+        const loginBox = document.getElementById('loginBox');
+        const cmsContainer = document.getElementById('cmsContainer');
+        const passwordInput = document.getElementById('passwordInput');
+        const loginBtn = document.getElementById('loginBtn');
+        const errorEl = document.getElementById('loginError');
+
+        function attemptLogin() {
+            if (passwordInput.value === CORRECT_PASSWORD) {
+                loginBox.style.display = 'none';
+                cmsContainer.style.display = 'block';
+                const script = document.createElement('script');
+                script.src = 'https://unpkg.com/netlify-cms@^2.10.0/dist/netlify-cms.js';
+                document.body.appendChild(script);
+                errorEl.style.display = 'none';
+            } else {
+                errorEl.style.display = 'block';
+                passwordInput.value = '';
+                passwordInput.focus();
+                setTimeout(() => { errorEl.style.display = 'none'; }, 3000);
+            }
+        }
+
+        loginBtn.addEventListener('click', attemptLogin);
+        passwordInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') attemptLogin();
+        });
+        passwordInput.focus();
+    </script>
+
 </body>
 </html>
