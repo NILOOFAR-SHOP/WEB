@@ -330,6 +330,8 @@
                 radial-gradient(ellipse at 70% 20%, rgba(200,169,106,0.06), transparent 60%),
                 radial-gradient(ellipse at 30% 80%, rgba(200,169,106,0.04), transparent 50%),
                 var(--bg-primary);
+            background-size:cover;
+            background-position:center;
             border-bottom:1px solid var(--border-color);
             overflow:hidden;
         }
@@ -1226,8 +1228,8 @@
             border-radius:8px; background:var(--bg-secondary);
             display:flex; align-items:center; justify-content:center; overflow:hidden;
         }
-        .hero-image-upload .preview { max-width:100%; max-height:160px; }
-        .hero-image-upload .preview img { max-width:100%; max-height:160px; object-fit:cover; }
+        .hero-image-upload .preview { max-width:100%; max-height:200px; }
+        .hero-image-upload .preview img { max-width:100%; max-height:200px; object-fit:cover; }
         .logo-upload-area .preview img { max-width:100%; max-height:70px; object-fit:contain; }
         .logo-upload-area .hint, .file-upload-area .hint, .hero-image-upload .hint {
             color:var(--text-muted); font-size:0.7rem;
@@ -1257,8 +1259,8 @@
         .border-gold { border-color:var(--nilofor-gold); }
         .bg-gold { background:var(--nilofor-gold); }
 
-        /* ===== FLOATING BUTTONS ===== */
-        /* حذف کامل دکمه‌های شناور */
+        /* ===== حذف کامل دکمه‌های شناور ===== */
+        .floating-buttons { display:none !important; }
 
         .price-slider-wrap input[type="range"] {
             -webkit-appearance:none; appearance:none;
@@ -1633,7 +1635,7 @@
 
     <script>
         // ============================================================
-        //  فروشگاه نیلوفر - نسخه نهایی (بدون محصولات نمونه و بدون لوگوی شناور)
+        //  فروشگاه نیلوفر - نسخه نهایی نهایی
         // ============================================================
 
         // ===== STATE =====
@@ -1695,8 +1697,31 @@
                     }
                 });
             }
-            if (heroImage) {
-                document.querySelector('.hero').style.setProperty('--hero-bg', `url(${heroImage}) center/cover no-repeat, radial-gradient(ellipse at 70% 20%, rgba(200,169,106,0.06), transparent 60%), radial-gradient(ellipse at 30% 80%, rgba(200,169,106,0.04), transparent 50%), var(--bg-primary)`);
+            // بارگذاری تصویر هدر از localStorage
+            loadHeroImage();
+        }
+
+        // ===== تابع بارگذاری تصویر هدر =====
+        function loadHeroImage() {
+            const savedImage = localStorage.getItem('nilofor_hero_image');
+            if (savedImage && savedImage.startsWith('data:image')) {
+                try {
+                    const heroElement = document.querySelector('.hero');
+                    if (heroElement) {
+                        heroElement.style.backgroundImage = `url(${savedImage})`;
+                        heroElement.style.backgroundSize = 'cover';
+                        heroElement.style.backgroundPosition = 'center';
+                        heroElement.style.setProperty('--hero-bg', `url(${savedImage}) center/cover no-repeat, radial-gradient(ellipse at 70% 20%, rgba(200,169,106,0.06), transparent 60%), radial-gradient(ellipse at 30% 80%, rgba(200,169,106,0.04), transparent 50%), var(--bg-primary)`);
+                    }
+                    // پیش‌نمایش در پنل ادمین
+                    const preview = document.getElementById('heroImagePreview');
+                    if (preview) {
+                        preview.innerHTML = `<img src="${savedImage}" alt="هدر" style="max-width:100%; max-height:200px; object-fit:cover; border-radius:8px;" />`;
+                    }
+                    console.log('✅ تصویر هدر بارگذاری شد');
+                } catch (e) {
+                    console.warn('⚠️ خطا در بارگذاری تصویر هدر:', e);
+                }
             }
         }
 
@@ -1790,7 +1815,7 @@
             document.getElementById('shippingInfo').classList.remove('show');
         });
 
-        // ===== LOAD PRODUCTS (بدون محصولات نمونه) =====
+        // ===== LOAD PRODUCTS =====
         function loadInitialProducts() {
             const stored = localStorage.getItem('nilofor_products_v2');
             if (stored) {
@@ -3028,8 +3053,8 @@
                     <div style="background:var(--bg-card);border-radius:12px;padding:14px;margin:14px 0;border:1px solid var(--border-color);box-shadow:var(--shadow-soft);">
                         <h4 style="color:var(--text-primary);font-size:0.8rem;margin-bottom:6px;">🖼️ تصویر هدر (بنر اصلی)</h4>
                         <div class="hero-image-upload" id="heroImageUpload">
-                            <div class="preview" id="heroImagePreview">${currentHeroImage?`<img src="${currentHeroImage}" alt="هدر" />`:'<span style="color:var(--text-muted);font-size:1.2rem;">🖼️</span>'}</div>
-                            <div class="hint">برای آپلود تصویر هدر کلیک کنید (JPG, PNG, SVG)</div>
+                            <div class="preview" id="heroImagePreview">${currentHeroImage?`<img src="${currentHeroImage}" alt="هدر" style="max-width:100%;max-height:200px;object-fit:cover;border-radius:8px;" />`:'<span style="color:var(--text-muted);font-size:1.2rem;">🖼️</span>'}</div>
+                            <div class="hint">برای آپلود تصویر هدر کلیک کنید (JPG, PNG, SVG, WEBP) - حداکثر ۲ مگابایت</div>
                             <input type="file" id="heroFileInput" accept="image/*" />
                         </div>
                     </div>
@@ -3056,26 +3081,72 @@
                 </div>
             `;
 
+            // ===== آپلود تصویر هدر (اصلاح‌شده) =====
             const heroUpload = document.getElementById('heroImageUpload');
             const heroFile = document.getElementById('heroFileInput');
+
             heroUpload?.addEventListener('click', () => heroFile?.click());
+
             heroFile?.addEventListener('change', function(e) {
                 const file = this.files[0];
                 if (!file) return;
+
+                // بررسی سایز فایل (حداکثر ۲ مگابایت)
+                if (file.size > 2 * 1024 * 1024) {
+                    document.getElementById('settingsResult').innerHTML =
+                        '<span style="color:#ef4444;">❌ حجم تصویر بیشتر از ۲ مگابایت است.</span>';
+                    return;
+                }
+
+                // بررسی فرمت فایل
+                const validTypes = ['image/jpeg', 'image/png', 'image/svg+xml', 'image/webp'];
+                if (!validTypes.includes(file.type)) {
+                    document.getElementById('settingsResult').innerHTML =
+                        '<span style="color:#ef4444;">❌ فرمت فایل پشتیبانی نمی‌شود. (JPG, PNG, SVG, WEBP)</span>';
+                    return;
+                }
+
                 const reader = new FileReader();
                 reader.onload = function(ev) {
-                    const dataUrl = ev.target.result;
-                    document.getElementById('heroImagePreview').innerHTML =
-                        `<img src="${dataUrl}" alt="هدر" />`;
-                    heroImage = dataUrl;
-                    localStorage.setItem('nilofor_hero_image', dataUrl);
-                    document.querySelector('.hero').style.setProperty('--hero-bg', `url(${dataUrl}) center/cover no-repeat, radial-gradient(ellipse at 70% 20%, rgba(200,169,106,0.06), transparent 60%), radial-gradient(ellipse at 30% 80%, rgba(200,169,106,0.04), transparent 50%), var(--bg-primary)`);
-                    document.getElementById('settingsResult').innerHTML =
-                        '<span style="color:#22c55e;">✅ تصویر هدر آپلود شد.</span>';
+                    try {
+                        const dataUrl = ev.target.result;
+
+                        // ذخیره در localStorage
+                        localStorage.setItem('nilofor_hero_image', dataUrl);
+
+                        // نمایش در پیش‌نمایش
+                        document.getElementById('heroImagePreview').innerHTML =
+                            `<img src="${dataUrl}" alt="هدر" style="max-width:100%; max-height:200px; object-fit:cover; border-radius:8px;" />`;
+
+                        // اعمال به هدر سایت
+                        const heroElement = document.querySelector('.hero');
+                        if (heroElement) {
+                            heroElement.style.backgroundImage = `url(${dataUrl})`;
+                            heroElement.style.backgroundSize = 'cover';
+                            heroElement.style.backgroundPosition = 'center';
+                            heroElement.style.setProperty('--hero-bg', `url(${dataUrl}) center/cover no-repeat, radial-gradient(ellipse at 70% 20%, rgba(200,169,106,0.06), transparent 60%), radial-gradient(ellipse at 30% 80%, rgba(200,169,106,0.04), transparent 50%), var(--bg-primary)`);
+                        }
+
+                        document.getElementById('settingsResult').innerHTML =
+                            '<span style="color:#22c55e;">✅ تصویر هدر با موفقیت آپلود شد.</span>';
+
+                        showToast('✅ تصویر هدر به‌روزرسانی شد', 'gold');
+                    } catch (error) {
+                        console.error('خطا در ذخیره تصویر:', error);
+                        document.getElementById('settingsResult').innerHTML =
+                            '<span style="color:#ef4444;">❌ خطا در پردازش تصویر.</span>';
+                    }
                 };
+
+                reader.onerror = function() {
+                    document.getElementById('settingsResult').innerHTML =
+                        '<span style="color:#ef4444;">❌ خطا در خواندن فایل.</span>';
+                };
+
                 reader.readAsDataURL(file);
             });
 
+            // ===== آپلود لوگوی روبیکا =====
             const rubikaUpload = document.getElementById('rubikaLogoUpload');
             const rubikaFile = document.getElementById('rubikaFileInput');
             rubikaUpload?.addEventListener('click', () => rubikaFile?.click());
@@ -3096,6 +3167,7 @@
                 reader.readAsDataURL(file);
             });
 
+            // ===== آپلود لوگو فروشگاه =====
             const uploadArea = document.getElementById('logoUploadArea');
             const fileInput = document.getElementById('logoFileInput');
             uploadArea?.addEventListener('click', () => fileInput?.click());
@@ -3626,7 +3698,7 @@
                             updateSocialLinks(); }
                         if (data.heroImage) { heroImage = data.heroImage;
                             localStorage.setItem('nilofor_hero_image', heroImage);
-                            document.querySelector('.hero').style.setProperty('--hero-bg', `url(${heroImage}) center/cover no-repeat, radial-gradient(ellipse at 70% 20%, rgba(200,169,106,0.06), transparent 60%), radial-gradient(ellipse at 30% 80%, rgba(200,169,106,0.04), transparent 50%), var(--bg-primary)`); }
+                            loadHeroImage(); }
                         localStorage.setItem('nilofor_products_v2', JSON.stringify(productsData));
                         localStorage.setItem('nilofor_orders', JSON.stringify(orders));
                         localStorage.setItem('nilofor_reviews', JSON.stringify(reviews));
@@ -4055,9 +4127,10 @@
             if (savedLinks) { try { socialLinks = JSON.parse(savedLinks); } catch (e) {} }
             const savedRubikaLogo = localStorage.getItem('nilofor_rubika_logo');
             if (savedRubikaLogo) { rubikaLogo = savedRubikaLogo; }
-            const savedHeroImage = localStorage.getItem('nilofor_hero_image');
-            if (savedHeroImage) { heroImage = savedHeroImage;
-                document.querySelector('.hero').style.setProperty('--hero-bg', `url(${heroImage}) center/cover no-repeat, radial-gradient(ellipse at 70% 20%, rgba(200,169,106,0.06), transparent 60%), radial-gradient(ellipse at 30% 80%, rgba(200,169,106,0.04), transparent 50%), var(--bg-primary)`); }
+
+            // بارگذاری تصویر هدر
+            loadHeroImage();
+
             updateSocialLinks();
 
             renderReviews();
@@ -4071,11 +4144,12 @@
                     `<i class="fas fa-user"></i> <span class="label">${escapeHtml(currentUser.name)}</span>`;
             }
 
-            console.log('🦷 فروشگاه نیلوفر — نسخه نهایی (بدون محصولات نمونه و بدون لوگوی شناور)');
+            console.log('🦷 فروشگاه نیلوفر — نسخه نهایی');
             console.log('🔑 پنل ادمین با رمز 1212');
             console.log('📍 مشهد، خیابان امام رضا، دانش ۱۱، سرای بلور');
             console.log('📞 ۰۵۱-۳۸۵۱۶۱۶۲ · ۰۵۱-۳۸۵۱۱۰۶۵');
             console.log('📥 محصولات فقط از طریق واردات فایل (PDF/CSV/Excel/JSON) اضافه می‌شوند.');
+            console.log('🖼️ تصویر هدر قابل آپلود در پنل ادمین (تنظیمات)');
         }
 
         init();
