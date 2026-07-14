@@ -1,0 +1,48 @@
+# admin/config.yml
+
+# آدرس مخزن گیت‌هاب شما (نام کاربری و نام مخزن را جایگزین کنید)
+backend:
+  name: github
+  repo: YOUR_USERNAME/YOUR_REPOSITORY_NAME
+  branch: main  # یا master
+
+# برای احراز هویت با گیت‌هاب (نیاز به ثبت برنامه در گیت‌هاب دارد)
+# برای شروع کار سریع، می‌توانید از سرویس گیت‌ابی (Git Gateway) نتلیفای استفاده کنید
+# اما ساده‌ترین راه، استفاده از OAuth گیت‌هاب است.
+
+# محلی که تصاویر در مخزن ذخیره می‌شوند
+media_folder: "public/images/products"
+public_folder: "/images/products"
+
+# تنظیمات زبان (برای پنل فارسی)
+locale: 'fa'
+
+# تعریف کلکسیون‌ها (مدل‌های داده)
+collections:
+  - name: "products"           # نام کلکسیون
+    label: "محصولات"           # عنوان در پنل
+    folder: "data/products"    # مسیر ذخیره فایل‌های JSON محصولات
+    create: true               # اجازه ساخت محصول جدید
+    slug: "{{slug}}"           # نام فایل بر اساس اسلاگ
+    fields:                    # فیلدهای هر محصول
+      - { label: "شناسه", name: "id", widget: "string", default: "" }
+      - { label: "نام محصول", name: "name", widget: "string", required: true }
+      - { label: "برند", name: "brand", widget: "string", required: true }
+      - { label: "دسته‌بندی", name: "category", widget: "string" }
+      - { label: "کد محصول", name: "code", widget: "string" }
+      - { label: "قیمت (تومان)", name: "priceIRR", widget: "number", valueType: "int" }
+      - { label: "سود (درصد)", name: "profitPercent", widget: "number", default: 200, valueType: "int" }
+      - { label: "موجودی", name: "stock", widget: "number", default: 0, valueType: "int" }
+      - { label: "توضیحات کوتاه", name: "description", widget: "text" }
+      - { label: "توضیحات کامل", name: "longDescription", widget: "markdown" }
+      - label: "تصاویر محصول"
+        name: "images"
+        widget: "list"
+        field: { label: "تصویر", name: "image", widget: "image" }
+      - label: "مشخصات فنی"
+        name: "specs"
+        widget: "object"
+        fields:
+          - { label: "جنس", name: "material", widget: "string" }
+          - { label: "ابعاد", name: "dimensions", widget: "string" }
+          - { label: "وزن", name: "weight", widget: "string" }
