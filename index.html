@@ -45,8 +45,6 @@
             --gold-dark: #b8953a;
             --radius-card: 20px;
             --radius-btn: 60px;
-            --origin-original: #22c55e;
-            --origin-copy: #facc15;
         }
         [data-theme="dark"] {
             --bg-primary: #1a1510;
@@ -330,8 +328,6 @@
                 radial-gradient(ellipse at 70% 20%, rgba(200,169,106,0.06), transparent 60%),
                 radial-gradient(ellipse at 30% 80%, rgba(200,169,106,0.04), transparent 50%),
                 var(--bg-primary);
-            background-size:cover;
-            background-position:center;
             border-bottom:1px solid var(--border-color);
             overflow:hidden;
         }
@@ -629,13 +625,6 @@
         .stock-badge.in-stock { background:rgba(34,197,94,0.12); color:#22c55e; }
         .stock-badge.out-of-stock { background:rgba(239,68,68,0.12); color:#ef4444; }
         .stock-badge.special-order { background:rgba(200,169,106,0.12); color:var(--nilofor-gold); }
-        .product-card-full .origin-badge {
-            display:inline-block; padding:2px 6px; border-radius:40px;
-            font-size:0.5rem; font-weight:600; margin-right:3px;
-        }
-        .origin-badge.original { background:rgba(34,197,94,0.12); color:#22c55e; }
-        .origin-badge.copy { background:rgba(250,204,21,0.12); color:#facc15; }
-        .origin-badge.limon { background:rgba(200,169,106,0.15); color:var(--nilofor-gold); }
         .product-card-full .inquiry-btn {
             background:var(--bg-input);
             border:1px solid var(--border-color);
@@ -1228,8 +1217,8 @@
             border-radius:8px; background:var(--bg-secondary);
             display:flex; align-items:center; justify-content:center; overflow:hidden;
         }
-        .hero-image-upload .preview { max-width:100%; max-height:200px; }
-        .hero-image-upload .preview img { max-width:100%; max-height:200px; object-fit:cover; }
+        .hero-image-upload .preview { max-width:100%; max-height:160px; }
+        .hero-image-upload .preview img { max-width:100%; max-height:160px; object-fit:cover; }
         .logo-upload-area .preview img { max-width:100%; max-height:70px; object-fit:contain; }
         .logo-upload-area .hint, .file-upload-area .hint, .hero-image-upload .hint {
             color:var(--text-muted); font-size:0.7rem;
@@ -1258,9 +1247,6 @@
         .text-gold { color:var(--nilofor-gold); }
         .border-gold { border-color:var(--nilofor-gold); }
         .bg-gold { background:var(--nilofor-gold); }
-
-        /* ===== حذف کامل دکمه‌های شناور ===== */
-        .floating-buttons { display:none !important; }
 
         .price-slider-wrap input[type="range"] {
             -webkit-appearance:none; appearance:none;
@@ -1427,9 +1413,9 @@
                 <div class="hero-badge"><span class="dot"></span> فروشگاه نیلوفر · از ۱۳۷۸</div>
                 <h1>زیبایی <br /><span class="highlight">در هر جزئیات</span></h1>
                 <div class="rotating-text">
-                    <span class="phrase">✨ <span class="gold">ظروف لیمون</span>، اصالت و کیفیت در کنار هم</span>
+                    <span class="phrase">✨ <span class="gold">ظروف لیمون</span>، کیفیت و زیبایی در کنار هم</span>
                     <span class="phrase">🌟 <span class="gold">سرویس جهیزیه</span>، انتخابی برای یک عمر زیبایی</span>
-                    <span class="phrase">💎 <span class="gold">سرویس بهداشتی</span>، ترکیب هنر و کاربردی بودن</span>
+                    <span class="phrase">💎 <span class="gold">سرویس بهداشتی</span>، هنر و کاربردی بودن</span>
                 </div>
                 <div class="hero-actions">
                     <a href="#product-page" class="btn btn-gold"><i class="fas fa-arrow-left"></i> مشاهده محصولات</a>
@@ -1466,7 +1452,7 @@
         <span class="brand"><span class="gold">★</span> ارسال سریع</span>
         <span class="brand"><span class="gold">★</span> قیمت مناسب</span>
         <span class="brand"><span class="gold">★</span> پشتیبانی ۲۴/۷</span>
-        <span class="brand"><span class="gold">★</span> تضمین اصالت</span>
+        <span class="brand"><span class="gold">★</span> تضمین کیفیت</span>
         <span class="brand"><span class="gold">★</span> بیش از ۲۵ سال تجربه</span>
         <span class="brand"><span class="gold">★</span> رضایت مشتریان</span>
         <span class="brand"><span class="gold">★</span> کیفیت برتر</span>
@@ -1490,7 +1476,6 @@
                         <input type="range" id="priceMax" min="0" max="50000000" value="50000000" step="100000" />
                         <span class="range-values" id="priceRangeDisplay">۰ - ۵۰,۰۰۰,۰۰۰</span>
                     </div>
-                    <select id="filterOrigin"><option value="">همه اصالت</option><option value="true">اورجینال لیمون</option><option value="false">سایر</option></select>
                     <select id="filterCountry"><option value="">همه کشورها</option><option value="ایران">ایران</option></select>
                     <label style="display:flex;align-items:center;gap:5px;font-size:0.65rem;color:var(--text-muted);"><input type="checkbox" id="filterInStock" /> فقط موجود</label>
                     <input type="text" id="productSearchInput" placeholder="جستجو..." style="font-size:0.7rem;" />
@@ -1559,7 +1544,7 @@
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-brand">
-                    <h3>🦷 <span class="gold">نیلوفر</span></h3>
+                    <h3><span class="gold">نیلوفر</span></h3>
                     <p>مرجع تخصصی محصولات با کیفیت. با بیش از ۲۵ سال تجربه در خدمت شما.</p>
                     <div class="contact-info" style="margin-top:10px;">
                         <div class="contact-row"><i class="fas fa-store"></i> آدرس فروشگاه: مشهد، خیابان امام رضا، دانش ۱۱، سرای بلور، فروشگاه نیلوفر</div>
@@ -1618,7 +1603,6 @@
             <div class="admin-tab" data-tab="products">🛒 محصولات</div>
             <div class="admin-tab" data-tab="inventory">📦 انبار</div>
             <div class="admin-tab" data-tab="prices">💰 قیمت‌ها</div>
-            <div class="admin-tab" data-tab="origin">🏷️ اصالت</div>
             <div class="admin-tab" data-tab="reviews">⭐ نظرات</div>
             <div class="admin-tab" data-tab="inquiries">📋 استعلام‌ها</div>
             <div class="admin-tab" data-tab="settings">⚙️ تنظیمات</div>
@@ -1627,6 +1611,7 @@
             <div class="admin-tab" data-tab="reports">📈 گزارش‌ها</div>
             <div class="admin-tab" data-tab="import">📥 واردات محصولات</div>
             <div class="admin-tab" data-tab="sync">🔄 همگام‌سازی</div>
+            <div class="admin-tab" data-tab="product-detail">📝 جزییات محصولات</div>
         </div>
         <div id="adminContent" class="admin-content-scroll"><p style="color:var(--text-muted);">بارگذاری...</p></div>
     </div>
@@ -1635,7 +1620,7 @@
 
     <script>
         // ============================================================
-        //  فروشگاه نیلوفر - نسخه نهایی نهایی
+        //  فروشگاه نیلوفر - نسخه نهایی با به‌روزرسانی هوشمند و ریست محصولات
         // ============================================================
 
         // ===== STATE =====
@@ -1659,8 +1644,6 @@
         let userIP = '';
         let userCountry = '';
         let userCity = '';
-        let chartInstance = null;
-        let imageMapping = {};
 
         // ===== لینک‌های شبکه‌های اجتماعی =====
         let socialLinks = JSON.parse(localStorage.getItem('nilofor_social_links')) || {
@@ -1683,45 +1666,24 @@
             };
             for (const [id, url] of Object.entries(map)) { const el = document.getElementById(id); if (el) el.href = url; }
             if (rubikaLogo) {
-                document.querySelectorAll('.rubika, .rubika-link').forEach(el => {
-                    const icon = el.querySelector('i');
-                    if (icon) {
-                        icon.className = '';
-                        const img = document.createElement('img');
-                        img.src = rubikaLogo;
-                        img.style.width = '16px';
-                        img.style.height = '16px';
-                        img.style.objectFit = 'contain';
-                        el.prepend(img);
-                        if (icon) icon.style.display = 'none';
+                document.querySelectorAll('.rubika, .rubika-link').forEach((el, index) => {
+                    if (index === 0) {
+                        const icon = el.querySelector('i');
+                        if (icon) {
+                            icon.className = '';
+                            const img = document.createElement('img');
+                            img.src = rubikaLogo;
+                            img.style.width = '16px';
+                            img.style.height = '16px';
+                            img.style.objectFit = 'contain';
+                            el.prepend(img);
+                            if (icon) icon.style.display = 'none';
+                        }
                     }
                 });
             }
-            // بارگذاری تصویر هدر از localStorage
-            loadHeroImage();
-        }
-
-        // ===== تابع بارگذاری تصویر هدر =====
-        function loadHeroImage() {
-            const savedImage = localStorage.getItem('nilofor_hero_image');
-            if (savedImage && savedImage.startsWith('data:image')) {
-                try {
-                    const heroElement = document.querySelector('.hero');
-                    if (heroElement) {
-                        heroElement.style.backgroundImage = `url(${savedImage})`;
-                        heroElement.style.backgroundSize = 'cover';
-                        heroElement.style.backgroundPosition = 'center';
-                        heroElement.style.setProperty('--hero-bg', `url(${savedImage}) center/cover no-repeat, radial-gradient(ellipse at 70% 20%, rgba(200,169,106,0.06), transparent 60%), radial-gradient(ellipse at 30% 80%, rgba(200,169,106,0.04), transparent 50%), var(--bg-primary)`);
-                    }
-                    // پیش‌نمایش در پنل ادمین
-                    const preview = document.getElementById('heroImagePreview');
-                    if (preview) {
-                        preview.innerHTML = `<img src="${savedImage}" alt="هدر" style="max-width:100%; max-height:200px; object-fit:cover; border-radius:8px;" />`;
-                    }
-                    console.log('✅ تصویر هدر بارگذاری شد');
-                } catch (e) {
-                    console.warn('⚠️ خطا در بارگذاری تصویر هدر:', e);
-                }
+            if (heroImage) {
+                document.querySelector('.hero').style.setProperty('--hero-bg', `url(${heroImage}) center/cover no-repeat, radial-gradient(ellipse at 70% 20%, rgba(200,169,106,0.06), transparent 60%), radial-gradient(ellipse at 30% 80%, rgba(200,169,106,0.04), transparent 50%), var(--bg-primary)`);
             }
         }
 
@@ -1834,9 +1796,10 @@
                         if (p.priceIRR === undefined) p.priceIRR = 0;
                         if (p.profitPercent === undefined) p.profitPercent = 200;
                         if (p.inquiryEnabled === undefined) p.inquiryEnabled = false;
-                        if (p.isOriginal === undefined) p.isOriginal = true;
                         if (p.soldCount === undefined) p.soldCount = 0;
                         if (p.viewCount === undefined) p.viewCount = 0;
+                        if (p.specs === undefined) p.specs = {};
+                        if (p.longDescription === undefined) p.longDescription = '';
                     });
                     return true;
                 } catch (e) { console.warn('خطا در خواندن داده‌های محلی:', e); }
@@ -1846,7 +1809,7 @@
 
         // ===== RENDER PRODUCTS =====
         function renderProductPage(filterBrand = '', filterCategory = '', sort = 'name', search = '', page = 1,
-            priceMin = 0, priceMax = 50000000, origin = '', country = '', inStock = false) {
+            priceMin = 0, priceMax = 50000000, country = '', inStock = false) {
             const container = document.getElementById('productGridFull');
             if (!container) return;
 
@@ -1858,7 +1821,6 @@
                 search = p.search;
                 priceMin = p.pMin;
                 priceMax = p.pMax;
-                origin = p.origin;
                 country = p.country;
                 inStock = p.inStock;
             }
@@ -1870,8 +1832,6 @@
                     search)) return false;
                 const fp = getFinalPrice(p);
                 if (fp < priceMin || fp > priceMax) return false;
-                if (origin === 'true' && !p.isOriginal) return false;
-                if (origin === 'false' && p.isOriginal) return false;
                 if (country && p['کشور تولید کننده'] !== country) return false;
                 if (inStock && (p.stock || 0) <= 0) return false;
                 return true;
@@ -1915,8 +1875,6 @@
                 const stockHtml = (p.stock !== undefined) ?
                     `<span class="stock-badge ${p.stock > 0 ? 'in-stock' : 'out-of-stock'}">${p.stock > 0 ? `موجود: ${p.stock}` : 'ناموجود'}</span>` :
                     '';
-                const originHtml =
-                    `<span class="origin-badge ${p.isOriginal ? 'limon' : 'copy'}">${p.isOriginal ? '✅ لیمون' : 'ℹ️ سایر'}</span>`;
                 const codeHtml = p.code ? `<span class="product-code">${escapeHtml(p.code)}</span>` : '';
 
                 const showInquiry = (p.inquiryEnabled || p.showPrice === false || (p.stock || 0) <= 0);
@@ -1953,7 +1911,6 @@
                         <div class="brand">${escapeHtml(p.brand)} · ${escapeHtml(p.category)}</div>
                         <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:3px; margin-top:3px;">
                             ${stockHtml}
-                            ${originHtml}
                             ${codeHtml}
                             ${inquiryBtn}
                             ${viewCountHtml}
@@ -1978,7 +1935,7 @@
             document.querySelectorAll('#pagination button').forEach(btn => {
                 btn.addEventListener('click', function() {
                     renderProductPage(filterBrand, filterCategory, sort, search, parseInt(this.dataset
-                        .page), priceMin, priceMax, origin, country, inStock);
+                        .page), priceMin, priceMax, country, inStock);
                 });
             });
 
@@ -1990,7 +1947,7 @@
                 btn.addEventListener('click', function(e) { e.stopPropagation();
                     toggleWishlist(this.dataset.id);
                     renderProductPage(filterBrand, filterCategory, sort, search, currentPage, priceMin,
-                        priceMax, origin, country, inStock); });
+                        priceMax, country, inStock); });
             });
             document.querySelectorAll('.product-card-full').forEach(card => {
                 card.addEventListener('click', function(e) {
@@ -2036,7 +1993,6 @@
                 search: document.getElementById('productSearchInput').value.trim(),
                 pMin: parseInt(document.getElementById('priceMin').value) || 0,
                 pMax: parseInt(document.getElementById('priceMax').value) || 50000000,
-                origin: document.getElementById('filterOrigin').value,
                 country: document.getElementById('filterCountry').value,
                 inStock: document.getElementById('filterInStock').checked
             };
@@ -2044,7 +2000,7 @@
 
         function applyFilters() {
             const p = getFilterParams();
-            renderProductPage(p.brand, p.cat, p.sort, p.search, 1, p.pMin, p.pMax, p.origin, p.country, p.inStock);
+            renderProductPage(p.brand, p.cat, p.sort, p.search, 1, p.pMin, p.pMax, p.country, p.inStock);
             document.getElementById('priceRangeDisplay').textContent = `${formatPrice(p.pMin)} - ${formatPrice(p.pMax)}`;
         }
 
@@ -2082,17 +2038,8 @@
             const finalPrice = getFinalPrice(p);
             const priceDisplay = (p.showPrice !== false && finalPrice > 0) ? formatPrice(finalPrice) : 'استعلام قیمت';
             const specs = [];
-            for (let key in p) {
-                if (['id', 'name', 'brand', 'category', 'image', 'images', 'tag', 'guarantee', 'priceIRR', 'profitPercent',
-                        'stock', 'code', 'isOriginal', 'inquiryEnabled', 'showPrice', 'description', 'soldCount',
-                        'viewCount'
-                    ].includes(key)) continue;
-                if (p[key] && typeof p[key] !== 'object') specs.push({ label: key, value: p[key] });
-            }
-            if (p.specs && typeof p.specs === 'object') {
-                for (let key in p.specs) {
-                    if (p.specs[key]) specs.push({ label: key, value: p.specs[key] });
-                }
+            for (let key in p.specs) {
+                if (p.specs[key]) specs.push({ label: key, value: p.specs[key] });
             }
             const content = document.getElementById('productDetailContent');
             const images = p.images && p.images.length > 0 ? p.images : [p.image];
@@ -2126,13 +2073,12 @@
                             ${p.guarantee ? '<span style="color:var(--nilofor-gold); font-size:0.75rem;"><i class="fas fa-shield-alt"></i> سلامت کالا</span>' : ''}
                             ${p.tag ? `<span class="badge badge-gold" style="font-size:0.6rem;">${p.tag}</span>` : ''}
                             ${p.stock !== undefined ? `<span class="stock-badge ${p.stock > 0 ? 'in-stock' : 'out-of-stock'}">${p.stock > 0 ? `موجودی: ${p.stock}` : 'ناموجود'}</span>` : ''}
-                            <span class="origin-badge ${p.isOriginal ? 'limon' : 'copy'}" style="font-size:0.55rem;">${p.isOriginal ? '✅ لیمون' : 'ℹ️ سایر'}</span>
                             <span style="color:var(--text-muted); font-size:0.7rem;"><i class="fas fa-eye"></i> ${p.viewCount || 0} بازدید</span>
                             <span style="color:var(--text-muted); font-size:0.7rem;"><i class="fas fa-shopping-bag"></i> ${p.soldCount || 0} فروش</span>
                         </div>
                         <div class="description-box">
                             <h4>📝 توضیحات محصول</h4>
-                            <p style="white-space:pre-line;">${escapeHtml(p.description || 'توضیحاتی برای این محصول ثبت نشده است.')}</p>
+                            <p style="white-space:pre-line;">${escapeHtml(p.longDescription || p.description || 'توضیحاتی برای این محصول ثبت نشده است.')}</p>
                         </div>
                         ${specs.length > 0 ? `<div class="specs">${specs.map(s => `<div class="spec-item"><span class="label">${escapeHtml(s.label)}</span><span class="value">${escapeHtml(s.value)}</span></div>`).join('')}</div>` : ''}
                         ${inquiryFormHtml}
@@ -2651,9 +2597,10 @@
         });
 
         // ============================================================
-        //  ADMIN PANEL FUNCTIONS (خلاصه)
+        //  ADMIN PANEL FUNCTIONS
         // ============================================================
 
+        // ===== DASHBOARD =====
         function renderDashboard() {
             const content = document.getElementById('adminContent');
             const totalOrders = orders.length,
@@ -2698,7 +2645,7 @@
             `;
         }
 
-        // ===== سایر بخش‌های ادمین (ساده‌شده) =====
+        // ===== ORDERS ADMIN =====
         function renderOrdersAdmin() {
             const content = document.getElementById('adminContent');
             if (orders.length === 0) { content.innerHTML = '<p style="color:var(--text-muted);">هیچ سفارشی ثبت نشده.</p>';
@@ -2719,6 +2666,7 @@
             renderDashboard();
             showToast('سفارش حذف شد'); };
 
+        // ===== PRODUCTS ADMIN (با دکمه ریست) =====
         function renderProductsAdmin() {
             const content = document.getElementById('adminContent');
             const searchTerm = document.getElementById('adminProductSearch')?.value?.trim() || '';
@@ -2731,6 +2679,7 @@
                     <input type="text" id="adminProductSearch" placeholder="جستجو..." value="${searchTerm}" style="flex:1;min-width:160px;padding:8px 14px;border-radius:60px;background:var(--bg-input);border:1px solid var(--border-color);color:var(--text-primary);font-size:0.75rem;min-height:34px;" />
                     <button class="btn btn-gold btn-sm" onclick="renderProductsAdmin()"><i class="fas fa-search"></i> جستجو</button>
                     <button class="btn btn-gold btn-sm" onclick="window.showAddProductForm()"><i class="fas fa-plus"></i> افزودن</button>
+                    <button class="btn btn-sm" style="background:#ef4444;color:#fff;" onclick="window.deleteAllProducts()"><i class="fas fa-trash-alt"></i> حذف همه</button>
                 </div>
                 <div id="addProductForm" style="display:none;background:var(--bg-card);border-radius:12px;padding:14px;margin-bottom:14px;border:1px solid var(--border-color);">
                     <h4 style="margin-bottom:10px;color:var(--text-primary);font-size:0.85rem;">➕ محصول جدید</h4>
@@ -2744,7 +2693,7 @@
                         <div><input type="text" id="newProductTag" placeholder="برچسب" style="width:100%;padding:8px 12px;border-radius:12px;background:var(--bg-input);border:1px solid var(--border-color);color:var(--text-primary);font-size:0.75rem;" /></div>
                         <div><input type="number" id="newProductStock" placeholder="موجودی" style="width:100%;padding:8px 12px;border-radius:12px;background:var(--bg-input);border:1px solid var(--border-color);color:var(--text-primary);font-size:0.75rem;" /></div>
                         <div><input type="number" id="newProductPrice" placeholder="قیمت (تومان)" style="width:100%;padding:8px 12px;border-radius:12px;background:var(--bg-input);border:1px solid var(--border-color);color:var(--text-primary);font-size:0.75rem;" /></div>
-                        <div><label style="color:var(--text-secondary);font-size:0.7rem;"><input type="checkbox" id="newProductOriginal" checked /> اورجینال</label></div>
+                        <div><input type="text" id="newProductDesc" placeholder="توضیحات (اختیاری)" style="width:100%;padding:8px 12px;border-radius:12px;background:var(--bg-input);border:1px solid var(--border-color);color:var(--text-primary);font-size:0.75rem;" /></div>
                     </div>
                     <div style="margin-top:10px;display:flex;gap:8px;">
                         <button class="btn btn-gold btn-sm" onclick="window.addProductFromAdmin()"><i class="fas fa-save"></i> ذخیره</button>
@@ -2753,7 +2702,7 @@
                     <div id="addProductResult" style="margin-top:8px;"></div>
                 </div>
                 <div style="overflow-x:auto;max-height:60vh;overflow-y:auto;">
-                    <table class="admin-table"><thead><tr><th>نام</th><th>برند</th><th>دسته</th><th>قیمت</th><th>موجودی</th><th>اصالت</th><th>کد</th><th>عملیات</th></tr></thead><tbody>
+                    <table class="admin-table"><thead><tr><th>نام</th><th>برند</th><th>دسته</th><th>قیمت</th><th>موجودی</th><th>کد</th><th>عملیات</th></tr></thead><tbody>
                         ${filtered.slice(0,200).map(p => `
                             <tr>
                                 <td style="font-size:0.6rem;">${escapeHtml(p.name)}</td>
@@ -2761,11 +2710,11 @@
                                 <td style="font-size:0.6rem;">${escapeHtml(p.category)}</td>
                                 <td style="font-size:0.6rem;">${formatPrice(getFinalPrice(p))}</td>
                                 <td><input type="number" class="stock-quick" data-id="${p.id}" value="${p.stock||0}" min="0" style="width:44px;padding:2px 4px;border-radius:6px;background:var(--bg-input);border:1px solid var(--border-color);color:var(--text-primary);font-size:0.6rem;" /></td>
-                                <td><select class="origin-quick" data-id="${p.id}" style="padding:2px 4px;border-radius:6px;background:var(--bg-input);border:1px solid var(--border-color);color:var(--text-primary);font-size:0.55rem;"><option value="true" ${p.isOriginal?'selected':''}>لیمون</option><option value="false" ${!p.isOriginal?'selected':''}>سایر</option></select></td>
                                 <td style="font-size:0.5rem;direction:ltr;">${escapeHtml(p.code||'-')}</td>
                                 <td>
                                     <button class="btn btn-sm btn-gold" onclick="window.quickUpdateStockAdmin('${p.id}')" style="padding:2px 6px;font-size:0.5rem;">ذخیره</button>
                                     <button class="btn btn-sm btn-outline" onclick="window.deleteProductAdmin('${p.id}')" style="color:#ef4444;border-color:#ef4444;padding:2px 6px;font-size:0.5rem;">×</button>
+                                    <button class="btn btn-sm btn-outline" onclick="window.openProductDetailEdit('${p.id}')" style="padding:2px 6px;font-size:0.5rem;border-color:var(--nilofor-gold);color:var(--nilofor-gold);">📝</button>
                                 </td>
                             </tr>
                         `).join('')}
@@ -2777,11 +2726,10 @@
         }
         window.quickUpdateStockAdmin = function(id) {
             const input = document.querySelector(`.stock-quick[data-id="${id}"]`);
-            const origin = document.querySelector(`.origin-quick[data-id="${id}"]`);
             if (!input) return;
             const stock = parseInt(input.value) || 0;
             const p = productsData.find(p => p.id === id);
-            if (p) { p.stock = stock; if (origin) p.isOriginal = origin.value === 'true';
+            if (p) { p.stock = stock;
                 localStorage.setItem('nilofor_products_v2', JSON.stringify(productsData));
                 document.getElementById('adminProductResult').innerHTML = '<span style="color:#22c55e;">✅ به‌روز شد.</span>';
                 renderProductsAdmin();
@@ -2807,24 +2755,23 @@
             const code = document.getElementById('newProductCode').value.trim();
             let image = document.getElementById('newProductImage').value.trim();
             const fileInput = document.getElementById('newProductImageFile');
-            const isOriginal = document.getElementById('newProductOriginal').checked;
+            const tag = document.getElementById('newProductTag').value.trim() || null;
+            const stock = parseInt(document.getElementById('newProductStock').value) || 0;
+            const price = parseInt(document.getElementById('newProductPrice').value) || 0;
+            const desc = document.getElementById('newProductDesc').value.trim() || '';
 
             if (fileInput && fileInput.files && fileInput.files[0]) {
                 const reader = new FileReader();
                 reader.onload = function(e) { image = e.target.result;
-                    addProductFinal(name, brand, category, code, image, isOriginal); };
+                    addProductFinal(name, brand, category, code, image, tag, stock, price, desc); };
                 reader.readAsDataURL(fileInput.files[0]);
                 return;
             }
             addProductFinal(name, brand, category, code, image ||
-                'https://picsum.photos/seed/add_product/400/400',
-                isOriginal);
+                'https://picsum.photos/seed/add_product/400/400', tag, stock, price, desc);
         };
 
-        function addProductFinal(name, brand, category, code, image, isOriginal) {
-            const tag = document.getElementById('newProductTag').value.trim() || null;
-            const stock = parseInt(document.getElementById('newProductStock').value) || 0;
-            const price = parseInt(document.getElementById('newProductPrice').value) || 0;
+        function addProductFinal(name, brand, category, code, image, tag, stock, price, desc) {
             if (!name || !brand || !category) {
                 document.getElementById('addProductResult').innerHTML =
                     '<span style="color:#ef4444;">لطفاً فیلدهای ضروری را پر کنید.</span>';
@@ -2841,14 +2788,14 @@
                 priceIRR: price,
                 profitPercent: 200,
                 stock: stock,
-                isOriginal: isOriginal,
                 inquiryEnabled: false,
                 showPrice: true,
                 image: images[0],
                 images: images,
                 tag: tag,
                 guarantee: true,
-                description: `✅ محصول: ${name}\n✅ برند: ${brand}\n✅ دسته: ${category}`,
+                description: desc || `✅ محصول: ${name}\n✅ برند: ${brand}\n✅ دسته: ${category}`,
+                longDescription: desc || '',
                 specs: {},
                 soldCount: 0,
                 viewCount: 0
@@ -2863,6 +2810,192 @@
                 document.getElementById('addProductResult').innerHTML = ''; }, 1500);
         }
 
+        // ----- حذف همه محصولات (ریست) -----
+        window.deleteAllProducts = function() {
+            if (!confirm('⚠️ آیا مطمئن هستید که می‌خواهید همه محصولات را حذف کنید؟ این عمل غیرقابل بازگشت است.')) return;
+            if (!confirm('تأیید نهایی: همه محصولات پاک می‌شوند.')) return;
+            productsData = [];
+            localStorage.setItem('nilofor_products_v2', JSON.stringify(productsData));
+            renderProductsAdmin();
+            applyFilters();
+            renderStats();
+            renderInventoryAdmin();
+            renderPriceManagement();
+            showToast('✅ همه محصولات حذف شدند.', 'gold');
+        };
+
+        // ===== PRODUCT DETAIL EDIT =====
+        function renderProductDetailEdit() {
+            const content = document.getElementById('adminContent');
+            const searchTerm = document.getElementById('detailSearch')?.value?.trim() || '';
+            let filtered = productsData;
+            if (searchTerm) filtered = filtered.filter(p => p.name.includes(searchTerm) || p.code.includes(searchTerm) || p
+                .brand.includes(searchTerm));
+
+            content.innerHTML = `
+                <h3 style="color:var(--text-primary);font-size:0.95rem;margin-bottom:14px;">📝 ویرایش جزییات محصولات</h3>
+                <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:14px;">
+                    <input type="text" id="detailSearch" placeholder="جستجو..." value="${searchTerm}" style="flex:1;min-width:160px;padding:8px 14px;border-radius:60px;background:var(--bg-input);border:1px solid var(--border-color);color:var(--text-primary);font-size:0.75rem;min-height:34px;" oninput="renderProductDetailEdit()" />
+                    <button class="btn btn-gold btn-sm" onclick="renderProductDetailEdit()"><i class="fas fa-search"></i></button>
+                </div>
+                <div style="overflow-x:auto;max-height:70vh;overflow-y:auto;">
+                    ${filtered.length===0?'<p style="color:var(--text-muted);">هیچ محصولی یافت نشد.</p>':
+                    filtered.map(p => `
+                        <div style="background:var(--bg-card);border-radius:12px;padding:14px;margin-bottom:12px;border:1px solid var(--border-color);box-shadow:var(--shadow-soft);">
+                            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:8px;">
+                                <div style="display:flex;align-items:center;gap:10px;">
+                                    ${p.image?`<img src="${p.image}" style="width:40px;height:40px;object-fit:cover;border-radius:8px;" onerror="this.style.display='none';" />`:'📦'}
+                                    <div><strong style="font-size:0.85rem;">${escapeHtml(p.name)}</strong> <span style="color:var(--text-muted);font-size:0.7rem;">(${escapeHtml(p.brand)})</span></div>
+                                </div>
+                                <button class="btn btn-sm btn-outline" onclick="window.toggleDetailEdit('${p.id}')" style="border-color:var(--nilofor-gold);color:var(--nilofor-gold);font-size:0.6rem;">${document.getElementById('detail_'+p.id)?.style?.display !== 'none' ? 'بستن' : 'ویرایش'}</button>
+                            </div>
+                            <div id="detail_${p.id}" style="display:none;padding-top:10px;border-top:1px solid var(--border-color);">
+                                <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+                                    <div><label style="font-size:0.65rem;color:var(--text-muted);">نام محصول</label><input type="text" id="edit_name_${p.id}" value="${escapeHtml(p.name)}" style="width:100%;padding:6px 10px;border-radius:8px;background:var(--bg-input);border:1px solid var(--border-color);color:var(--text-primary);font-size:0.7rem;" /></div>
+                                    <div><label style="font-size:0.65rem;color:var(--text-muted);">برند</label><input type="text" id="edit_brand_${p.id}" value="${escapeHtml(p.brand)}" style="width:100%;padding:6px 10px;border-radius:8px;background:var(--bg-input);border:1px solid var(--border-color);color:var(--text-primary);font-size:0.7rem;" /></div>
+                                    <div><label style="font-size:0.65rem;color:var(--text-muted);">دسته</label><input type="text" id="edit_category_${p.id}" value="${escapeHtml(p.category)}" style="width:100%;padding:6px 10px;border-radius:8px;background:var(--bg-input);border:1px solid var(--border-color);color:var(--text-primary);font-size:0.7rem;" /></div>
+                                    <div><label style="font-size:0.65rem;color:var(--text-muted);">کد محصول</label><input type="text" id="edit_code_${p.id}" value="${escapeHtml(p.code||'')}" style="width:100%;padding:6px 10px;border-radius:8px;background:var(--bg-input);border:1px solid var(--border-color);color:var(--text-primary);font-size:0.7rem;" /></div>
+                                    <div><label style="font-size:0.65rem;color:var(--text-muted);">قیمت (تومان)</label><input type="number" id="edit_price_${p.id}" value="${p.priceIRR||0}" style="width:100%;padding:6px 10px;border-radius:8px;background:var(--bg-input);border:1px solid var(--border-color);color:var(--text-primary);font-size:0.7rem;" /></div>
+                                    <div><label style="font-size:0.65rem;color:var(--text-muted);">موجودی</label><input type="number" id="edit_stock_${p.id}" value="${p.stock||0}" min="0" style="width:100%;padding:6px 10px;border-radius:8px;background:var(--bg-input);border:1px solid var(--border-color);color:var(--text-primary);font-size:0.7rem;" /></div>
+                                    <div style="grid-column:1/-1;">
+                                        <label style="font-size:0.65rem;color:var(--text-muted);">برچسب (tag)</label>
+                                        <input type="text" id="edit_tag_${p.id}" value="${escapeHtml(p.tag||'')}" style="width:100%;padding:6px 10px;border-radius:8px;background:var(--bg-input);border:1px solid var(--border-color);color:var(--text-primary);font-size:0.7rem;" />
+                                    </div>
+                                    <div style="grid-column:1/-1;">
+                                        <label style="font-size:0.65rem;color:var(--text-muted);">توضیحات کوتاه</label>
+                                        <textarea id="edit_desc_${p.id}" rows="2" style="width:100%;padding:6px 10px;border-radius:8px;background:var(--bg-input);border:1px solid var(--border-color);color:var(--text-primary);font-size:0.7rem;resize:vertical;">${escapeHtml(p.description||'')}</textarea>
+                                    </div>
+                                    <div style="grid-column:1/-1;">
+                                        <label style="font-size:0.65rem;color:var(--text-muted);">توضیحات بلند (متن کامل)</label>
+                                        <textarea id="edit_longdesc_${p.id}" rows="4" style="width:100%;padding:6px 10px;border-radius:8px;background:var(--bg-input);border:1px solid var(--border-color);color:var(--text-primary);font-size:0.7rem;resize:vertical;">${escapeHtml(p.longDescription||p.description||'')}</textarea>
+                                    </div>
+                                    <div style="grid-column:1/-1;">
+                                        <label style="font-size:0.65rem;color:var(--text-muted);">مشخصات فنی (هر خط یک مشخصه)</label>
+                                        <textarea id="edit_specs_${p.id}" rows="3" style="width:100%;padding:6px 10px;border-radius:8px;background:var(--bg-input);border:1px solid var(--border-color);color:var(--text-primary);font-size:0.7rem;resize:vertical;">${Object.entries(p.specs||{}).map(([k,v])=>`${k}: ${v}`).join('\n')}</textarea>
+                                    </div>
+                                    <div style="grid-column:1/-1;">
+                                        <label style="font-size:0.65rem;color:var(--text-muted);">لینک تصاویر (هر خط یک لینک)</label>
+                                        <textarea id="edit_images_${p.id}" rows="3" style="width:100%;padding:6px 10px;border-radius:8px;background:var(--bg-input);border:1px solid var(--border-color);color:var(--text-primary);font-size:0.7rem;resize:vertical;">${(p.images||[]).join('\n')}</textarea>
+                                        <div style="margin-top:6px;display:flex;gap:6px;flex-wrap:wrap;">
+                                            <input type="file" id="edit_image_file_${p.id}" accept="image/*" style="flex:1;padding:4px;border-radius:8px;background:var(--bg-input);border:1px solid var(--border-color);color:var(--text-primary);font-size:0.7rem;" />
+                                        </div>
+                                    </div>
+                                    <div style="grid-column:1/-1;display:flex;gap:8px;flex-wrap:wrap;margin-top:6px;">
+                                        <button class="btn btn-gold btn-sm" onclick="window.saveProductDetail('${p.id}')"><i class="fas fa-save"></i> ذخیره تغییرات</button>
+                                        <button class="btn btn-outline btn-sm" onclick="window.toggleDetailEdit('${p.id}')">بستن</button>
+                                    </div>
+                                    <div id="detail_result_${p.id}" style="grid-column:1/-1;font-size:0.75rem;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        window.toggleDetailEdit = function(id) {
+            const el = document.getElementById('detail_' + id);
+            if (el) el.style.display = el.style.display === 'none' ? 'block' : 'none';
+        };
+
+        window.saveProductDetail = function(id) {
+            const p = productsData.find(p => p.id === id);
+            if (!p) { document.getElementById('detail_result_' + id).innerHTML =
+                    '<span style="color:#ef4444;">محصول یافت نشد</span>'; return; }
+
+            const name = document.getElementById('edit_name_' + id).value.trim();
+            const brand = document.getElementById('edit_brand_' + id).value.trim();
+            const category = document.getElementById('edit_category_' + id).value.trim();
+            const code = document.getElementById('edit_code_' + id).value.trim();
+            const price = parseInt(document.getElementById('edit_price_' + id).value) || 0;
+            const stock = parseInt(document.getElementById('edit_stock_' + id).value) || 0;
+            const tag = document.getElementById('edit_tag_' + id).value.trim() || null;
+            const desc = document.getElementById('edit_desc_' + id).value.trim();
+            const longDesc = document.getElementById('edit_longdesc_' + id).value.trim();
+            const specsText = document.getElementById('edit_specs_' + id).value.trim();
+            const imagesText = document.getElementById('edit_images_' + id).value.trim();
+
+            if (!name || !brand || !category) {
+                document.getElementById('detail_result_' + id).innerHTML =
+                    '<span style="color:#ef4444;">نام، برند و دسته الزامی هستند.</span>';
+                return;
+            }
+
+            const specs = {};
+            if (specsText) {
+                specsText.split('\n').forEach(line => {
+                    const parts = line.split(':');
+                    if (parts.length >= 2) {
+                        const key = parts[0].trim();
+                        const value = parts.slice(1).join(':').trim();
+                        if (key && value) specs[key] = value;
+                    }
+                });
+            }
+
+            let images = [];
+            if (imagesText) {
+                images = imagesText.split('\n').map(l => l.trim()).filter(l => l);
+            }
+            const fileInput = document.getElementById('edit_image_file_' + id);
+            if (fileInput && fileInput.files && fileInput.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const dataUrl = e.target.result;
+                    images.push(dataUrl);
+                    finishSave();
+                };
+                reader.readAsDataURL(fileInput.files[0]);
+                return;
+            }
+
+            finishSave();
+
+            function finishSave() {
+                while (images.length < 3) {
+                    const seed = `${p.brand}_${p.name.replace(/\s/g, '_')}_${images.length}`;
+                    images.push(`https://picsum.photos/seed/${seed}/400/400`);
+                }
+
+                p.name = name;
+                p.brand = brand;
+                p.category = category;
+                p.code = code;
+                p.priceIRR = price;
+                p.stock = stock;
+                p.tag = tag;
+                p.description = desc;
+                p.longDescription = longDesc || desc;
+                p.specs = specs;
+                p.images = images;
+                p.image = images[0] || '';
+                p.guarantee = true;
+
+                localStorage.setItem('nilofor_products_v2', JSON.stringify(productsData));
+                document.getElementById('detail_result_' + id).innerHTML =
+                    '<span style="color:#22c55e;">✅ تغییرات ذخیره شد.</span>';
+                setTimeout(() => {
+                    document.getElementById('detail_result_' + id).innerHTML = '';
+                }, 3000);
+                applyFilters();
+                renderStats();
+            }
+        };
+
+        window.openProductDetailEdit = function(id) {
+            document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
+            const tab = document.querySelector('.admin-tab[data-tab="product-detail"]');
+            if (tab) tab.classList.add('active');
+            currentAdminTab = 'product-detail';
+            renderActiveTab();
+            setTimeout(() => {
+                window.toggleDetailEdit(id);
+                const el = document.getElementById('detail_' + id);
+                if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 300);
+        };
+
+        // ===== INVENTORY ADMIN =====
         function renderInventoryAdmin() {
             const content = document.getElementById('adminContent');
             const searchTerm = document.getElementById('invSearch')?.value?.trim() || '';
@@ -2911,6 +3044,7 @@
                 setTimeout(() => document.getElementById('stockUpdateResult').innerHTML = '', 2000); }
         };
 
+        // ===== PRICES ADMIN =====
         function renderPriceManagement() {
             const content = document.getElementById('adminContent');
             content.innerHTML = `
@@ -2943,49 +3077,7 @@
                 setTimeout(() => document.getElementById('priceUpdateResult').innerHTML = '', 2000); }
         };
 
-        function renderOriginManagement() {
-            const content = document.getElementById('adminContent');
-            content.innerHTML = `
-                <h3 style="color:var(--text-primary);font-size:0.95rem;margin-bottom:14px;">🏷️ مدیریت اصالت</h3>
-                <div style="background:var(--bg-card);border-radius:12px;padding:14px;margin-bottom:14px;border:1px solid var(--border-color);box-shadow:var(--shadow-soft);">
-                    <h4 style="color:var(--text-primary);font-size:0.8rem;">⚡ تغییر دسته‌جمعی</h4>
-                    <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
-                        <span style="color:var(--text-muted);font-size:0.75rem;">تغییر به:</span>
-                        <select id="bulkOriginNilofor" style="padding:6px 12px;border-radius:12px;background:var(--bg-input);border:1px solid var(--border-color);color:var(--text-primary);font-size:0.75rem;"><option value="true">لیمون (اورجینال)</option><option value="false">سایر</option></select>
-                        <button class="btn btn-gold btn-sm" onclick="window.applyBulkOriginNilofor()"><i class="fas fa-sync-alt"></i> اعمال</button>
-                    </div>
-                    <div id="bulkOriginResultNilofor" style="margin-top:8px;color:var(--text-muted);font-size:0.75rem;"></div>
-                </div>
-                <div style="overflow-x:auto;max-height:400px;overflow-y:auto;">
-                    <table class="admin-table"><thead><tr><th>محصول</th><th>برند</th><th>اصالت</th><th>عملیات</th></tr></thead><tbody>
-                        ${productsData.slice(0,200).map(p => `
-                            <tr><td style="font-size:0.6rem;">${escapeHtml(p.name)}</td><td style="font-size:0.6rem;">${escapeHtml(p.brand)}</td><td><span class="origin-badge ${p.isOriginal ? 'limon' : 'copy'}" style="font-size:0.5rem;">${p.isOriginal ? '✅ لیمون' : 'ℹ️ سایر'}</span></td><td><button class="btn btn-sm btn-gold" onclick="window.toggleOriginNilofor('${p.id}')" style="padding:2px 8px;font-size:0.55rem;">تغییر</button></td></tr>
-                        `).join('')}
-                    </tbody></table>
-                </div>
-                <div id="originUpdateResultNilofor" style="margin-top:10px;text-align:center;"></div>
-            `;
-        }
-        window.applyBulkOriginNilofor = function() {
-            const value = document.getElementById('bulkOriginNilofor').value === 'true';
-            productsData.forEach(p => { p.isOriginal = value; });
-            localStorage.setItem('nilofor_products_v2', JSON.stringify(productsData));
-            document.getElementById('bulkOriginResultNilofor').innerHTML =
-                `<span style="color:#22c55e;">✅ اصالت همه ${productsData.length} محصول به ${value?'لیمون':'سایر'} تغییر یافت.</span>`;
-            renderOriginManagement();
-            applyFilters();
-        };
-        window.toggleOriginNilofor = function(id) {
-            const p = productsData.find(p => p.id === id);
-            if (p) { p.isOriginal = !p.isOriginal;
-                localStorage.setItem('nilofor_products_v2', JSON.stringify(productsData));
-                document.getElementById('originUpdateResultNilofor').innerHTML =
-                    '<span style="color:#22c55e;">✅ اصالت به‌روز شد.</span>';
-                renderOriginManagement();
-                applyFilters();
-                setTimeout(() => document.getElementById('originUpdateResultNilofor').innerHTML = '', 1500); }
-        };
-
+        // ===== REVIEWS ADMIN =====
         function renderReviewsAdmin() {
             const content = document.getElementById('adminContent');
             if (reviews.length === 0) { content.innerHTML =
@@ -3001,6 +3093,7 @@
             renderReviews();
             showToast('نظر حذف شد'); };
 
+        // ===== INQUIRIES ADMIN =====
         function renderInquiriesAdmin() {
             const content = document.getElementById('adminContent');
             if (inquiries.length === 0) { content.innerHTML =
@@ -3053,7 +3146,7 @@
                     <div style="background:var(--bg-card);border-radius:12px;padding:14px;margin:14px 0;border:1px solid var(--border-color);box-shadow:var(--shadow-soft);">
                         <h4 style="color:var(--text-primary);font-size:0.8rem;margin-bottom:6px;">🖼️ تصویر هدر (بنر اصلی)</h4>
                         <div class="hero-image-upload" id="heroImageUpload">
-                            <div class="preview" id="heroImagePreview">${currentHeroImage?`<img src="${currentHeroImage}" alt="هدر" style="max-width:100%;max-height:200px;object-fit:cover;border-radius:8px;" />`:'<span style="color:var(--text-muted);font-size:1.2rem;">🖼️</span>'}</div>
+                            <div class="preview" id="heroImagePreview">${currentHeroImage?`<img src="${currentHeroImage}" alt="هدر" />`:'<span style="color:var(--text-muted);font-size:1.2rem;">🖼️</span>'}</div>
                             <div class="hint">برای آپلود تصویر هدر کلیک کنید (JPG, PNG, SVG, WEBP) - حداکثر ۲ مگابایت</div>
                             <input type="file" id="heroFileInput" accept="image/*" />
                         </div>
@@ -3081,24 +3174,20 @@
                 </div>
             `;
 
-            // ===== آپلود تصویر هدر (اصلاح‌شده) =====
             const heroUpload = document.getElementById('heroImageUpload');
             const heroFile = document.getElementById('heroFileInput');
-
             heroUpload?.addEventListener('click', () => heroFile?.click());
 
             heroFile?.addEventListener('change', function(e) {
                 const file = this.files[0];
                 if (!file) return;
 
-                // بررسی سایز فایل (حداکثر ۲ مگابایت)
                 if (file.size > 2 * 1024 * 1024) {
                     document.getElementById('settingsResult').innerHTML =
                         '<span style="color:#ef4444;">❌ حجم تصویر بیشتر از ۲ مگابایت است.</span>';
                     return;
                 }
 
-                // بررسی فرمت فایل
                 const validTypes = ['image/jpeg', 'image/png', 'image/svg+xml', 'image/webp'];
                 if (!validTypes.includes(file.type)) {
                     document.getElementById('settingsResult').innerHTML =
@@ -3110,15 +3199,9 @@
                 reader.onload = function(ev) {
                     try {
                         const dataUrl = ev.target.result;
-
-                        // ذخیره در localStorage
                         localStorage.setItem('nilofor_hero_image', dataUrl);
-
-                        // نمایش در پیش‌نمایش
                         document.getElementById('heroImagePreview').innerHTML =
-                            `<img src="${dataUrl}" alt="هدر" style="max-width:100%; max-height:200px; object-fit:cover; border-radius:8px;" />`;
-
-                        // اعمال به هدر سایت
+                            `<img src="${dataUrl}" alt="هدر" style="max-width:100%; max-height:160px; object-fit:cover; border-radius:8px;" />`;
                         const heroElement = document.querySelector('.hero');
                         if (heroElement) {
                             heroElement.style.backgroundImage = `url(${dataUrl})`;
@@ -3126,10 +3209,8 @@
                             heroElement.style.backgroundPosition = 'center';
                             heroElement.style.setProperty('--hero-bg', `url(${dataUrl}) center/cover no-repeat, radial-gradient(ellipse at 70% 20%, rgba(200,169,106,0.06), transparent 60%), radial-gradient(ellipse at 30% 80%, rgba(200,169,106,0.04), transparent 50%), var(--bg-primary)`);
                         }
-
                         document.getElementById('settingsResult').innerHTML =
                             '<span style="color:#22c55e;">✅ تصویر هدر با موفقیت آپلود شد.</span>';
-
                         showToast('✅ تصویر هدر به‌روزرسانی شد', 'gold');
                     } catch (error) {
                         console.error('خطا در ذخیره تصویر:', error);
@@ -3137,16 +3218,13 @@
                             '<span style="color:#ef4444;">❌ خطا در پردازش تصویر.</span>';
                     }
                 };
-
                 reader.onerror = function() {
                     document.getElementById('settingsResult').innerHTML =
                         '<span style="color:#ef4444;">❌ خطا در خواندن فایل.</span>';
                 };
-
                 reader.readAsDataURL(file);
             });
 
-            // ===== آپلود لوگوی روبیکا =====
             const rubikaUpload = document.getElementById('rubikaLogoUpload');
             const rubikaFile = document.getElementById('rubikaFileInput');
             rubikaUpload?.addEventListener('click', () => rubikaFile?.click());
@@ -3167,7 +3245,6 @@
                 reader.readAsDataURL(file);
             });
 
-            // ===== آپلود لوگو فروشگاه =====
             const uploadArea = document.getElementById('logoUploadArea');
             const fileInput = document.getElementById('logoFileInput');
             uploadArea?.addEventListener('click', () => fileInput?.click());
@@ -3237,7 +3314,7 @@
             showToast('تنظیمات ذخیره شد', 'gold');
         };
 
-        // ===== IMPORT =====
+        // ===== IMPORT (با به‌روزرسانی هوشمند) =====
         function renderImportTab() {
             const content = document.getElementById('adminContent');
             content.innerHTML = `
@@ -3273,6 +3350,7 @@
                         <li><strong>JSON:</strong> آرایه‌ای از اشیاء با کلیدهای: barcode, code, name, qty, price, carton</li>
                         <li><strong>TXT:</strong> هر خط یک محصول با فرمت: بارکد|کد|نام محصول|تعداد|قیمت عدد|قیمت کارتن</li>
                     </ul>
+                    <p style="color:var(--nilofor-gold);font-size:0.7rem;margin-top:6px;">🔁 اگر محصولی با <strong>کد</strong> یا <strong>بارکد</strong> یکسان وجود داشته باشد، اطلاعات آن به‌روز می‌شود (نه دوباره ایجاد).</p>
                 </div>
             `;
             const area = document.getElementById('importFileArea');
@@ -3285,6 +3363,26 @@
                     `📎 فایل انتخاب شد: ${file.name} (${(file.size/1024).toFixed(1)} KB)`;
                 document.getElementById('importDetails').innerHTML = '';
             });
+        }
+
+        // ---- تابع کمکی برای پیدا کردن محصول تکراری ----
+        function findExistingProduct(item) {
+            // اول بر اساس code (اگر وجود دارد)
+            if (item.code) {
+                const found = productsData.find(p => p.code && p.code === item.code);
+                if (found) return found;
+            }
+            // بعد بر اساس barcode (اگر وجود دارد)
+            if (item.barcode) {
+                const found = productsData.find(p => p.id === item.barcode || p.code === item.barcode);
+                if (found) return found;
+            }
+            // در نهایت با ترکیب name و brand (اگر brand مشخص باشد)
+            if (item.name && item.brand) {
+                const found = productsData.find(p => p.name === item.name && p.brand === item.brand);
+                if (found) return found;
+            }
+            return null;
         }
 
         async function extractProductsFromPDF(pdfData) {
@@ -3533,7 +3631,11 @@
 
                 let added = 0,
                     updated = 0;
+
                 for (const item of products) {
+                    // بررسی وجود محصول تکراری
+                    const existing = findExistingProduct(item);
+
                     const category = item.name.includes('سرویس') ? 'سرویس' :
                         item.name.includes('ظروف') ? 'ظروف' :
                         item.name.includes('لوازم') ? 'لوازم' :
@@ -3543,7 +3645,7 @@
                         item.name.includes('پیشتازان') ? 'پیشتازان' :
                         item.name.includes('نیلوفر') ? 'نیلوفر' : 'سایر';
                     const seed = `import_${item.barcode}`;
-                    const isOriginal = brand === 'لیمون';
+
                     const newProduct = {
                         id: item.barcode || 'LIMON_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4),
                         name: item.name,
@@ -3553,7 +3655,6 @@
                         priceIRR: item.price || 0,
                         profitPercent: 200,
                         stock: item.qty || 1,
-                        isOriginal: isOriginal,
                         inquiryEnabled: false,
                         showPrice: true,
                         image: `https://picsum.photos/seed/${seed}/400/400`,
@@ -3563,6 +3664,7 @@
                             `https://picsum.photos/seed/${seed}_3/400/400`
                         ],
                         description: `${item.name} - تعداد در کارتن: ${item.qty || 1} - قیمت کارتن: ${formatPrice(item.carton || 0)} تومان`,
+                        longDescription: `${item.name} - تعداد در کارتن: ${item.qty || 1} - قیمت کارتن: ${formatPrice(item.carton || 0)} تومان`,
                         specs: {
                             'تعداد در کارتن': item.qty || 1,
                             'قیمت کارتن': formatPrice(item.carton || 0),
@@ -3574,9 +3676,12 @@
                         soldCount: 0,
                         viewCount: 0
                     };
-                    const existingIdx = productsData.findIndex(p => p.id === newProduct.id);
-                    if (existingIdx > -1) {
-                        productsData[existingIdx] = newProduct;
+
+                    if (existing) {
+                        // به‌روزرسانی محصول موجود
+                        Object.assign(existing, newProduct);
+                        // حفظ id اصلی
+                        existing.id = existing.id;
                         updated++;
                     } else {
                         productsData.push(newProduct);
@@ -3591,7 +3696,7 @@
                     `<span style="color:#22c55e;">✅ واردات کامل! ${added} محصول جدید اضافه شد، ${updated} محصول به‌روزرسانی شد. (کل: ${productsData.length} محصول)</span>`;
                 details.innerHTML =
                     `📊 ${productsData.length} محصول در سیستم ذخیره شد. <br>🔍 نمونه: ${productsData.slice(0,3).map(p => p.name).join('، ')}`;
-                showToast(`${added} محصول جدید اضافه شد`, 'gold');
+                showToast(`${added} محصول جدید اضافه شد و ${updated} محصول به‌روز شد`, 'gold');
                 applyFilters();
                 renderStats();
 
@@ -3698,7 +3803,7 @@
                             updateSocialLinks(); }
                         if (data.heroImage) { heroImage = data.heroImage;
                             localStorage.setItem('nilofor_hero_image', heroImage);
-                            loadHeroImage(); }
+                            document.querySelector('.hero').style.setProperty('--hero-bg', `url(${heroImage}) center/cover no-repeat, radial-gradient(ellipse at 70% 20%, rgba(200,169,106,0.06), transparent 60%), radial-gradient(ellipse at 30% 80%, rgba(200,169,106,0.04), transparent 50%), var(--bg-primary)`); }
                         localStorage.setItem('nilofor_products_v2', JSON.stringify(productsData));
                         localStorage.setItem('nilofor_orders', JSON.stringify(orders));
                         localStorage.setItem('nilofor_reviews', JSON.stringify(reviews));
@@ -3762,7 +3867,7 @@
         }
 
         window.exportProductsCSVNilofor = function() {
-            const headers = ['id', 'name', 'brand', 'category', 'code', 'priceIRR', 'profitPercent', 'stock', 'isOriginal',
+            const headers = ['id', 'name', 'brand', 'category', 'code', 'priceIRR', 'profitPercent', 'stock',
                 'inquiryEnabled', 'showPrice'
             ];
             let csv = headers.join(',') + '\n';
@@ -3926,12 +4031,12 @@
                         priceIRR: p.priceIRR || p.price || 0,
                         profitPercent: 200,
                         stock: p.stock || 10,
-                        isOriginal: p.isOriginal !== undefined ? p.isOriginal : true,
                         showPrice: p.showPrice !== undefined ? p.showPrice : true,
                         inquiryEnabled: false,
                         image: images.length > 0 ? images[0] : '',
                         images: images,
                         description: p.description || `محصول ${p.name} از برند ${p.brand}`,
+                        longDescription: p.description || `محصول ${p.name} از برند ${p.brand}`,
                         specs: p.specs || {},
                         guarantee: p.guarantee !== undefined ? p.guarantee : true,
                         tag: p.tag || null,
@@ -4029,9 +4134,6 @@
                 case 'prices':
                     renderPriceManagement();
                     break;
-                case 'origin':
-                    renderOriginManagement();
-                    break;
                 case 'reviews':
                     renderReviewsAdmin();
                     break;
@@ -4055,6 +4157,9 @@
                     break;
                 case 'import':
                     renderImportTab();
+                    break;
+                case 'product-detail':
+                    renderProductDetailEdit();
                     break;
                 default:
                     renderDashboard();
@@ -4117,9 +4222,11 @@
         //  INIT
         // ============================================================
         async function init() {
-            // حذف کامل محصولات نمونه از localStorage
-            localStorage.removeItem('nilofor_products_v2');
-            productsData = [];
+            const hasData = loadInitialProducts();
+            if (!hasData || productsData.length === 0) {
+                productsData = [];
+                localStorage.setItem('nilofor_products_v2', JSON.stringify(productsData));
+            }
 
             loadSampleReviews();
 
@@ -4127,10 +4234,9 @@
             if (savedLinks) { try { socialLinks = JSON.parse(savedLinks); } catch (e) {} }
             const savedRubikaLogo = localStorage.getItem('nilofor_rubika_logo');
             if (savedRubikaLogo) { rubikaLogo = savedRubikaLogo; }
-
-            // بارگذاری تصویر هدر
-            loadHeroImage();
-
+            const savedHeroImage = localStorage.getItem('nilofor_hero_image');
+            if (savedHeroImage) { heroImage = savedHeroImage;
+                document.querySelector('.hero').style.setProperty('--hero-bg', `url(${heroImage}) center/cover no-repeat, radial-gradient(ellipse at 70% 20%, rgba(200,169,106,0.06), transparent 60%), radial-gradient(ellipse at 30% 80%, rgba(200,169,106,0.04), transparent 50%), var(--bg-primary)`); }
             updateSocialLinks();
 
             renderReviews();
@@ -4146,10 +4252,8 @@
 
             console.log('🦷 فروشگاه نیلوفر — نسخه نهایی');
             console.log('🔑 پنل ادمین با رمز 1212');
-            console.log('📍 مشهد، خیابان امام رضا، دانش ۱۱، سرای بلور');
-            console.log('📞 ۰۵۱-۳۸۵۱۶۱۶۲ · ۰۵۱-۳۸۵۱۱۰۶۵');
-            console.log('📥 محصولات فقط از طریق واردات فایل (PDF/CSV/Excel/JSON) اضافه می‌شوند.');
-            console.log('🖼️ تصویر هدر قابل آپلود در پنل ادمین (تنظیمات)');
+            console.log('✅ به‌روزرسانی هوشمند هنگام واردات (بر اساس کد/بارکد/نام+برند)');
+            console.log('✅ دکمه حذف همه محصولات در مدیریت محصولات اضافه شد');
         }
 
         init();
