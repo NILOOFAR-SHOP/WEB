@@ -10,11 +10,16 @@
     "stock": 10,
     "description": "سرویس کامل ۱۲ نفره با کیفیت عالی",
     "longDescription": "این سرویس شامل ۱۲ بشقاب، ۱۲ قاشق، ۱۲ چنگال و ... است",
-    "images": [],
+    "images": [
+      "https://picsum.photos/seed/limon_1/400/400",
+      "https://picsum.photos/seed/limon_2/400/400"
+    ],
     "specs": {
       "material": "استیل ضد زنگ",
       "dimensions": "۵۰×۴۰×۲۰ سانتی‌متر",
       "weight": "۳ کیلوگرم"
-    }
+    },
+    "guarantee": true,
+    "tag": "ویژه"
   }
 ]
