@@ -1432,7 +1432,11 @@
                     <span><i class="fas fa-star" style="color:#c8a96a;"></i> ۴.۸/۵ امتیاز</span>
                     <span><i class="fas fa-truck"></i> ارسال سریع</span>
                 </div>
-                <div class="sync-status" id="syncStatus"><span class="dot yellow" id="syncDot"></span><span id="syncText">در حال بررسی...</span></div>
+                <!-- ===== وضعیت اتصال به گیت‌هاب ===== -->
+                <div class="github-status" style="display:inline-flex;align-items:center;gap:6px;padding:3px 12px;border-radius:40px;font-size:0.6rem;background:var(--bg-input);border:1px solid var(--border-color);">
+                    <span class="dot yellow" id="syncDot" style="width:8px;height:8px;border-radius:50%;display:inline-block;"></span>
+                    <span id="syncText">در حال اتصال به گیت‌هاب...</span>
+                </div>
             </div>
             <div class="hero-image-side">
                 <div class="hero-deco">
@@ -1484,7 +1488,7 @@
             <div id="productGridFull" class="product-grid-full">
                 <p style="grid-column:1/-1; text-align:center; padding:50px 0; color:var(--text-muted); font-size:0.95rem;">
                     <i class="fas fa-box-open" style="font-size:2.2rem; display:block; margin-bottom:12px; color:var(--nilofor-gold); opacity:0.4;"></i>
-                    محصولات به زودی اضافه می‌شوند.
+                    در حال بارگذاری محصولات...
                 </p>
             </div>
             <div class="pagination" id="pagination"></div>
@@ -1582,10 +1586,10 @@
         </div>
     </footer>
 
-    <!-- ===== دکمه‌های شناور حذف شدند ===== -->
+    <!-- ===== دکمه‌های شناور ===== -->
     <div class="scroll-top" id="scrollTop"><i class="fas fa-arrow-up"></i></div>
 
-    <!-- ===== MODALS (خلاصه) ===== -->
+    <!-- ===== MODALS ===== -->
     <div id="loginModal" class="modal"><div class="modal-content"><span class="close-modal">&times;</span><h3><i class="fas fa-user"></i> ورود / ثبت‌نام</h3><form id="loginForm"><div class="form-group"><label class="field-label"><i class="fas fa-phone"></i> شماره موبایل *</label><input type="tel" id="loginPhone" placeholder="۰۹۱۲۳۴۵۶۷۸۹" required /></div><div class="form-group" id="otpSection" style="display:none;"><label class="field-label"><i class="fas fa-key"></i> کد تایید *</label><input type="text" id="loginOtp" placeholder="کد ۶ رقمی" maxlength="6" /></div><button type="submit" class="btn btn-gold" style="width:100%; justify-content:center;"><i class="fas fa-paper-plane"></i> ارسال کد تایید</button><div id="loginResult" style="margin-top:14px; text-align:center;"></div></form></div></div>
     <div id="orderModal" class="modal"><div class="modal-content"><span class="close-modal">&times;</span><h3><i class="fas fa-shopping-cart"></i> ثبت سفارش</h3><form id="orderForm"><div class="form-row-2"><div class="form-group"><label class="field-label"><i class="fas fa-user"></i> نام کامل *</label><input type="text" id="orderName" placeholder="نام و نام خانوادگی" required /></div><div class="form-group"><label class="field-label"><i class="fas fa-phone"></i> شماره تماس *</label><input type="tel" id="orderPhone" placeholder="۰۹۱۲۳۴۵۶۷۸۹" required /></div></div><div class="form-row-2"><div class="form-group"><label class="field-label"><i class="fas fa-envelope"></i> ایمیل</label><input type="email" id="orderEmail" placeholder="example@email.com" /></div><div class="form-group"><label class="field-label"><i class="fab fa-instagram"></i> اینستاگرام</label><input type="text" id="orderInstagram" placeholder="نام کاربری" /></div></div><div class="form-row-2"><div class="form-group"><label class="field-label"><i class="fas fa-tag"></i> نوع سفارش *</label><select id="orderType" required><option value="product">خرید محصول</option><option value="consultation">مشاوره</option></select></div><div class="form-group"><label class="field-label"><i class="fas fa-box"></i> نام محصول</label><input type="text" id="orderProductName" placeholder="نام محصول" /></div></div><div class="form-group"><label class="field-label"><i class="fas fa-sort-numeric-up"></i> تعداد</label><input type="number" id="orderQuantity" min="1" value="1" /></div><div class="form-group"><label class="field-label"><i class="fas fa-truck"></i> روش ارسال</label><select id="orderShipping"><option value="post">پست (۵۰,۰۰۰ تومان)</option><option value="tipax">تیپاکس (۷۰,۰۰۰ تومان)</option><option value="motobike">پیک موتوری (۱۰۰,۰۰۰ تومان)</option></select></div><div class="form-group"><label class="field-label"><i class="fas fa-credit-card"></i> روش پرداخت</label><select id="orderPayment"><option value="online">پرداخت آنلاین</option><option value="card">کارت به کارت</option><option value="cod">پرداخت در محل</option></select></div><div class="form-group"><label class="field-label"><i class="fas fa-comment"></i> توضیحات</label><textarea id="orderMessage" rows="3" placeholder="توضیحات تکمیلی..."></textarea></div><div class="checkbox-group"><input type="checkbox" id="orderAgree" required /><label for="orderAgree">شرایط و قوانین را می‌پذیرم</label></div><button type="submit" class="btn btn-gold" style="width:100%; justify-content:center;"><i class="fas fa-check"></i> ثبت سفارش</button><div id="orderResult" style="margin-top:14px; text-align:center;"></div></form></div></div>
     <div id="reviewModal" class="modal"><div class="modal-content"><span class="close-modal">&times;</span><h3><i class="fas fa-star"></i> ثبت نظر</h3><form id="reviewForm"><div class="form-group"><label class="field-label"><i class="fas fa-user"></i> نام</label><input type="text" id="reviewName" placeholder="نام شما" required /></div><div class="form-group"><label class="field-label">امتیاز</label><div class="star-rating" id="starRating"><span data-value="1">☆</span><span data-value="2">☆</span><span data-value="3">☆</span><span data-value="4">☆</span><span data-value="5">☆</span></div></div><div class="form-group"><label class="field-label"><i class="fas fa-comment"></i> نظر شما</label><textarea id="reviewText" rows="3" placeholder="نظر خود را بنویسید..." required></textarea></div><div class="checkbox-group"><input type="checkbox" id="reviewAgree" required /><label for="reviewAgree">شرایط و قوانین را می‌پذیرم</label></div><button type="submit" class="btn btn-gold" style="width:100%; justify-content:center;"><i class="fas fa-paper-plane"></i> ثبت نظر</button><div id="reviewResult" style="margin-top:14px; text-align:center;"></div></form></div></div>
@@ -1620,8 +1624,15 @@
 
     <script>
         // ============================================================
-        //  فروشگاه نیلوفر - نسخه نهایی با به‌روزرسانی هوشمند و ریست محصولات
+        //  فروشگاه نیلوفر - نسخه نهایی یکپارچه با گیت‌هاب
         // ============================================================
+
+        // ===== تنظیمات گیت‌هاب =====
+        // ⚠️ این دو خط را با اطلاعات مخزن خود جایگزین کنید
+        const GITHUB_USER = 'YOUR_USERNAME';        // ← نام کاربری گیت‌هاب خود را وارد کنید
+        const GITHUB_REPO = 'YOUR_REPOSITORY';      // ← نام مخزن خود را وارد کنید
+        const BRANCH = 'main';
+        const PRODUCTS_URL = `https://raw.githubusercontent.com/${GITHUB_USER}/${GITHUB_REPO}/${BRANCH}/data/products.json`;
 
         // ===== STATE =====
         let productsData = [];
@@ -1735,7 +1746,7 @@
             return { discount, valid: true, message: `تخفیف ${coupon.discount}% اعمال شد` };
         }
 
-        // ===== USER LOCATION =====
+        // ===== GET USER LOCATION =====
         function getUserLocation() {
             fetch('https://ipapi.co/json/')
                 .then(res => res.json())
@@ -1776,6 +1787,74 @@
         document.getElementById('closeShipping')?.addEventListener('click', function() {
             document.getElementById('shippingInfo').classList.remove('show');
         });
+
+        // ===== دریافت محصولات از گیت‌هاب =====
+        async function fetchProductsFromGitHub() {
+            const statusDot = document.getElementById('syncDot');
+            const statusText = document.getElementById('syncText');
+
+            try {
+                statusDot.className = 'dot yellow';
+                statusText.textContent = 'در حال دریافت از گیت‌هاب...';
+
+                const response = await fetch(PRODUCTS_URL, {
+                    headers: { 'Cache-Control': 'no-cache' }
+                });
+
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+                const products = await response.json();
+
+                if (!Array.isArray(products) || products.length === 0) {
+                    statusDot.className = 'dot yellow';
+                    statusText.textContent = 'هیچ محصولی در گیت‌هاب یافت نشد.';
+                    return [];
+                }
+
+                products.forEach(p => {
+                    if (!p.id) p.id = `prod_${Date.now()}_${Math.random().toString(36).substr(2, 6)}`;
+                    if (!p.images || p.images.length === 0) {
+                        const seed = `${p.brand || 'nilofor'}_${p.name?.replace(/\s/g, '_') || 'product'}`;
+                        p.images = [
+                            `https://picsum.photos/seed/${seed}_1/400/400`,
+                            `https://picsum.photos/seed/${seed}_2/400/400`,
+                            `https://picsum.photos/seed/${seed}_3/400/400`
+                        ];
+                        p.image = p.images[0];
+                    }
+                    if (p.priceIRR === undefined) p.priceIRR = 0;
+                    if (p.profitPercent === undefined) p.profitPercent = 200;
+                    if (p.inquiryEnabled === undefined) p.inquiryEnabled = false;
+                    if (p.soldCount === undefined) p.soldCount = 0;
+                    if (p.viewCount === undefined) p.viewCount = 0;
+                    if (p.specs === undefined) p.specs = {};
+                    if (p.longDescription === undefined) p.longDescription = '';
+                });
+
+                statusDot.className = 'dot green';
+                statusText.textContent = `✅ ${products.length} محصول از گیت‌هاب بارگذاری شد`;
+
+                localStorage.setItem('nilofor_products_backup', JSON.stringify(products));
+                return products;
+
+            } catch (error) {
+                console.error('❌ خطا در دریافت از گیت‌هاب:', error);
+                statusDot.className = 'dot red';
+                statusText.textContent = '❌ خطا در اتصال به گیت‌هاب. استفاده از داده‌های محلی';
+
+                const backup = localStorage.getItem('nilofor_products_backup');
+                if (backup) {
+                    try {
+                        const data = JSON.parse(backup);
+                        if (data.length > 0) {
+                            statusText.textContent = `⚠️ داده‌های محلی (${data.length} محصول)`;
+                            return data;
+                        }
+                    } catch (e) {}
+                }
+                return [];
+            }
+        }
 
         // ===== LOAD PRODUCTS =====
         function loadInitialProducts() {
@@ -2597,7 +2676,7 @@
         });
 
         // ============================================================
-        //  ADMIN PANEL FUNCTIONS
+        //  ADMIN PANEL FUNCTIONS (خلاصه)
         // ============================================================
 
         // ===== DASHBOARD =====
@@ -3314,7 +3393,7 @@
             showToast('تنظیمات ذخیره شد', 'gold');
         };
 
-        // ===== IMPORT (با به‌روزرسانی هوشمند) =====
+        // ===== IMPORT =====
         function renderImportTab() {
             const content = document.getElementById('adminContent');
             content.innerHTML = `
@@ -3367,17 +3446,14 @@
 
         // ---- تابع کمکی برای پیدا کردن محصول تکراری ----
         function findExistingProduct(item) {
-            // اول بر اساس code (اگر وجود دارد)
             if (item.code) {
                 const found = productsData.find(p => p.code && p.code === item.code);
                 if (found) return found;
             }
-            // بعد بر اساس barcode (اگر وجود دارد)
             if (item.barcode) {
                 const found = productsData.find(p => p.id === item.barcode || p.code === item.barcode);
                 if (found) return found;
             }
-            // در نهایت با ترکیب name و brand (اگر brand مشخص باشد)
             if (item.name && item.brand) {
                 const found = productsData.find(p => p.name === item.name && p.brand === item.brand);
                 if (found) return found;
@@ -3633,7 +3709,6 @@
                     updated = 0;
 
                 for (const item of products) {
-                    // بررسی وجود محصول تکراری
                     const existing = findExistingProduct(item);
 
                     const category = item.name.includes('سرویس') ? 'سرویس' :
@@ -3678,9 +3753,7 @@
                     };
 
                     if (existing) {
-                        // به‌روزرسانی محصول موجود
                         Object.assign(existing, newProduct);
-                        // حفظ id اصلی
                         existing.id = existing.id;
                         updated++;
                     } else {
@@ -4219,13 +4292,21 @@
         }
 
         // ============================================================
-        //  INIT
+        //  INIT (نهایی)
         // ============================================================
         async function init() {
-            const hasData = loadInitialProducts();
-            if (!hasData || productsData.length === 0) {
-                productsData = [];
-                localStorage.setItem('nilofor_products_v2', JSON.stringify(productsData));
+            // بارگذاری محصولات از گیت‌هاب
+            const products = await fetchProductsFromGitHub();
+            if (products && products.length > 0) {
+                productsData = products;
+                localStorage.setItem('nilofor_products_v2', JSON.stringify(products));
+            } else {
+                // اگر گیت‌هاب در دسترس نبود، از داده‌های محلی استفاده کن
+                const hasLocalData = loadInitialProducts();
+                if (!hasLocalData || productsData.length === 0) {
+                    productsData = [];
+                    localStorage.setItem('nilofor_products_v2', JSON.stringify(productsData));
+                }
             }
 
             loadSampleReviews();
@@ -4250,13 +4331,16 @@
                     `<i class="fas fa-user"></i> <span class="label">${escapeHtml(currentUser.name)}</span>`;
             }
 
-            console.log('🦷 فروشگاه نیلوفر — نسخه نهایی');
+            console.log('✅ فروشگاه نیلوفر — نسخه نهایی یکپارچه با گیت‌هاب');
             console.log('🔑 پنل ادمین با رمز 1212');
+            console.log('✅ اتصال به گیت‌هاب برای همگام‌سازی داده‌ها');
             console.log('✅ به‌روزرسانی هوشمند هنگام واردات (بر اساس کد/بارکد/نام+برند)');
-            console.log('✅ دکمه حذف همه محصولات در مدیریت محصولات اضافه شد');
+            console.log('✅ دکمه حذف همه محصولات در مدیریت محصولات');
+            console.log(`📦 ${productsData.length} محصول بارگذاری شد`);
         }
 
-        init();
+        // ===== اجرا =====
+        document.addEventListener('DOMContentLoaded', init);
     </script>
 </body>
 </html>
