@@ -1,0 +1,40 @@
+backend:
+  name: github
+  repo: YOUR_USERNAME/YOUR_REPOSITORY_NAME   # ← نام کاربری و مخزن خود را وارد کنید
+  branch: main                                 # یا master
+
+media_folder: "public/images/products"
+public_folder: "/images/products"
+
+locale: 'fa'
+
+collections:
+  - name: "products"
+    label: "محصولات"
+    folder: "data"
+    create: true
+    slug: "products"
+    extension: json
+    format: json
+    fields:
+      - { label: "شناسه (خودکار)", name: "id", widget: "string", default: "", required: false }
+      - { label: "نام محصول", name: "name", widget: "string", required: true }
+      - { label: "برند", name: "brand", widget: "string", required: true }
+      - { label: "دسته‌بندی", name: "category", widget: "string" }
+      - { label: "کد محصول", name: "code", widget: "string" }
+      - { label: "قیمت پایه (تومان)", name: "priceIRR", widget: "number", valueType: "int", default: 0 }
+      - { label: "درصد سود", name: "profitPercent", widget: "number", valueType: "int", default: 200 }
+      - { label: "موجودی", name: "stock", widget: "number", valueType: "int", default: 0 }
+      - { label: "توضیحات کوتاه", name: "description", widget: "text" }
+      - { label: "توضیحات کامل", name: "longDescription", widget: "markdown" }
+      - label: "تصاویر"
+        name: "images"
+        widget: "list"
+        field: { label: "تصویر", name: "image", widget: "image" }
+      - label: "مشخصات فنی"
+        name: "specs"
+        widget: "object"
+        fields:
+          - { label: "جنس", name: "material", widget: "string" }
+          - { label: "ابعاد", name: "dimensions", widget: "string" }
+          - { label: "وزن", name: "weight", widget: "string" }

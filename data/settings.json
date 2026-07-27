@@ -1,0 +1,16 @@
+{
+  "social_links": {
+    "rubika": "https://rubika.ir/nilofor",
+    "instagram": "https://instagram.com/nilofor_shop",
+    "telegram": "https://t.me/nilo2",
+    "whatsapp": "https://chat.whatsapp.com/CTbGomlq0unCfhsEjWq68Z"
+  },
+  "free_shipping_threshold": "5000000",
+  "shipping_cost": "50000",
+  "tax_rate": "9",
+  "shop_logo": "/uploads/img_1784928953462_bgac0w.webp",
+  "hero_image": "/uploads/img_1784928945570_fbuf3o.webp",
+  "rubika_logo": "/uploads/img_1784928947508_vpr7xz.png",
+  "test_key": "test_value_1785095010",
+  "preview_test": "working_1785095019"
+}
