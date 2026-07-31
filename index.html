@@ -3,9 +3,15 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover" />
-    <meta name="theme-color" content="#fbf7f0" />
+    <meta name="theme-color" content="#c8a96a" />
+    <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="نیلوفر" />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png" />
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
     <title>نیلوفر | فروشگاه تخصصی</title>
     <link href="/vendor/css/vazir.css" rel="stylesheet" />
     <link rel="stylesheet" href="/vendor/css/fontawesome.min.css" />
@@ -1988,8 +1994,8 @@
         // ===== تنظیمات گیت‌هاب (فقط برای بکاپ) =====
         const GITHUB_USER = 'NILOOFAR-SHOP';
         const GITHUB_REPO = 'WEB';
-        const BRANCH = 'main';
-        const PRODUCTS_URL = `https://raw.githubusercontent.com/${GITHUB_USER}/${GITHUB_REPO}/${BRANCH}/data/products.json`;
+        const BRANCH = 'master';
+        const PRODUCTS_URL = `https://raw.githubusercontent.com/${GITHUB_USER}/${GITHUB_REPO}/${BRANCH}/repo/data/products.json`;
 
         // ===== STATE =====
         let productsData = [];
@@ -2189,11 +2195,8 @@
             products.forEach(p => {
                 if (!p.id) p.id = 'prod_' + Date.now() + '_' + Math.random().toString(36).substr(2, 6);
                 if (!p.images || p.images.length === 0) {
-                    const seed = p.brand + '_' + (p.name || 'product').replace(/\s/g, '_');
-                    p.images = ['https://picsum.photos/seed/' + seed + '_1/400/400',
-                                'https://picsum.photos/seed/' + seed + '_2/400/400',
-                                'https://picsum.photos/seed/' + seed + '_3/400/400'];
-                    p.image = p.images[0];
+                    p.images = ['/images/no-image.svg'];
+                    p.image = '/images/no-image.svg';
                 }
                 if (p.priceIRR === undefined) p.priceIRR = 0;
                 if (p.profitPercent === undefined) p.profitPercent = 200;
@@ -2214,13 +2217,8 @@
                     productsData = JSON.parse(stored);
                     productsData.forEach(p => {
                         if (!p.images || p.images.length === 0) {
-                            const seed = `${p.brand}_${p.name.replace(/\s/g, '_')}_${p.id}`;
-                            p.images = [
-                                `https://picsum.photos/seed/${seed}_1/400/400`,
-                                `https://picsum.photos/seed/${seed}_2/400/400`,
-                                `https://picsum.photos/seed/${seed}_3/400/400`
-                            ];
-                            p.image = p.images[0];
+                            p.images = ['/images/no-image.svg'];
+                            p.image = '/images/no-image.svg';
                         }
                         if (p.priceIRR === undefined) p.priceIRR = 0;
                         if (p.profitPercent === undefined) p.profitPercent = 200;
@@ -2314,7 +2312,7 @@
                 const mainImg = p.images && p.images.length > 0 ? p.images[0] : p.image;
                 const imgSrc = (mainImg && mainImg !== '' && !mainImg.includes('undefined')) ?
                     mainImg :
-                    `https://picsum.photos/seed/dental_${p.id}/400/400`;
+                    '/images/no-image.svg';
                 const imgHtml =
                     `<img src="${imgSrc}" alt="${escapeHtml(p.name)}" />`;
                 const isWish = wishlist.includes(p.id);
@@ -2957,7 +2955,7 @@
             const content = document.getElementById('productDetailContent');
             const finalPrice = getFinalPrice(product);
             const priceDisplay = (product.showPrice !== false && finalPrice > 0) ? formatPrice(finalPrice) + ' تومان' : 'استعلام قیمت';
-            const images = product.images && product.images.length > 0 ? product.images : [product.image || 'https://picsum.photos/seed/'+product.code+'/400/400'];
+            const images = product.images && product.images.length > 0 ? product.images : [product.image || '/images/no-image.svg'];
             const mainImg = images[0];
             const thumbsHtml = images.slice(0, 6).map((img, i) => `<img src="${img}" class="${i===0?'active':''}" onclick="document.querySelector('#productDetailContent .main-img').src=this.src; this.parentElement.querySelectorAll('img').forEach(t=>t.classList.remove('active')); this.classList.add('active');" />`).join('');
             const specsHtml = product.specs && Object.keys(product.specs).length > 0 ?
@@ -3193,7 +3191,7 @@
                 return;
             }
             addProductFinal(name, brand, category, code, image ||
-                'https://picsum.photos/seed/add_product/400/400', tag, stock, price, desc);
+                '/images/no-image.svg', tag, stock, price, desc);
         };
 
         function addProductFinal(name, brand, category, code, image, tag, stock, price, desc) {
@@ -3203,7 +3201,7 @@
                 return;
             }
             const seed = `add_${Date.now()}`;
-            const images = [image, `https://picsum.photos/seed/${seed}_1/400/400`, `https://picsum.photos/seed/${seed}_2/400/400`];
+            const images = [image];
             productsData.push({
                 id: generateId(),
                 name,
@@ -3377,10 +3375,7 @@
             finishSave();
 
             function finishSave() {
-                while (images.length < 3) {
-                    const seed = `${p.brand}_${p.name.replace(/\s/g, '_')}_${images.length}`;
-                    images.push(`https://picsum.photos/seed/${seed}/400/400`);
-                }
+                if (images.length === 0) images.push('/images/no-image.svg');
 
                 p.name = name;
                 p.brand = brand;
@@ -4068,12 +4063,8 @@
                         stock: item.qty || 1,
                         inquiryEnabled: false,
                         showPrice: true,
-                        image: `https://picsum.photos/seed/${seed}/400/400`,
-                        images: [
-                            `https://picsum.photos/seed/${seed}_1/400/400`,
-                            `https://picsum.photos/seed/${seed}_2/400/400`,
-                            `https://picsum.photos/seed/${seed}_3/400/400`
-                        ],
+                        image: '/images/no-image.svg',
+                        images: ['/images/no-image.svg'],
                         description: `${item.name} - تعداد در کارتن: ${item.qty || 1} - قیمت کارتن: ${formatPrice(item.carton || 0)} تومان`,
                         longDescription: `${item.name} - تعداد در کارتن: ${item.qty || 1} - قیمت کارتن: ${formatPrice(item.carton || 0)} تومان`,
                         specs: {
@@ -4894,6 +4885,28 @@
             init();
             document.getElementById('cartDrawerOverlay')?.addEventListener('click', closeCartDrawer);
         });
+
+        const GITHUB_IMG_BASE = 'https://raw.githubusercontent.com/NILOOFAR-SHOP/WEB/master/repo/uploads/';
+        document.addEventListener('error', function(e) {
+            const el = e.target;
+            if (el.tagName !== 'IMG' || el.dataset.fb) return;
+            el.dataset.fb = '1';
+            const src = el.getAttribute('src') || '';
+            const match = src.match(/\/uploads\/(limon_[^/?]+)/);
+            if (match) {
+                el.src = GITHUB_IMG_BASE + match[1];
+            } else if (!src.includes(GITHUB_IMG_BASE)) {
+                el.src = '/images/no-image.svg';
+            }
+        }, true);
+
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/sw.js').catch(function(err) {
+                    console.warn('SW registration failed:', err);
+                });
+            });
+        }
     </script>
 
     <!-- ===== CART DRAWER ===== -->

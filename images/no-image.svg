@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400">
+  <rect width="400" height="400" fill="#f5efe6"/>
+  <g fill="none" stroke="#c8a96a" stroke-width="6" stroke-linecap="round">
+    <rect x="120" y="140" width="160" height="170" rx="20" stroke="#c8a96a" fill="#ffffff"/>
+    <rect x="150" y="90" width="100" height="50" rx="6" fill="#ffffff"/>
+    <rect x="160" y="120" width="80" height="20" fill="#ffffff"/>
+    <line x1="200" y1="80" x2="200" y2="90"/>
+  </g>
+  <text x="200" y="250" font-family="Vazirmatn, sans-serif" font-size="22" fill="#b8953a" text-anchor="middle">عکسی موجود نیست</text>
+  <text x="200" y="285" font-family="Vazirmatn, sans-serif" font-size="14" fill="#a3907e" text-anchor="middle">No Image</text>
+</svg>
