@@ -15,6 +15,20 @@ app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 
 [UPLOADS_DIR, DATA_DIR].forEach(dir => { if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true }); });
 
+// ===== CACHE CONTROL =====
+const LONG_CACHE = 'public, max-age=31536000, immutable';
+app.use((req, res, next) => {
+  const p = req.path;
+  if (p.startsWith('/uploads/') || p.startsWith('/vendor/') || p.startsWith('/icons/') || p.startsWith('/images/') || p === '/favicon.png' || p === '/robots.txt') {
+    res.set('Cache-Control', LONG_CACHE);
+  } else if (p === '/sw.js' || p === '/manifest.json') {
+    res.set('Cache-Control', 'no-cache');
+  } else if (p === '/' || p.endsWith('.html')) {
+    res.set('Cache-Control', 'no-cache');
+  }
+  next();
+});
+
 const storage = multer.diskStorage({
   destination: UPLOADS_DIR,
   filename: (req, file, cb) => {

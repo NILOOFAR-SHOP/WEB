@@ -12,7 +12,23 @@
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
     <link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png" />
     <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
-    <title>نیلوفر | فروشگاه تخصصی</title>
+    <link rel="canonical" id="canonicalLink" href="/" />
+    <title>نیلوفر | فروشگاه تخصصی لوازم خانه و آشپزخانه</title>
+    <meta name="description" content="فروشگاه تخصصی نیلوفر؛ عرضه انواع لوازم خانه و آشپزخانه شامل بانکه، بطری، سبد، سرویس بهداشتی، ظروف فریزری، لیوان، نظم‌دهنده و بیش از ۱۶۰ محصول از برندهای معتبر مانند لیمون." />
+    <meta name="keywords" content="فروشگاه نیلوفر, لوازم خانه, لوازم آشپزخانه, بانکه, لیوان, ظروف فریزری, سبد, نظم دهنده, برند لیمون, خرید عمده" />
+    <meta name="robots" content="index, follow" />
+    <meta name="author" content="نیلوفر" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="نیلوفر" />
+    <meta property="og:title" content="نیلوفر | فروشگاه تخصصی لوازم خانه و آشپزخانه" />
+    <meta property="og:description" content="فروشگاه تخصصی نیلوفر؛ بیش از ۱۶۰ محصول از برندهای معتبر مانند لیمون با امکان استعلام قیمت و سفارش آنلاین." />
+    <meta property="og:locale" content="fa_IR" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="نیلوفر | فروشگاه تخصصی لوازم خانه و آشپزخانه" />
+    <meta name="twitter:description" content="فروشگاه تخصصی نیلوفر؛ بیش از ۱۶۰ محصول از برندهای معتبر مانند لیمون." />
+    <link rel="preconnect" href="https://raw.githubusercontent.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="/vendor/css/vazir.css" rel="stylesheet" />
     <link rel="stylesheet" href="/vendor/css/fontawesome.min.css" />
     <script src="/vendor/js/chart.min.js"></script>
@@ -1606,6 +1622,31 @@
             .hero h1 { font-size: 1.1rem !important; }
             .container { padding: 0 6px !important; }
         }
+
+        /* ===== BREADCRUMB ===== */
+        .breadcrumb { display:flex; flex-wrap:wrap; align-items:center; gap:6px; font-size:0.72rem; color:var(--text-muted); margin-bottom:14px; padding-bottom:10px; border-bottom:1px solid var(--border-color); }
+        .breadcrumb a { color:var(--nilofor-gold); text-decoration:none; }
+        .breadcrumb a:hover { text-decoration:underline; }
+        .breadcrumb .sep { opacity:0.5; }
+        .breadcrumb .current { color:var(--text-secondary); font-weight:600; }
+
+        /* ===== RELATED PRODUCTS ===== */
+        .related-products { margin-top:22px; padding-top:16px; border-top:1px solid var(--border-color); }
+        .related-title { font-size:0.85rem; margin-bottom:12px; color:var(--text-primary); }
+        .related-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(120px,1fr)); gap:10px; }
+        .related-card { background:var(--bg-card); border:1px solid var(--border-color); border-radius:14px; padding:10px; text-align:center; cursor:pointer; transition:transform 0.2s, box-shadow 0.2s; }
+        .related-card:hover { transform:translateY(-3px); box-shadow:var(--shadow-hover); }
+        .related-card img { width:100%; height:70px; object-fit:cover; border-radius:10px; background:var(--bg-secondary); }
+        .related-name { display:block; font-size:0.66rem; color:var(--text-primary); margin-top:8px; min-height:2.4em; line-height:1.2; overflow:hidden; }
+        .related-price { display:block; font-size:0.66rem; color:var(--nilofor-gold); font-weight:700; margin-top:4px; }
+
+        /* ===== FREE SHIPPING PROGRESS ===== */
+        .ship-bar-wrap { padding:8px 2px 4px; }
+        .ship-bar-track { height:8px; border-radius:20px; background:var(--bg-input); overflow:hidden; }
+        .ship-bar-fill { height:100%; border-radius:20px; background:linear-gradient(90deg, var(--gold-light), var(--nilofor-gold)); transition:width 0.5s ease; }
+        .ship-bar-msg { font-size:0.68rem; color:var(--text-secondary); margin-top:6px; text-align:center; }
+        .ship-bar-msg strong { color:var(--nilofor-gold); }
+        .ship-bar-free { padding:8px 2px 4px; font-size:0.72rem; color:#22c55e; text-align:center; font-weight:700; }
     </style>
     <script>
         // ============================================================
@@ -1659,6 +1700,29 @@
                 return await res.json();
             } catch (e) { console.error('Upload error:', e); return null; }
         }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "#organization",
+          "name": "فروشگاه نیلوفر",
+          "url": "https://NILOOFAR-SHOP.github.io/WEB/",
+          "logo": "https://NILOOFAR-SHOP.github.io/WEB/favicon.png",
+          "description": "فروشگاه تخصصی لوازم خانه و آشپزخانه"
+        },
+        {
+          "@type": "WebSite",
+          "@id": "#website",
+          "url": "https://NILOOFAR-SHOP.github.io/WEB/",
+          "name": "فروشگاه نیلوفر",
+          "inLanguage": "fa-IR",
+          "publisher": { "@id": "#organization" }
+        }
+      ]
+    }
     </script>
 </head>
 <body>
@@ -1789,6 +1853,14 @@
                 </p>
             </div>
             <div class="pagination" id="pagination"></div>
+        </div>
+    </section>
+
+    <!-- ===== RECENTLY VIEWED ===== -->
+    <section class="section" id="recentlyViewedSection" style="display:none; padding-top:0;">
+        <div class="container">
+            <div class="section-header animate-fade-up"><div><span class="badge badge-gold">تاریخچه</span><h2 class="section-title">بازدیدهای اخیر شما</h2></div></div>
+            <div class="product-grid-full" id="recentlyViewedGrid"></div>
         </div>
     </section>
 
@@ -2004,6 +2076,7 @@
         let reviews = JSON.parse(localStorage.getItem('nilofor_reviews')) || [];
         let inquiries = JSON.parse(localStorage.getItem('nilofor_inquiries')) || [];
         let wishlist = JSON.parse(localStorage.getItem('nilofor_wishlist')) || [];
+        let recentlyViewed = JSON.parse(localStorage.getItem('nilofor_recently_viewed')) || [];
         let couponCodes = JSON.parse(localStorage.getItem('nilofor_coupons')) || [];
         let surveyResults = JSON.parse(localStorage.getItem('nilofor_surveys')) || [];
         let newsletterSubs = JSON.parse(localStorage.getItem('nilofor_newsletter_subs')) || [];
@@ -2314,7 +2387,7 @@
                     mainImg :
                     '/images/no-image.svg';
                 const imgHtml =
-                    `<img src="${imgSrc}" alt="${escapeHtml(p.name)}" />`;
+                    `<img src="${imgSrc}" alt="${escapeHtml(p.name)}" loading="lazy" decoding="async" />`;
                 const isWish = wishlist.includes(p.id);
                 const viewCountHtml =
                     `<div class="view-count"><i class="fas fa-eye"></i> ${p.viewCount || 0} بازدید</div>`;
@@ -2430,6 +2503,23 @@
             const p = getFilterParams();
             renderProductPage(p.brand, p.cat, p.sort, p.search, 1, p.pMin, p.pMax, p.country, p.inStock);
             document.getElementById('priceRangeDisplay').textContent = `${formatPrice(p.pMin)} - ${formatPrice(p.pMax)}`;
+        }
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function goCategory(cat) {
+            const sel = document.getElementById('filterCategory');
+            if (cat && !Array.from(sel.options).some(o => o.value === cat)) {
+                const opt = document.createElement('option');
+                opt.value = cat; opt.textContent = cat;
+                sel.appendChild(opt);
+            }
+            sel.value = cat || '';
+            applyFilters();
+            const target = document.getElementById('product-page');
+            if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
 
         // ===== SUBMIT INQUIRY =====
@@ -2949,7 +3039,40 @@
         function openModal(id) { const m = document.getElementById(id + 'Modal'); if (m) m.style.display = 'flex'; }
 
         function closeAllModals() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); }
+        function recordRecentlyViewed(productId) {
+            recentlyViewed = recentlyViewed.filter(id => id !== productId);
+            recentlyViewed.unshift(productId);
+            recentlyViewed = recentlyViewed.slice(0, 8);
+            localStorage.setItem('nilofor_recently_viewed', JSON.stringify(recentlyViewed));
+        }
+
+        function renderRecentlyViewed() {
+            const section = document.getElementById('recentlyViewedSection');
+            const grid = document.getElementById('recentlyViewedGrid');
+            if (!section || !grid) return;
+            const items = recentlyViewed.map(id => productsData.find(p => p.id === id)).filter(Boolean);
+            if (items.length < 2) { section.style.display = 'none'; return; }
+            section.style.display = '';
+            grid.innerHTML = items.map(p => {
+                const finalPrice = getFinalPrice(p);
+                const priceDisplay = (p.showPrice !== false && finalPrice > 0) ? formatPrice(finalPrice) : 'استعلام قیمت';
+                const mainImg = p.images && p.images.length > 0 ? p.images[0] : p.image;
+                const imgSrc = (mainImg && mainImg !== '' && !mainImg.includes('undefined')) ? mainImg : '/images/no-image.svg';
+                return `<div class="product-card-full" data-id="${p.id}" onclick="showProductDetail('${p.id}')" style="cursor:pointer;">
+                    <div class="product-images" data-product="${p.id}">
+                        <img src="${imgSrc}" alt="${escapeHtml(p.name)}" loading="lazy" decoding="async" />
+                    </div>
+                    <div class="quick-overlay"><button class="quick-view-btn" onclick="event.stopPropagation();showProductDetail('${p.id}')"><i class="fas fa-eye" style="margin-left:6px;"></i>مشاهده سریع</button></div>
+                    <h4>${escapeHtml(p.name)}</h4>
+                    <div class="brand">${escapeHtml(p.brand)} · ${escapeHtml(p.category)}</div>
+                    <div class="price-row"><span class="price">${priceDisplay}</span></div>
+                </div>`;
+            }).join('');
+        }
+
         function showProductDetail(productId) {
+            recordRecentlyViewed(productId);
+            renderRecentlyViewed();
             const product = productsData.find(p => p.id === productId);
             if (!product) return;
             const content = document.getElementById('productDetailContent');
@@ -2957,7 +3080,7 @@
             const priceDisplay = (product.showPrice !== false && finalPrice > 0) ? formatPrice(finalPrice) + ' تومان' : 'استعلام قیمت';
             const images = product.images && product.images.length > 0 ? product.images : [product.image || '/images/no-image.svg'];
             const mainImg = images[0];
-            const thumbsHtml = images.slice(0, 6).map((img, i) => `<img src="${img}" class="${i===0?'active':''}" onclick="document.querySelector('#productDetailContent .main-img').src=this.src; this.parentElement.querySelectorAll('img').forEach(t=>t.classList.remove('active')); this.classList.add('active');" />`).join('');
+            const thumbsHtml = images.slice(0, 6).map((img, i) => `<img src="${img}" class="${i===0?'active':''}" loading="lazy" decoding="async" onerror="this.style.display='none';" onclick="document.querySelector('#productDetailContent .main-img').src=this.src; this.parentElement.querySelectorAll('img').forEach(t=>t.classList.remove('active')); this.classList.add('active');" />`).join('');
             const specsHtml = product.specs && Object.keys(product.specs).length > 0 ?
                 Object.entries(product.specs).map(([k,v]) => `<div class="spec-item"><span class="label">${escapeHtml(k)}:</span><span class="value">${escapeHtml(v)}</span></div>`).join('') : '';
             const guaHtml = product.guarantee ? '<div style="color:#22c55e;font-size:0.7rem;margin-top:6px;"><i class="fas fa-shield-alt"></i> گارانتی سلامت کالا</div>' : '';
@@ -2966,9 +3089,25 @@
                 `<button class="btn btn-gold" onclick="submitInquiry('${product.id}')" style="justify-content:center;"><i class="fas fa-phone" style="margin-left:6px;"></i>استعلام قیمت</button>`;
             const inquiryForm = (product.inquiryEnabled || product.showPrice === false || (product.stock||0)<=0) ?
                 `<div class="inquiry-form-box"><h4><i class="fas fa-phone"></i> استعلام قیمت</h4><input type="text" id="inqName" placeholder="نام شما" /><input type="tel" id="inqPhone" placeholder="شماره تماس" /><input type="email" id="inqEmail" placeholder="ایمیل (اختیاری)" /><button class="btn btn-gold btn-sm" onclick="submitInquiryFromDetail('${product.id}')" style="width:100%;justify-content:center;">ارسال استعلام</button></div>` : '';
-            content.innerHTML = `<div class="product-detail-grid">
+            const breadcrumbHtml = `<nav class="breadcrumb" aria-label="breadcrumb">
+                <a href="#" onclick="event.preventDefault();scrollToTop();">خانه</a>
+                <span class="sep">/</span>
+                <a href="#" onclick="event.preventDefault();goCategory('${escapeHtml(product.category||'')}');">${escapeHtml(product.category||'همه محصولات')}</a>
+                <span class="sep">/</span>
+                <span class="current">${escapeHtml(product.name)}</span>
+            </nav>`;
+            const related = productsData.filter(p => p.category === product.category && p.id !== product.id).slice(0, 4);
+            const relatedHtml = related.length > 0 ?
+                `<div class="related-products"><h4 class="related-title">محصولات مرتبط</h4><div class="related-grid">${related.map(rp => {
+                    const rPrice = getFinalPrice(rp);
+                    const rDisp = (rp.showPrice !== false && rPrice > 0) ? formatPrice(rPrice) : 'استعلام قیمت';
+                    const rImg = rp.images && rp.images.length > 0 ? rp.images[0] : (rp.image || '/images/no-image.svg');
+                    return `<div class="related-card" onclick="showProductDetail('${rp.id}')"><img src="${rImg}" alt="${escapeHtml(rp.name)}" loading="lazy" decoding="async" /><span class="related-name">${escapeHtml(rp.name)}</span><span class="related-price">${rDisp}</span></div>`;
+                }).join('')}</div></div>` : '';
+            content.innerHTML = `${breadcrumbHtml}
+            <div class="product-detail-grid">
                 <div class="gallery">
-                    <img src="${mainImg}" class="main-img" alt="${escapeHtml(product.name)}" />
+                    <img src="${mainImg}" class="main-img" alt="${escapeHtml(product.name)}" loading="eager" decoding="async" />
                     <div class="thumbnails">${thumbsHtml}</div>
                 </div>
                 <div class="info">
@@ -2983,7 +3122,8 @@
                     ${cartBtn}
                     ${inquiryForm}
                 </div>
-            </div>`;
+            </div>
+            ${relatedHtml}`;
             openModal('productDetail');
         }
         function submitInquiryFromDetail(productId) {
@@ -4658,6 +4798,9 @@
                 loadSampleReviews();
             }
 
+            // === INJECT SEO JSON-LD (ItemList) ===
+            injectProductJsonLd();
+
             // === IMMEDIATE RENDER (no waiting) ===
             if (heroImage) { const h = document.querySelector('.hero'); if (h) h.style.background = 'url(' + heroImage + ') center/cover no-repeat, radial-gradient(ellipse at 70% 20%, rgba(200,169,106,0.06), transparent 60%), radial-gradient(ellipse at 30% 80%, rgba(200,169,106,0.04), transparent 50%), #0d0d0d'; }
             if (shopLogo) updateHeaderLogo(shopLogo);
@@ -4677,6 +4820,31 @@
         }
 
         // ===== CATEGORY PILLS =====
+        function injectProductJsonLd() {
+            try {
+                document.getElementById('canonicalLink')?.setAttribute('href', location.origin + location.pathname);
+                const existing = document.getElementById('jsonld-products');
+                if (existing) existing.remove();
+                const items = productsData.slice(0, 20).map(p => ({
+                    '@type': 'ListItem',
+                    'position': productsData.indexOf(p) + 1,
+                    'item': {
+                        '@type': 'Product',
+                        'name': p.name,
+                        'image': (p.images && p.images[0]) || p.image || '/images/no-image.svg',
+                        'brand': { '@type': 'Brand', 'name': p.brand || 'لیمون' },
+                        'sku': p.code,
+                        'category': p.category
+                    }
+                }));
+                const script = document.createElement('script');
+                script.type = 'application/ld+json';
+                script.id = 'jsonld-products';
+                script.textContent = JSON.stringify({ '@context': 'https://schema.org', '@type': 'ItemList', 'itemListElement': items });
+                document.head.appendChild(script);
+            } catch (e) { console.error('jsonld error:', e); }
+        }
+
         function renderCategoryPills() {
             const container = document.getElementById('categoryPills');
             if (!container) return;
@@ -4775,9 +4943,16 @@
             });
             const shipping = subtotal >= (parseInt(localStorage.getItem('nilofor_free_shipping_threshold')) || 5000000) ? 0 : (parseInt(localStorage.getItem('nilofor_shipping_cost')) || 50000);
             const tax = Math.round(subtotal * ((parseInt(localStorage.getItem('nilofor_tax_rate')) || 9) / 100));
+            const freeThreshold = parseInt(localStorage.getItem('nilofor_free_shipping_threshold')) || 5000000;
             const total = subtotal + shipping + tax;
+            const shipProgress = Math.min(100, Math.round((subtotal / freeThreshold) * 100));
+            const remaining = freeThreshold - subtotal;
+            const shipBarHtml = shipping === 0
+                ? `<div class="ship-bar-free"><i class="fas fa-check-circle"></i> ارسال رایگان فعال شد</div>`
+                : `<div class="ship-bar-wrap"><div class="ship-bar-track"><div class="ship-bar-fill" style="width:${shipProgress}%"></div></div><div class="ship-bar-msg">${formatPrice(remaining)} تومان تا <strong>ارسال رایگان</strong></div></div>`;
             itemsEl.innerHTML = itemsHtml;
             footerEl.innerHTML = `
+                ${shipBarHtml}
                 <div class="cart-drawer-total"><span>جمع کل:</span><span style="color:var(--nilofor-gold);">${formatPrice(total)} تومان</span></div>
                 <button class="btn btn-gold" style="width:100%;" onclick="closeCartDrawer(); renderCartModal(); openModal('cart');">نهایی کردن خرید</button>
             `;

@@ -1,7 +1,8 @@
-const CACHE_NAME = 'nilofar-v1';
+const CACHE_NAME = 'nilofar-v2';
 const CORE_ASSETS = [
   '/',
   '/manifest.json',
+  '/robots.txt',
   '/vendor/css/vazir.css',
   '/vendor/css/fontawesome.min.css',
   '/vendor/js/chart.min.js',
