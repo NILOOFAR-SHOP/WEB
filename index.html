@@ -2027,6 +2027,7 @@
         async function syncInquiryToServer(inquiry) { await apiSaveInquiry(inquiry); }
         async function syncProductToServer(product) { if (productsData.find(p => p.id === product.id)) { await apiUpdateProduct(product); } else { await apiSaveProduct(product); } }
         async function syncSettingsToServer() {
+            const smsConfig = JSON.parse(localStorage.getItem('nilofor_sms_config') || 'null');
             const settings = {
                 social_links: socialLinks,
                 shop_logo: shopLogo,
@@ -2034,7 +2035,8 @@
                 rubika_logo: rubikaLogo,
                 free_shipping_threshold: localStorage.getItem('nilofor_free_shipping_threshold'),
                 shipping_cost: localStorage.getItem('nilofor_shipping_cost'),
-                tax_rate: localStorage.getItem('nilofor_tax_rate')
+                tax_rate: localStorage.getItem('nilofor_tax_rate'),
+                sms: smsConfig || undefined
             };
             await apiSaveSettings(settings);
         }
@@ -3708,12 +3710,23 @@
             const taxRate = localStorage.getItem('nilofor_tax_rate') || 9;
             const shippingCost = localStorage.getItem('nilofor_shipping_cost') || 50000;
             const freeThreshold = localStorage.getItem('nilofor_free_shipping_threshold') || 5000000;
+            const smsSettings = JSON.parse(localStorage.getItem('nilofor_sms_config')) || {};
+            const smsEnabled = smsSettings.enabled !== false;
+            const smsEndpoint = smsSettings.endpoint || '';
+            const smsAuthType = smsSettings.authType || 'none';
+            const smsApiKey = smsSettings.apiKey || '';
+            const smsUsername = smsSettings.username || '';
+            const smsPassword = smsSettings.password || '';
+            const smsPhoneField = smsSettings.phoneField || 'phone';
+            const smsMessageField = smsSettings.messageField || 'message';
+            const smsAdminPhone = smsSettings.adminPhone || '+989153104827';
+            const smsAdminEnabled = smsSettings.adminEnabled !== false;
+            const smsCustomerEnabled = smsSettings.customerEnabled !== false;
 
             content.innerHTML = `
                 <h3 style="color:var(--text-primary);font-size:0.95rem;margin-bottom:14px;">⚙️ تنظیمات فروشگاه نیلوفر</h3>
                 <div style="max-width:500px;">
-                    <div class="form-group"><label class="field-label">نام فروشگاه</label><input type="text" id="shopName" value="${settings.name||'فروشگاه نیلوفر'}" style="width:100%;padding:8px 12px;border-radius:12px;background:var(--bg-input);border:1px solid var(--border-color);color:var(--text-primary);font-size:0.8rem;" /></div>
-                    <div class="form-group"><label class="field-label">آدرس</label><input type="text" id="shopAddress" value="${settings.address||'مشهد، خیابان امام رضا، دانش ۱۱، سرای بلور، فروشگاه نیلوفر'}" style="width:100%;padding:8px 12px;border-radius:12px;background:var(--bg-input);border:1px solid var(--border-color);color:var(--text-primary);font-size:0.8rem;" /></div>
+                    <div class="form-group"><label class="field-label">نام فروشگاه</label><input type="text" id="shopName" value="${settings.name||'فروشگاه نیلوفر'}" style="width:100%;padding:8px 12px;border-radius:12px;background:var(--bg-input);border:1px solid var(--border-color);color:var(--text-primary);font-size:0.8rem;" /></div>                    <div class="form-group"><label class="field-label">آدرس</label><input type="text" id="shopAddress" value="${settings.address||'مشهد، خیابان امام رضا، دانش ۱۱، سرای بلور، فروشگاه نیلوفر'}" style="width:100%;padding:8px 12px;border-radius:12px;background:var(--bg-input);border:1px solid var(--border-color);color:var(--text-primary);font-size:0.8rem;" /></div>
                     <div class="form-group"><label class="field-label">شماره تماس</label><input type="tel" id="shopPhone" value="${settings.phone||'۰۵۱-۳۸۵۱۶۱۶۲'}" style="width:100%;padding:8px 12px;border-radius:12px;background:var(--bg-input);border:1px solid var(--border-color);color:var(--text-primary);font-size:0.8rem;" /></div>
                     <div class="form-group"><label class="field-label">ایمیل</label><input type="email" id="shopEmail" value="${settings.email||'info@nilofor.ir'}" style="width:100%;padding:8px 12px;border-radius:12px;background:var(--bg-input);border:1px solid var(--border-color);color:var(--text-primary);font-size:0.8rem;" /></div>
                     <div class="form-group"><label class="field-label">درصد مالیات (%)</label><input type="number" id="taxRate" value="${taxRate}" style="width:100%;padding:8px 12px;border-radius:12px;background:var(--bg-input);border:1px solid var(--border-color);color:var(--text-primary);font-size:0.8rem;" /></div>
@@ -3754,6 +3767,33 @@
                             <input type="file" id="logoFileInput" accept="image/*" />
                         </div>
                     </div>
+
+                    <div style="background:var(--bg-card);border-radius:12px;padding:14px;margin:14px 0;border:1px solid var(--border-color);box-shadow:var(--shadow-soft);">
+                        <h4 style="color:var(--text-primary);font-size:0.8rem;margin-bottom:6px;">📱 پیامک اتوماتیک سفارش</h4>
+                        <p style="color:var(--text-muted);font-size:0.72rem;margin-bottom:10px;">اتصال به سیستم پیامکی خودتان. با ثبت هر سفارش، پیامک اطلاع به مدیر و تاییدیه به مشتری ارسال می‌شود.</p>
+                        <label style="display:flex;align-items:center;gap:8px;color:var(--text-primary);font-size:0.8rem;margin-bottom:12px;cursor:pointer;">
+                            <input type="checkbox" id="smsEnabled" ${smsEnabled?'checked':''} /> فعال‌سازی ارسال پیامک خودکار
+                        </label>
+                        <div class="form-group"><label class="field-label">آدرس سرویس پیامکی (Endpoint)</label><input type="url" id="smsEndpoint" value="${smsEndpoint}" placeholder="https://sms.example.com/v1/send" style="width:100%;padding:8px 12px;border-radius:12px;background:var(--bg-input);border:1px solid var(--border-color);color:var(--text-primary);font-size:0.8rem;direction:ltr;" /></div>
+                        <div class="form-group"><label class="field-label">نوع احراز هویت</label><select id="smsAuthType" style="width:100%;padding:8px 12px;border-radius:12px;background:var(--bg-input);border:1px solid var(--border-color);color:var(--text-primary);font-size:0.8rem;">
+                            <option value="none" ${smsAuthType==='none'?'selected':''}>بدون احراز هویت</option>
+                            <option value="bearer" ${smsAuthType==='bearer'?'selected':''}>Bearer Token</option>
+                            <option value="basic" ${smsAuthType==='basic'?'selected':''}>Basic (نام کاربری/رمز)</option>
+                        </select></div>
+                        <div class="form-group" id="smsApiKeyGroup" ${smsAuthType==='basic'?'style="display:none;"':''}><label class="field-label">API Key / توکن</label><input type="password" id="smsApiKey" value="${smsApiKey}" style="width:100%;padding:8px 12px;border-radius:12px;background:var(--bg-input);border:1px solid var(--border-color);color:var(--text-primary);font-size:0.8rem;direction:ltr;" /></div>
+                        <div class="form-group" id="smsBasicGroup" ${smsAuthType==='basic'?'':'style="display:none;"'}><label class="field-label">نام کاربری</label><input type="text" id="smsUsername" value="${smsUsername}" style="width:100%;padding:8px 12px;border-radius:12px;background:var(--bg-input);border:1px solid var(--border-color);color:var(--text-primary);font-size:0.8rem;direction:ltr;" /><label class="field-label" style="margin-top:8px;">رمز عبور</label><input type="password" id="smsPassword" value="${smsPassword}" style="width:100%;padding:8px 12px;border-radius:12px;background:var(--bg-input);border:1px solid var(--border-color);color:var(--text-primary);font-size:0.8rem;direction:ltr;" /></div>
+                        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+                            <div class="form-group" style="flex:1;min-width:140px;"><label class="field-label">نام فیلد شماره</label><input type="text" id="smsPhoneField" value="${smsPhoneField}" placeholder="phone" style="width:100%;padding:8px 12px;border-radius:12px;background:var(--bg-input);border:1px solid var(--border-color);color:var(--text-primary);font-size:0.8rem;direction:ltr;" /></div>
+                            <div class="form-group" style="flex:1;min-width:140px;"><label class="field-label">نام فیلد متن</label><input type="text" id="smsMessageField" value="${smsMessageField}" placeholder="message" style="width:100%;padding:8px 12px;border-radius:12px;background:var(--bg-input);border:1px solid var(--border-color);color:var(--text-primary);font-size:0.8rem;direction:ltr;" /></div>
+                        </div>
+                        <div class="form-group"><label class="field-label">شماره مدیر (دریافت اطلاع سفارش)</label><input type="tel" id="smsAdminPhone" value="${smsAdminPhone}" style="width:100%;padding:8px 12px;border-radius:12px;background:var(--bg-input);border:1px solid var(--border-color);color:var(--text-primary);font-size:0.8rem;direction:ltr;" /></div>
+                        <label style="display:flex;align-items:center;gap:8px;color:var(--text-primary);font-size:0.8rem;margin-bottom:8px;cursor:pointer;"><input type="checkbox" id="smsAdminEnabled" ${smsAdminEnabled?'checked':''} /> اطلاع به مدیر</label>
+                        <label style="display:flex;align-items:center;gap:8px;color:var(--text-primary);font-size:0.8rem;margin-bottom:12px;cursor:pointer;"><input type="checkbox" id="smsCustomerEnabled" ${smsCustomerEnabled?'checked':''} /> تاییدیه به مشتری</label>
+                        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+                            <button class="btn btn-gold" style="flex:1;font-size:0.75rem;" onclick="window.sendTestSms()"><i class="fas fa-paper-plane"></i> ارسال پیامک تست</button>
+                        </div>
+                        <div id="smsTestResult" style="margin-top:8px;font-size:0.75rem;"></div>
+                    </div>
                     <button class="btn btn-gold" onclick="window.saveSettingsNilofor()"><i class="fas fa-save"></i> ذخیره تنظیمات</button>
                     <div id="settingsResult" style="margin-top:8px;"></div>
                 </div>
@@ -3762,6 +3802,14 @@
             const heroUpload = document.getElementById('heroImageUpload');
             const heroFile = document.getElementById('heroFileInput');
             heroUpload?.addEventListener('click', () => heroFile?.click());
+
+            document.getElementById('smsAuthType')?.addEventListener('change', function() {
+                const v = this.value;
+                const apiKeyGroup = document.getElementById('smsApiKeyGroup');
+                const basicGroup = document.getElementById('smsBasicGroup');
+                if (apiKeyGroup) apiKeyGroup.style.display = v === 'basic' ? 'none' : '';
+                if (basicGroup) basicGroup.style.display = v === 'basic' ? '' : 'none';
+            });
 
             heroFile?.addEventListener('change', async function(e) {
                 const file = this.files[0];
@@ -3875,10 +3923,13 @@
             if (!name) { showToast('نام فروشگاه را وارد کنید', 'error'); return; }
             if (!email || !email.includes('@')) { showToast('ایمیل معتبر وارد کنید', 'error'); return; }
 
+            const smsSettings = collectSmsSettings();
+
             localStorage.setItem('nilofor_shop_settings', JSON.stringify({ name, address, phone, email }));
             localStorage.setItem('nilofor_tax_rate', tax);
             localStorage.setItem('nilofor_shipping_cost', shipping);
             localStorage.setItem('nilofor_free_shipping_threshold', free);
+            localStorage.setItem('nilofor_sms_config', JSON.stringify(smsSettings));
             socialLinks = { rubika, instagram, telegram, whatsapp };
             localStorage.setItem('nilofor_social_links', JSON.stringify(socialLinks));
             updateSocialLinks();
@@ -3887,6 +3938,48 @@
             document.getElementById('settingsResult').innerHTML =
                 '<span style="color:#22c55e;">✅ تنظیمات با موفقیت ذخیره شد.</span>';
             showToast('تنظیمات ذخیره شد', 'gold');
+        };
+
+        function collectSmsSettings() {
+            return {
+                enabled: document.getElementById('smsEnabled').checked,
+                endpoint: document.getElementById('smsEndpoint').value.trim(),
+                authType: document.getElementById('smsAuthType').value,
+                apiKey: document.getElementById('smsApiKey').value.trim(),
+                username: document.getElementById('smsUsername').value.trim(),
+                password: document.getElementById('smsPassword').value.trim(),
+                phoneField: document.getElementById('smsPhoneField').value.trim() || 'phone',
+                messageField: document.getElementById('smsMessageField').value.trim() || 'message',
+                adminPhone: document.getElementById('smsAdminPhone').value.trim() || '+989153104827',
+                adminEnabled: document.getElementById('smsAdminEnabled').checked,
+                customerEnabled: document.getElementById('smsCustomerEnabled').checked
+            };
+        }
+
+        window.sendTestSms = async function() {
+            const smsSettings = collectSmsSettings();
+            localStorage.setItem('nilofor_sms_config', JSON.stringify(smsSettings));
+            await syncSettingsToServer();
+            const el = document.getElementById('smsTestResult');
+            if (!el) return;
+            el.innerHTML = '<span style="color:#c8a96a;">در حال ارسال پیامک تست...</span>';
+            try {
+                const resp = await fetch(API_BASE + '/sms/test', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({})
+                });
+                const data = await resp.json();
+                if (data.success) {
+                    el.innerHTML = '<span style="color:#22c55e;">✅ پیامک تست با موفقیت ارسال شد.</span>';
+                    showToast('پیامک تست ارسال شد', 'gold');
+                } else {
+                    el.innerHTML = '<span style="color:#ef4444;">ارسال ناموفق بود. فعال بودن و آدرس سرویس را بررسی کنید (لاگ در server).</span>';
+                    showToast('ارسال پیامک تست ناموفق بود', 'error');
+                }
+            } catch(e) {
+                el.innerHTML = '<span style="color:#ef4444;">خطا در ارتباط با سرور: ' + (e.message || '') + '</span>';
+            }
         };
 
         // ===== IMPORT =====

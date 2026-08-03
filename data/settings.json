@@ -12,5 +12,19 @@
   "hero_image": "/uploads/img_1784928945570_fbuf3o.webp",
   "rubika_logo": "/uploads/img_1784928947508_vpr7xz.png",
   "test_key": "test_value_1785095010",
-  "preview_test": "working_1785095019"
+  "preview_test": "working_1785095019",
+  "sms": {
+    "enabled": false,
+    "endpoint": "",
+    "method": "POST",
+    "authType": "none",
+    "apiKey": "",
+    "username": "",
+    "password": "",
+    "phoneField": "phone",
+    "messageField": "message",
+    "adminPhone": "+989153104827",
+    "adminEnabled": true,
+    "customerEnabled": true
+  }
 }

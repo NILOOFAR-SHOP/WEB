@@ -3,6 +3,7 @@ const cors = require('cors');
 const fs = require('fs');
 const path = require('path');
 const multer = require('multer');
+const sms = require('./sms');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -159,6 +160,7 @@ app.post('/api/orders', (req, res) => {
   order.createdAt = order.createdAt || Date.now();
   orders.push(order);
   writeJSON('orders.json', orders);
+  try { sms.notifyOrder(order); } catch (e) { console.error('SMS notify error:', e.message); }
   res.json({ success: true, order });
 });
 
@@ -179,6 +181,22 @@ app.delete('/api/orders', (req, res) => {
   orders = orders.filter(o => o.id !== id);
   writeJSON('orders.json', orders);
   res.json({ success: true });
+});
+
+// ===== SMS =====
+app.get('/api/sms/outbox', (req, res) => {
+  res.json(sms.getOutbox(parseInt(req.query.limit) || 50));
+});
+
+app.post('/api/sms/test', async (req, res) => {
+  try {
+    const to = req.body && req.body.to ? String(req.body.to).trim() : (sms.getConfig().adminPhone || null);
+    const text = 'تست پیامک فروشگاه نیلوفر ✅ تنظیمات اتصال پیامکی شما سالم است.';
+    const ok = await sms.sendSms(to, text);
+    res.json({ success: ok, outbox: sms.getOutbox(5) });
+  } catch (e) {
+    res.status(500).json({ success: false, error: e.message });
+  }
 });
 
 // ===== REVIEWS =====
