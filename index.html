@@ -14,18 +14,18 @@
     <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
     <link rel="canonical" id="canonicalLink" href="/" />
     <title>نیلوفر | فروشگاه تخصصی لوازم خانه و آشپزخانه</title>
-    <meta name="description" content="فروشگاه تخصصی نیلوفر؛ عرضه انواع لوازم خانه و آشپزخانه شامل بانکه، بطری، سبد، سرویس بهداشتی، ظروف فریزری، لیوان، نظم‌دهنده و بیش از ۱۶۰ محصول از برندهای معتبر مانند لیمون." />
+    <meta name="description" content="فروشگاه تخصصی نیلوفر؛ عرضه انواع لوازم خانه و آشپزخانه شامل بانکه، بطری، سبد، سرویس بهداشتی، ظروف فریزری، لیوان، نظم‌دهنده و بیش از ۳۷۰ محصول از برندهای معتبر مانند لیمون." />
     <meta name="keywords" content="فروشگاه نیلوفر, لوازم خانه, لوازم آشپزخانه, بانکه, لیوان, ظروف فریزری, سبد, نظم دهنده, برند لیمون, خرید عمده" />
     <meta name="robots" content="index, follow" />
     <meta name="author" content="نیلوفر" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="نیلوفر" />
     <meta property="og:title" content="نیلوفر | فروشگاه تخصصی لوازم خانه و آشپزخانه" />
-    <meta property="og:description" content="فروشگاه تخصصی نیلوفر؛ بیش از ۱۶۰ محصول از برندهای معتبر مانند لیمون با امکان استعلام قیمت و سفارش آنلاین." />
+    <meta property="og:description" content="فروشگاه تخصصی نیلوفر؛ بیش از ۳۷۰ محصول از برندهای معتبر مانند لیمون با امکان استعلام قیمت و سفارش آنلاین." />
     <meta property="og:locale" content="fa_IR" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="نیلوفر | فروشگاه تخصصی لوازم خانه و آشپزخانه" />
-    <meta name="twitter:description" content="فروشگاه تخصصی نیلوفر؛ بیش از ۱۶۰ محصول از برندهای معتبر مانند لیمون." />
+    <meta name="twitter:description" content="فروشگاه تخصصی نیلوفر؛ بیش از ۳۷۰ محصول از برندهای معتبر مانند لیمون." />
     <link rel="preconnect" href="https://raw.githubusercontent.com" crossorigin />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -990,6 +990,10 @@
             color:var(--text-secondary);
             line-height:1.7;
             font-style:italic;
+            display:-webkit-box;
+            -webkit-line-clamp:3;
+            -webkit-box-orient:vertical;
+            overflow:hidden;
         }
         .testimonial-card .author {
             display:flex; align-items:center; gap:10px;
@@ -1559,8 +1563,13 @@
             .product-card-full .badge-tag { font-size:0.45rem !important; padding:1px 6px !important; top:3px !important; right:3px !important; }
             .product-card-full .badge-guarantee { font-size:0.4rem !important; padding:1px 5px !important; top:3px !important; left:3px !important; }
             .testimonial-grid { grid-template-columns:1fr 1fr !important; gap:8px !important; }
-            .testimonial-card { padding:12px 10px !important; border-radius:12px !important; }
-            .testimonial-card blockquote { font-size:0.65rem !important; }
+            .testimonial-card { padding:10px 8px !important; border-radius:12px !important; }
+            .testimonial-card .stars { font-size:0.7rem !important; margin-bottom:4px !important; }
+            .testimonial-card blockquote { font-size:0.62rem !important; line-height:1.5 !important; margin:0 !important; -webkit-line-clamp:2 !important; }
+            .testimonial-card .author { margin-top:8px !important; padding-top:8px !important; gap:8px !important; }
+            .testimonial-card .author .avatar { width:26px !important; height:26px !important; font-size:0.7rem !important; }
+            .testimonial-card .author .info h5 { font-size:0.65rem !important; }
+            .testimonial-card .author .info p { font-size:0.55rem !important; }
             .features-grid { grid-template-columns:1fr 1fr !important; gap:8px !important; }
             .feature-card { padding:14px 8px !important; border-radius:12px !important; }
             .feature-card .icon { font-size:1.5rem !important; }
@@ -1586,6 +1595,22 @@
             .product-card-full .price { font-size:0.65rem !important; }
             .product-card-full .add-btn { width:24px !important; height:24px !important; min-width:24px !important; min-height:24px !important; }
             .product-card-full .stock-badge { font-size:0.45rem !important; padding:1px 4px !important; }
+        }
+
+        /* ===== Mobile Base Font & Android Layout Hardening ===== */
+        @media (max-width:480px) {
+            html { font-size:14px; }
+            body { font-size:13px; }
+            input, textarea, select { font-size:16px !important; }
+        }
+        @media (max-width:380px) {
+            html { font-size:13.5px; }
+        }
+        @supports (height:100dvh) {
+            .cart-drawer { height:100dvh; }
+        }
+        @supports (min-height:100dvh) {
+            .hero { min-height:85dvh; }
         }
 
         /* ===== iOS & Android Mobile Optimizations ===== */
