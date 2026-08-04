@@ -902,6 +902,18 @@
         }
         .product-detail-grid .info .specs .spec-item .label { color:var(--text-muted); }
         .product-detail-grid .info .specs .spec-item .value { color:var(--text-primary); }
+        .product-detail-grid .info .share-row {
+            display:flex; align-items:center; gap:8px; margin:10px 0;
+        }
+        .share-btn {
+            width:32px; height:32px; border-radius:50%; border:none; cursor:pointer;
+            display:inline-flex; align-items:center; justify-content:center; font-size:0.8rem;
+            color:#fff; transition:transform .15s ease; line-height:1;
+        }
+        .share-btn:hover { transform:scale(1.12); }
+        .share-btn.share-wa { background:#25d366; }
+        .share-btn.share-tg { background:#229ed9; }
+        .share-btn.share-copy { background:var(--text-muted); }
         .product-detail-grid .info .description-box {
             margin:10px 0;
             padding:10px;
@@ -1960,6 +1972,20 @@
                 </div>
                 <div class="footer-col"><h5>دسترسی سریع</h5><a href="#product-page">محصولات</a><a href="#reviews">نظرات</a><a href="#survey">نظرسنجی</a></div>
                 <div class="footer-col"><h5>خدمات</h5><a href="#" onclick="document.getElementById('consultBtn').click(); return false;">مشاوره</a><a href="#" onclick="document.getElementById('heroOrderBtn').click(); return false;">سفارش</a></div>
+                <div class="footer-col"><h5>پیگیری سفارش</h5>
+                    <div style="display:flex;gap:6px;margin-top:6px;">
+                        <input type="text" id="trackInput" placeholder="کد پیگیری (مثل NLF-ABC123)" style="flex:1;min-width:0;padding:8px 10px;border-radius:8px;background:var(--bg-input);border:1px solid var(--border-color);color:var(--text-primary);font-size:0.7rem;" />
+                        <button class="btn btn-sm btn-gold" onclick="trackOrder()">پیگیری</button>
+                    </div>
+                    <div id="trackResult" style="font-size:0.7rem;color:var(--text-secondary);margin-top:8px;line-height:1.7;"></div>
+                </div>
+                <div class="footer-col"><h5>ارسال پیام سریع</h5>
+                    <input type="text" id="ctName" placeholder="نام شما" style="width:100%;margin-top:6px;box-sizing:border-box;padding:8px 10px;border-radius:8px;background:var(--bg-input);border:1px solid var(--border-color);color:var(--text-primary);font-size:0.7rem;" />
+                    <input type="tel" id="ctPhone" placeholder="شماره تماس" style="width:100%;margin-top:6px;box-sizing:border-box;padding:8px 10px;border-radius:8px;background:var(--bg-input);border:1px solid var(--border-color);color:var(--text-primary);font-size:0.7rem;" />
+                    <textarea id="ctMsg" rows="2" placeholder="پیام شما..." style="width:100%;margin-top:6px;box-sizing:border-box;padding:8px 10px;border-radius:8px;background:var(--bg-input);border:1px solid var(--border-color);color:var(--text-primary);font-size:0.7rem;resize:vertical;"></textarea>
+                    <button class="btn btn-gold btn-sm" onclick="submitContact()" style="width:100%;justify-content:center;margin-top:6px;">ارسال پیام</button>
+                    <div id="ctResult" style="font-size:0.7rem;margin-top:6px;color:var(--text-secondary);line-height:1.7;"></div>
+                </div>
             </div>
             <div class="trust-badges">
                 <div class="trust-item"><i class="fas fa-shield-alt"></i> <span>ضمانت کیفیت کالا</span></div>
@@ -2003,6 +2029,7 @@
             <div class="admin-tab" data-tab="prices">💰 قیمت‌ها</div>
             <div class="admin-tab" data-tab="reviews">⭐ نظرات</div>
             <div class="admin-tab" data-tab="inquiries">📋 استعلام‌ها</div>
+            <div class="admin-tab" data-tab="contacts">✉️ پیام‌ها</div>
             <div class="admin-tab" data-tab="settings">⚙️ تنظیمات</div>
             <div class="admin-tab" data-tab="backup">💾 بکاپ</div>
             <div class="admin-tab" data-tab="csv">📄 CSV</div>
@@ -2107,6 +2134,7 @@
         let couponCodes = JSON.parse(localStorage.getItem('nilofor_coupons')) || [];
         let surveyResults = JSON.parse(localStorage.getItem('nilofor_surveys')) || [];
         let newsletterSubs = JSON.parse(localStorage.getItem('nilofor_newsletter_subs')) || [];
+        let contacts = JSON.parse(localStorage.getItem('nilofor_contacts')) || [];
         let users = JSON.parse(localStorage.getItem('nilofor_users')) || [];
         let currentUser = JSON.parse(localStorage.getItem('nilofor_current_user')) || null;
         let currentAdminTab = 'dashboard';
@@ -2163,6 +2191,15 @@
         function formatPrice(num) { if (!num || isNaN(num)) return '۰'; return Number(num).toLocaleString('fa-IR'); }
 
         function generateId() { return 'id_' + Date.now() + '_' + Math.random().toString(36).substr(2, 6); }
+
+        function normalizePhone(v) {
+            return String(v || '').trim()
+                .replace(/[۰-۹]/g, d => String('۰۱۲۳۴۵۶۷۸۹'.indexOf(d)))
+                .replace(/[٠-٩]/g, d => String('٠١٢٣٤٥٦٧٨٩'.indexOf(d)))
+                .replace(/[\s-]/g, '');
+        }
+
+        function isValidIranPhone(v) { return /^09\d{9}$/.test(normalizePhone(v)); }
 
         function getPersianDate() { return new Date().toLocaleDateString('fa-IR'); }
 
@@ -2906,7 +2943,9 @@
                 return;
             }
             const show = approved.slice(-20);
-            grid.innerHTML = show.map((r, idx) => {
+            const avg = approved.reduce((s, r) => s + (r.rating || 0), 0) / approved.length;
+            const summary = `<div style="grid-column:1/-1;text-align:center;margin-bottom:10px;font-size:0.75rem;color:var(--text-secondary);">⭐ میانگین امتیاز: <b style="color:var(--nilofor-gold);">${avg.toFixed(1).replace('.', '٫')}</b> از ۵ · بر اساس ${approved.length} نظر</div>`;
+            grid.innerHTML = summary + show.map((r, idx) => {
                 const stars = '★'.repeat(r.rating) + '☆'.repeat(5 - r.rating);
                 return `<div class="testimonial-card animate-fade-up delay-${(idx%3)+1}"><div class="stars">${stars}</div><blockquote>${escapeHtml(r.text)}</blockquote><div class="author"><div class="avatar">${escapeHtml(r.name.charAt(0))}</div><div class="info"><h5>${escapeHtml(r.name)}</h5><p>${r.date || ''}</p></div></div></div>`;
             }).join('');
@@ -2984,7 +3023,7 @@
         document.getElementById('orderForm')?.addEventListener('submit', function(e) {
             e.preventDefault();
             const name = document.getElementById('orderName').value.trim();
-            const phone = document.getElementById('orderPhone').value.trim();
+            const phone = normalizePhone(document.getElementById('orderPhone').value.trim());
             const email = document.getElementById('orderEmail').value.trim();
             const instagram = document.getElementById('orderInstagram').value.trim();
             const type = document.getElementById('orderType').value;
@@ -3001,6 +3040,12 @@
                 return;
             }
 
+            if (!isValidIranPhone(phone)) {
+                document.getElementById('orderResult').innerHTML =
+                    '<span style="color:#ef4444;">شماره موبایل معتبر نیست. مثال: ۰۹۱۲۳۴۵۶۷۸۹</span>';
+                return;
+            }
+
             const subtotal = cart.reduce((s, i) => s + i.qty * i.price, 0);
             let couponDiscount = 0;
             const couponCode = document.getElementById('couponInput')?.value?.trim() || '';
@@ -3012,6 +3057,7 @@
 
             const order = {
                 id: generateId(),
+                code: 'NLF-' + Math.random().toString(36).substr(2, 6).toUpperCase(),
                 customer: name,
                 phone,
                 email,
@@ -3044,12 +3090,84 @@
             updateCartUI();
 
             document.getElementById('orderResult').innerHTML =
-                '<span style="color:#22c55e;">✅ سفارش ثبت شد. به زودی تماس می‌گیریم.</span>';
+                `<span style="color:#22c55e;">✅ سفارش ثبت شد. کد پیگیری: <b>${order.code || ''}</b></span>`;
             this.reset();
             renderStats();
             setTimeout(() => { closeAllModals();
                 document.getElementById('orderResult').innerHTML = ''; }, 2500);
         });
+
+        // ===== TRACK ORDER =====
+        async function trackOrder() {
+            const code = (document.getElementById('trackInput').value || '').trim().toUpperCase();
+            const res = document.getElementById('trackResult');
+            if (!code) { res.innerHTML = '<span style="color:#ef4444;">کد پیگیری را وارد کنید.</span>'; return; }
+            const local = orders.find(o => String(o.code || '').toUpperCase() === code);
+            if (local) {
+                res.innerHTML = `<span style="color:#22c55e;">✅ سفارش <b>${local.code}</b> · وضعیت: ${escapeHtml(local.status || 'جدید')}</span><br><span>تاریخ: ${local.date || ''} · مبلغ: ${formatPrice(local.total)}</span>`;
+                return;
+            }
+            res.innerHTML = '<span>در حال جستجو...</span>';
+            try {
+                const r = await fetch(API_BASE + '/orders/track?code=' + encodeURIComponent(code));
+                if (r.status === 404) { res.innerHTML = '<span style="color:#ef4444;">سفارشی با این کد یافت نشد.</span>'; return; }
+                if (!r.ok) throw new Error('HTTP ' + r.status);
+                const o = await r.json();
+                res.innerHTML = `<span style="color:#22c55e;">✅ سفارش <b>${escapeHtml(o.code)}</b> · وضعیت: ${escapeHtml(o.status)}</span><br><span>تاریخ: ${o.date || ''} · مبلغ: ${formatPrice(o.total)}</span>`;
+            } catch (e) {
+                res.innerHTML = '<span style="color:#ef4444;">خطا در ارتباط با سرور. بعداً تلاش کنید.</span>';
+            }
+        }
+
+        // ===== QUICK CONTACT =====
+        async function submitContact() {
+            const name = document.getElementById('ctName').value.trim();
+            const phone = normalizePhone(document.getElementById('ctPhone').value.trim());
+            const msg = document.getElementById('ctMsg').value.trim();
+            const res = document.getElementById('ctResult');
+            if (!name || !msg) { res.innerHTML = '<span style="color:#ef4444;">نام و پیام الزامی است.</span>'; return; }
+            if (phone && !isValidIranPhone(phone)) { res.innerHTML = '<span style="color:#ef4444;">شماره موبایل معتبر نیست.</span>'; return; }
+            const c = { id: generateId(), name, phone, message: msg, date: getPersianDate(), createdAt: Date.now() };
+            contacts.push(c);
+            localStorage.setItem('nilofor_contacts', JSON.stringify(contacts));
+            try {
+                await fetch(API_BASE + '/contacts', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(c) });
+            } catch (e) {}
+            res.innerHTML = '<span style="color:#22c55e;">✅ پیام شما ثبت شد. به زودی پاسخ می‌دهیم.</span>';
+            document.getElementById('ctName').value = '';
+            document.getElementById('ctPhone').value = '';
+            document.getElementById('ctMsg').value = '';
+        }
+
+        // ===== PRODUCT SHARE =====
+        function getProductShareUrl(productId) {
+            return location.origin + location.pathname + '#p=' + encodeURIComponent(productId);
+        }
+
+        function shareProduct(platform, productId) {
+            const product = productsData.find(p => p.id === productId);
+            if (!product) return;
+            const url = getProductShareUrl(productId);
+            const price = (product.showPrice !== false && getFinalPrice(product) > 0) ? formatPrice(getFinalPrice(product)) + ' تومان' : 'استعلام قیمت';
+            const text = encodeURIComponent('🛍 ' + product.name + '\nقیمت: ' + price + '\n' + url);
+            if (platform === 'whatsapp') window.open('https://wa.me/?text=' + text, '_blank', 'noopener');
+            else if (platform === 'telegram') window.open('https://t.me/share/url?url=' + encodeURIComponent(url) + '&text=' + text, '_blank', 'noopener');
+        }
+
+        function copyProductLink(productId) {
+            const url = getProductShareUrl(productId);
+            const done = () => showToast('لینک محصول کپی شد', 'success');
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(url).then(done).catch(() => { window.prompt('لینک محصول:', url); });
+            } else { window.prompt('لینک محصول:', url); }
+        }
+
+        function handleProductHash() {
+            const m = location.hash.match(/^#p=(.+)$/);
+            if (!m) return;
+            const id = decodeURIComponent(m[1]);
+            if (productsData.find(p => p.id === id)) showProductDetail(id);
+        }
 
         // ===== STATS =====
         function renderStats() {
@@ -3116,6 +3234,12 @@
                 `<button class="btn btn-gold" onclick="submitInquiry('${product.id}')" style="justify-content:center;"><i class="fas fa-phone" style="margin-left:6px;"></i>استعلام قیمت</button>`;
             const inquiryForm = (product.inquiryEnabled || product.showPrice === false || (product.stock||0)<=0) ?
                 `<div class="inquiry-form-box"><h4><i class="fas fa-phone"></i> استعلام قیمت</h4><input type="text" id="inqName" placeholder="نام شما" /><input type="tel" id="inqPhone" placeholder="شماره تماس" /><input type="email" id="inqEmail" placeholder="ایمیل (اختیاری)" /><button class="btn btn-gold btn-sm" onclick="submitInquiryFromDetail('${product.id}')" style="width:100%;justify-content:center;">ارسال استعلام</button></div>` : '';
+            const shareHtml = `<div class="share-row">
+                <span style="font-size:0.7rem;color:var(--text-muted);">اشتراک‌گذاری:</span>
+                <button class="share-btn share-wa" onclick="shareProduct('whatsapp','${product.id}')" title="واتساپ" aria-label="اشتراک در واتساپ"><i class="fab fa-whatsapp"></i></button>
+                <button class="share-btn share-tg" onclick="shareProduct('telegram','${product.id}')" title="تلگرام" aria-label="اشتراک در تلگرام"><i class="fab fa-telegram-plane"></i></button>
+                <button class="share-btn share-copy" onclick="copyProductLink('${product.id}')" title="کپی لینک" aria-label="کپی لینک"><i class="fas fa-link"></i></button>
+            </div>`;
             const breadcrumbHtml = `<nav class="breadcrumb" aria-label="breadcrumb">
                 <a href="#" onclick="event.preventDefault();scrollToTop();">خانه</a>
                 <span class="sep">/</span>
@@ -3143,6 +3267,7 @@
                     <div class="product-code">${escapeHtml(product.code)}</div>
                     <div class="price">${priceDisplay}</div>
                     ${guaHtml}
+                    ${shareHtml}
                     ${product.description ? `<div class="description-box"><h4>توضیحات</h4><p>${escapeHtml(product.description)}</p></div>` : ''}
                     ${product.longDescription ? `<div class="description-box"><h4>توضیحات تکمیلی</h4><p>${escapeHtml(product.longDescription)}</p></div>` : ''}
                     ${specsHtml ? `<div class="specs"><h4 style="margin-bottom:8px;font-size:0.8rem;">مشخصات</h4>${specsHtml}</div>` : ''}
@@ -3157,8 +3282,9 @@
             const product = productsData.find(p => p.id === productId);
             if (!product) return;
             const name = document.getElementById('inqName').value.trim();
-            const phone = document.getElementById('inqPhone').value.trim();
+            const phone = normalizePhone(document.getElementById('inqPhone').value.trim());
             if (!name || !phone) { showToast('نام و شماره تماس الزامی است','error'); return; }
+            if (!isValidIranPhone(phone)) { showToast('شماره موبایل معتبر نیست','error'); return; }
             const email = document.getElementById('inqEmail').value.trim();
             const inquiry = { id: generateId(), productId, productName: product.name, productCode: product.code, brand: product.brand, name, phone, email, date: getPersianDate(), status: 'جدید' };
             inquiries.push(inquiry);
@@ -3230,7 +3356,7 @@
                 </div>
                 <div style="background:var(--bg-card);border-radius:12px;padding:14px;border:1px solid var(--border-color);box-shadow:var(--shadow-soft);">
                     <h4 style="color:var(--text-primary);font-size:0.85rem;">📋 آخرین سفارشات</h4>
-                    ${orders.length===0?'<p style="color:var(--text-muted); font-size:0.75rem;">هیچ سفارشی ثبت نشده.</p>':`<table class="admin-table"><thead><tr><th>شناسه</th><th>مشتری</th><th>تماس</th><th>تعداد</th><th>مبلغ</th><th>وضعیت</th><th>تاریخ</th></tr></thead><tbody>${orders.slice(-5).reverse().map(o=>`<tr><td>#${o.id.slice(0,8)}</td><td>${escapeHtml(o.customer||'ناشناس')}</td><td>${escapeHtml(o.phone||'')}</td><td>${o.items?o.items.reduce((s,i)=>s+i.qty,0):0}</td><td>${formatPrice(o.total||0)}</td><td><span class="status-badge status-${(o.status||'new').toLowerCase()}">${o.status||'جدید'}</span></td><td>${o.date||''}</td></tr>`).join('')}</tbody></table>`}
+                    ${orders.length===0?'<p style="color:var(--text-muted); font-size:0.75rem;">هیچ سفارشی ثبت نشده.</p>':`<table class="admin-table"><thead><tr><th>شناسه</th><th>مشتری</th><th>تماس</th><th>تعداد</th><th>مبلغ</th><th>وضعیت</th><th>تاریخ</th></tr></thead><tbody>${orders.slice(-5).reverse().map(o=>`<tr><td>${o.code||('#'+o.id.slice(0,8))}</td><td>${escapeHtml(o.customer||'ناشناس')}</td><td>${escapeHtml(o.phone||'')}</td><td>${o.items?o.items.reduce((s,i)=>s+i.qty,0):0}</td><td>${formatPrice(o.total||0)}</td><td><span class="status-badge status-${(o.status||'new').toLowerCase()}">${o.status||'جدید'}</span></td><td>${o.date||''}</td></tr>`).join('')}</tbody></table>`}
                 </div>
             `;
         }
@@ -3241,7 +3367,7 @@
             if (orders.length === 0) { content.innerHTML = '<p style="color:var(--text-muted);">هیچ سفارشی ثبت نشده.</p>';
                 return; }
             content.innerHTML =
-                `<h3 style="color:var(--text-primary);margin-bottom:14px;font-size:0.95rem;">📦 مدیریت سفارشات (${orders.length})</h3><div style="overflow-x:auto;"><table class="admin-table"><thead><tr><th>شناسه</th><th>مشتری</th><th>تماس</th><th>تعداد</th><th>مبلغ</th><th>وضعیت</th><th>تاریخ</th><th>عملیات</th></tr></thead><tbody>${orders.map(o=>`<tr><td>#${o.id.slice(0,8)}</td><td>${escapeHtml(o.customer||'ناشناس')}</td><td>${escapeHtml(o.phone||'')}</td><td>${o.items?o.items.reduce((s,i)=>s+i.qty,0):0}</td><td>${formatPrice(o.total||0)}</td><td><select onchange="window.updateOrderStatus('${o.id}',this.value)" style="background:var(--bg-input);border:1px solid var(--border-color);border-radius:8px;padding:3px 6px;color:var(--text-primary);font-size:0.6rem;"><option value="جدید" ${o.status==='جدید'?'selected':''}>جدید</option><option value="در حال پردازش" ${o.status==='در حال پردازش'?'selected':''}>در حال پردازش</option><option value="ارسال شده" ${o.status==='ارسال شده'?'selected':''}>ارسال شده</option><option value="تحویل داده شد" ${o.status==='تحویل داده شد'?'selected':''}>تحویل داده شد</option><option value="لغو شده" ${o.status==='لغو شده'?'selected':''}>لغو شده</option></select></td><td>${o.date||''}</td><td><button class="btn-icon" onclick="window.deleteOrder('${o.id}')" style="color:#ef4444;font-size:0.8rem;min-width:34px;min-height:34px;"><i class="fas fa-trash"></i></button></td></tr>`).join('')}</tbody></table></div>`;
+                `<h3 style="color:var(--text-primary);margin-bottom:14px;font-size:0.95rem;">📦 مدیریت سفارشات (${orders.length})</h3><div style="overflow-x:auto;"><table class="admin-table"><thead><tr><th>شناسه</th><th>مشتری</th><th>تماس</th><th>تعداد</th><th>مبلغ</th><th>وضعیت</th><th>تاریخ</th><th>عملیات</th></tr></thead><tbody>${orders.map(o=>`<tr><td>${o.code||('#'+o.id.slice(0,8))}</td><td>${escapeHtml(o.customer||'ناشناس')}</td><td>${escapeHtml(o.phone||'')}</td><td>${o.items?o.items.reduce((s,i)=>s+i.qty,0):0}</td><td>${formatPrice(o.total||0)}</td><td><select onchange="window.updateOrderStatus('${o.id}',this.value)" style="background:var(--bg-input);border:1px solid var(--border-color);border-radius:8px;padding:3px 6px;color:var(--text-primary);font-size:0.6rem;"><option value="جدید" ${o.status==='جدید'?'selected':''}>جدید</option><option value="در حال پردازش" ${o.status==='در حال پردازش'?'selected':''}>در حال پردازش</option><option value="ارسال شده" ${o.status==='ارسال شده'?'selected':''}>ارسال شده</option><option value="تحویل داده شد" ${o.status==='تحویل داده شد'?'selected':''}>تحویل داده شد</option><option value="لغو شده" ${o.status==='لغو شده'?'selected':''}>لغو شده</option></select></td><td>${o.date||''}</td><td><button class="btn-icon" onclick="window.deleteOrder('${o.id}')" style="color:#ef4444;font-size:0.8rem;min-width:34px;min-height:34px;"><i class="fas fa-trash"></i></button></td></tr>`).join('')}</tbody></table></div>`;
         }
         window.updateOrderStatus = function(id, status) { const o = orders.find(o => o.id === id); if (o) { o.status =
                 status;
@@ -3667,11 +3793,34 @@
         // ===== REVIEWS ADMIN =====
         function renderReviewsAdmin() {
             const content = document.getElementById('adminContent');
-            if (reviews.length === 0) { content.innerHTML =
-                    '<h3 style="color:var(--text-primary);font-size:0.95rem;margin-bottom:14px;">⭐ نظرات</h3><p style="color:var(--text-muted);">هیچ نظری ثبت نشده.</p>';
-                return; }
+            const tableHtml = (reviews.length === 0) ?
+                '<p style="color:var(--text-muted);">هیچ نظری ثبت نشده.</p>' :
+                `<div style="overflow-x:auto;"><table class="admin-table"><thead><tr><th>نام</th><th>امتیاز</th><th>نظر</th><th>تاریخ</th><th>عملیات</th></tr></thead><tbody>${reviews.map(r=>`<tr><td>${escapeHtml(r.name)}</td><td>${'★'.repeat(r.rating)}</td><td style="max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${escapeHtml(r.text)}">${escapeHtml(r.text.substring(0,40))}${r.text.length>40?'...':''}</td><td>${r.date||''}</td><td><button class="btn-icon" onclick="window.deleteReviewAdmin('${r.id}')" style="color:#ef4444;font-size:0.8rem;min-width:34px;min-height:34px;"><i class="fas fa-trash"></i></button></td></tr>`).join('')}</tbody></table></div>`;
             content.innerHTML =
-                `<h3 style="color:var(--text-primary);font-size:0.95rem;margin-bottom:14px;">⭐ مدیریت نظرات (${reviews.length})</h3><div style="overflow-x:auto;"><table class="admin-table"><thead><tr><th>نام</th><th>امتیاز</th><th>نظر</th><th>تاریخ</th><th>عملیات</th></tr></thead><tbody>${reviews.map(r=>`<tr><td>${escapeHtml(r.name)}</td><td>${'★'.repeat(r.rating)}</td><td style="max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${escapeHtml(r.text)}">${escapeHtml(r.text.substring(0,40))}${r.text.length>40?'...':''}</td><td>${r.date||''}</td><td><button class="btn-icon" onclick="window.deleteReviewAdmin('${r.id}')" style="color:#ef4444;font-size:0.8rem;min-width:34px;min-height:34px;"><i class="fas fa-trash"></i></button></td></tr>`).join('')}</tbody></table></div>`;
+                `<h3 style="color:var(--text-primary);font-size:0.95rem;margin-bottom:14px;">⭐ مدیریت نظرات (${reviews.length})</h3>
+                <button class="btn btn-gold btn-sm" onclick="toggleAddReviewAdmin()" style="margin-bottom:12px;"><i class="fas fa-plus"></i> افزودن نظر</button>
+                <div id="addReviewAdminBox" style="display:none;margin-bottom:14px;padding:12px;border:1px solid var(--border-color);border-radius:10px;background:var(--bg-input);">
+                    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px;">
+                        <input id="arName" placeholder="نام" style="flex:1;min-width:120px;padding:8px 10px;border-radius:8px;background:var(--bg-input);border:1px solid var(--border-color);color:var(--text-primary);font-size:0.7rem;" />
+                        <input id="arRating" type="number" min="1" max="5" value="5" placeholder="امتیاز ۱-۵" style="width:110px;padding:8px 10px;border-radius:8px;background:var(--bg-input);border:1px solid var(--border-color);color:var(--text-primary);font-size:0.7rem;" />
+                    </div>
+                    <textarea id="arText" rows="2" placeholder="متن نظر" style="width:100%;box-sizing:border-box;padding:8px 10px;border-radius:8px;background:var(--bg-input);border:1px solid var(--border-color);color:var(--text-primary);font-size:0.7rem;resize:vertical;"></textarea>
+                    <button class="btn btn-gold btn-sm" onclick="addReviewAdmin()" style="margin-top:8px;">ثبت نظر</button>
+                </div>
+                ${tableHtml}`;
+        }
+        function toggleAddReviewAdmin() { const b = document.getElementById('addReviewAdminBox'); if (b) b.style.display = (b.style.display === 'none') ? '' : 'none'; }
+        function addReviewAdmin() {
+            const name = document.getElementById('arName').value.trim();
+            const text = document.getElementById('arText').value.trim();
+            const rating = parseInt(document.getElementById('arRating').value) || 5;
+            if (!name || !text) { showToast('نام و متن نظر الزامی است', 'error'); return; }
+            const r = { id: generateId(), name, rating: Math.min(5, Math.max(1, rating)), text, date: getPersianDate(), approved: true, createdAt: Date.now() };
+            reviews.push(r);
+            saveReviewsData();
+            renderReviewsAdmin();
+            renderReviews();
+            showToast('نظر افزوده شد');
         }
         window.deleteReviewAdmin = function(id) { if (!confirm('حذف نظر؟')) return;
             reviews = reviews.filter(r => r.id !== id);
@@ -3699,6 +3848,24 @@
             localStorage.setItem('nilofor_inquiries', JSON.stringify(inquiries));
             renderInquiriesAdmin();
             showToast('استعلام حذف شد'); };
+
+        // ===== CONTACTS ADMIN =====
+        function renderContactsAdmin() {
+            const content = document.getElementById('adminContent');
+            if (contacts.length === 0) {
+                content.innerHTML =
+                    '<h3 style="color:var(--text-primary);font-size:0.95rem;margin-bottom:14px;">✉️ پیام‌های کاربران</h3><p style="color:var(--text-muted);">پیامی ثبت نشده است.</p>';
+                return;
+            }
+            content.innerHTML =
+                `<h3 style="color:var(--text-primary);font-size:0.95rem;margin-bottom:14px;">✉️ مدیریت پیام‌ها (${contacts.length})</h3><div style="overflow-x:auto;"><table class="admin-table"><thead><tr><th>نام</th><th>تماس</th><th>پیام</th><th>تاریخ</th><th>عملیات</th></tr></thead><tbody>${contacts.slice().reverse().map(c=>`<tr><td>${escapeHtml(c.name||'-')}</td><td>${escapeHtml(c.phone||'-')}</td><td style="max-width:200px;white-space:normal;word-break:break-word;" title="${escapeHtml(c.message||'')}">${escapeHtml((c.message||'').substring(0,80))}${(c.message||'').length>80?'...':''}</td><td>${c.date||''}</td><td><button class="btn-icon" onclick="window.deleteContactAdmin('${c.id}')" style="color:#ef4444;font-size:0.8rem;min-width:34px;min-height:34px;"><i class="fas fa-trash"></i></button></td></tr>`).join('')}</tbody></table></div>`;
+        }
+        window.deleteContactAdmin = function(id) { if (!confirm('حذف پیام؟')) return;
+            contacts = contacts.filter(c => c.id !== id);
+            localStorage.setItem('nilofor_contacts', JSON.stringify(contacts));
+            try { fetch(API_BASE + '/contacts?id=' + encodeURIComponent(id), { method: 'DELETE' }); } catch (e) {}
+            renderContactsAdmin();
+            showToast('پیام حذف شد'); };
 
         // ===== SETTINGS =====
         function renderSettings() {
@@ -4787,6 +4954,9 @@
                 case 'inquiries':
                     renderInquiriesAdmin();
                     break;
+                case 'contacts':
+                    renderContactsAdmin();
+                    break;
                 case 'settings':
                     renderSettings();
                     break;
@@ -4929,6 +5099,8 @@
             updateCartUI();
             updateWishlistUI();
             applyFilters();
+            handleProductHash();
+            window.addEventListener('hashchange', handleProductHash);
             initLiveSearch();
             setTimeout(animateCounters, 500);
             if (currentUser) { document.getElementById('loginBtn').innerHTML = '<i class="fas fa-user"></i> <span class="label">' + escapeHtml(currentUser.name) + '</span>'; }

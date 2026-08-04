@@ -153,10 +153,26 @@ app.get('/api/orders', (req, res) => {
   res.json(orders);
 });
 
+app.get('/api/orders/track', (req, res) => {
+  const code = String(req.query.code || '').trim().toUpperCase();
+  if (!code) return res.status(400).json({ error: 'کد پیگیری وارد نشده است.' });
+  const order = readJSON('orders.json').find(o => String(o.code || '').trim().toUpperCase() === code);
+  if (!order) return res.status(404).json({ error: 'not_found' });
+  res.json({
+    code: order.code,
+    status: order.status || 'جدید',
+    date: order.date || '',
+    total: order.total || 0,
+    items: (order.items || []).map(i => i.name),
+    shipping: order.shipping || ''
+  });
+});
+
 app.post('/api/orders', (req, res) => {
   const orders = readJSON('orders.json');
   const order = req.body;
   if (!order.id) order.id = 'ord_' + Date.now() + '_' + Math.random().toString(36).substr(2, 6);
+  if (!order.code) order.code = 'NLF-' + Math.random().toString(36).substr(2, 6).toUpperCase();
   order.createdAt = order.createdAt || Date.now();
   orders.push(order);
   writeJSON('orders.json', orders);
@@ -244,6 +260,29 @@ app.post('/api/inquiries', (req, res) => {
   inquiries.push(inquiry);
   writeJSON('inquiries.json', inquiries);
   res.json({ success: true, inquiry });
+});
+
+// ===== CONTACTS =====
+app.get('/api/contacts', (req, res) => {
+  res.json(readJSON('contacts.json'));
+});
+
+app.post('/api/contacts', (req, res) => {
+  const contacts = readJSON('contacts.json');
+  const contact = req.body;
+  if (!contact.id) contact.id = 'ct_' + Date.now() + '_' + Math.random().toString(36).substr(2, 6);
+  contact.createdAt = contact.createdAt || Date.now();
+  contacts.push(contact);
+  writeJSON('contacts.json', contacts);
+  res.json({ success: true, contact });
+});
+
+app.delete('/api/contacts', (req, res) => {
+  let contacts = readJSON('contacts.json');
+  const id = req.query.id;
+  contacts = contacts.filter(c => c.id !== id);
+  writeJSON('contacts.json', contacts);
+  res.json({ success: true });
 });
 
 // ===== SETTINGS =====
