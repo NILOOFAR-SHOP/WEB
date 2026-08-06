@@ -123,21 +123,42 @@
         .badge { display:inline-block; padding:3px 14px; border-radius:40px; font-size:0.6rem; font-weight:600; letter-spacing:0.5px; text-transform:uppercase; background:var(--badge-bg); border:1px solid var(--border-color); color:var(--badge-text); }
         .badge-gold { background:var(--nilofor-gold); color:#fff; border-color:var(--nilofor-gold); }
 
-        /* ===== CATEGORY PILLS ===== */
-        .category-pills {
-            display:flex; flex-wrap:wrap; gap:8px; margin-bottom:20px;
-            padding-bottom:16px; border-bottom:1px solid var(--border-color);
-        }
-        .cat-pill {
-            padding:7px 18px; border-radius:60px; border:1.5px solid var(--border-color);
-            background:var(--bg-card); color:var(--text-secondary);
-            font-size:0.7rem; font-weight:500; cursor:pointer;
+        /* ===== CATEGORY FILTER (dropdown) ===== */
+        .category-pills { position:relative; margin-bottom:20px; z-index:55; }
+        .cat-filter-btn {
+            display:inline-flex; align-items:center; gap:8px;
+            padding:9px 18px; border-radius:60px;
+            border:1.5px solid var(--border-color);
+            background:var(--bg-card); color:var(--text-primary);
+            font-size:0.75rem; font-weight:600; cursor:pointer;
             transition:all 0.3s cubic-bezier(0.22,1,0.36,1);
-            white-space:nowrap; box-shadow:0 1px 3px rgba(0,0,0,0.02);
+            box-shadow:0 1px 3px rgba(0,0,0,0.02);
         }
-        .cat-pill:hover { border-color:var(--nilofor-gold); color:var(--nilofor-gold); transform:translateY(-2px); box-shadow:0 4px 12px rgba(200,169,106,0.1); }
-        .cat-pill.active { background:var(--nilofor-gold); color:#fff; border-color:var(--nilofor-gold); box-shadow:0 4px 16px rgba(200,169,106,0.25); }
-        .cat-pill .count { font-size:0.6rem; opacity:0.7; margin-right:4px; }
+        .cat-filter-btn:hover, .cat-filter-btn.open { border-color:var(--nilofor-gold); color:var(--nilofor-gold); }
+        .cat-filter-btn .chev { transition:transform 0.3s ease; font-size:0.65rem; }
+        .cat-filter-btn.open .chev { transform:rotate(180deg); }
+        .cat-filter-btn .cat-count {
+            background:var(--bg-hover); color:var(--nilofor-gold);
+            border-radius:40px; padding:1px 9px; font-size:0.62rem; font-weight:600;
+        }
+        .cat-filter-menu {
+            position:absolute; top:calc(100% + 8px); right:0; z-index:60;
+            min-width:280px; max-width:92vw; max-height:340px; overflow-y:auto;
+            background:var(--bg-card); border:1px solid var(--border-color);
+            border-radius:16px; box-shadow:var(--shadow-hover);
+            padding:8px; display:none;
+        }
+        .cat-filter-menu.open { display:block; }
+        .cat-filter-menu .cat-item {
+            display:flex; align-items:center; justify-content:space-between; gap:10px;
+            width:100%; padding:9px 14px; border-radius:10px;
+            font-size:0.75rem; color:var(--text-secondary); cursor:pointer;
+            transition:background 0.2s ease, color 0.2s ease; text-align:right;
+        }
+        .cat-filter-menu .cat-item:hover { background:var(--bg-hover); color:var(--nilofor-gold); }
+        .cat-filter-menu .cat-item.active { background:var(--nilofor-gold); color:#fff; }
+        .cat-filter-menu .cat-item .count { font-size:0.62rem; opacity:0.8; margin-right:4px; background:rgba(0,0,0,0.06); padding:1px 8px; border-radius:30px; }
+        .cat-filter-menu .cat-item.active .count { background:rgba(255,255,255,0.25); }
 
         /* ===== STAGGERED CARD ANIMATION ===== */
         .product-card-full { opacity:0; animation:fadeUpCard 0.5s cubic-bezier(0.22,1,0.36,1) forwards; }
@@ -573,6 +594,24 @@
         .hero-image-side .hero-deco .ring:nth-child(1) { width:120%; height:120%; animation-delay:0s; }
         .hero-image-side .hero-deco .ring:nth-child(2) { width:140%; height:140%; animation-delay:2s; }
         .hero-image-side .hero-deco .ring:nth-child(3) { width:160%; height:160%; animation-delay:4s; }
+        .hero-collage { position:relative; width:88%; aspect-ratio:1/1; }
+        .hero-collage .collage-item {
+            position:absolute; overflow:hidden;
+            border-radius:22px;
+            border:3px solid rgba(255,255,255,0.85);
+            box-shadow:0 18px 50px rgba(61,44,27,0.28);
+            animation:heroFloat 7s ease-in-out infinite;
+        }
+        .hero-collage .collage-item img { width:100%; height:100%; object-fit:cover; border-radius:18px; }
+        .hero-collage .collage-item.c1 { width:54%; height:54%; top:2%; right:4%; z-index:3; animation-delay:0s; }
+        .hero-collage .collage-item.c2 { width:40%; height:40%; bottom:0; left:2%; z-index:2; animation-delay:1.3s; }
+        .hero-collage .collage-item.c3 { width:38%; height:38%; top:6%; left:0; z-index:4; animation-delay:2.6s; }
+        .hero-collage .collage-item.c4 { width:34%; height:34%; bottom:2%; right:30%; z-index:1; animation-delay:3.9s; }
+        .hero-collage .collage-item.c5 { width:22%; height:22%; top:40%; left:38%; z-index:5; border-radius:50%; animation-delay:5.2s; }
+        @keyframes heroFloat {
+            0%,100% { transform:translateY(0) rotate(-2deg); }
+            50% { transform:translateY(-16px) rotate(2deg); }
+        }
 
         @media (max-width:1024px) {
             .hero .container { grid-template-columns:1fr; text-align:center; }
@@ -589,8 +628,10 @@
             .hero .rotating-text { font-size:0.85rem; min-height:60px; }
             .hero-stats .stat h3 { font-size:1.3rem; }
             .hero-stats { gap:16px; }
-            .hero-image-side .hero-deco { max-width:160px; }
-            .hero-image-side .hero-deco i { font-size:3.5rem; }
+            .hero-image-side .hero-deco { max-width:190px; }
+            .hero-collage .collage-item { border-radius:14px; }
+            .hero-collage .collage-item img { border-radius:11px; }
+            .hero-collage .collage-item.c4, .hero-collage .collage-item.c5 { display:none; }
         }
 
         /* ===== MARQUEE ===== */
@@ -835,6 +876,9 @@
         }
         .pagination button.active { background:var(--nilofor-gold); color:#fff; border-color:var(--nilofor-gold); }
         .pagination button:hover { background:var(--bg-hover); transform:translateY(-2px); }
+        .pagination button:disabled { opacity:0.35; cursor:not-allowed; transform:none; }
+        .pagination .page-nav { min-width:38px; }
+        .pagination .page-ellipsis { display:inline-flex; align-items:flex-end; padding-bottom:6px; color:var(--text-muted); font-size:0.7rem; user-select:none; }
 
         /* ===== PRODUCT DETAIL ===== */
         .product-detail-modal .modal-content { max-width:900px; }
@@ -1027,6 +1071,28 @@
             color:var(--text-muted);
             margin:0;
         }
+        .review-slider { position:relative; }
+        .review-track-wrap { overflow:hidden; border-radius:var(--radius-card); }
+        .review-track { display:flex; transition:transform 0.6s cubic-bezier(0.22,1,0.36,1); }
+        .review-slide {
+            flex:0 0 100%; min-width:0; padding:4px;
+            display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:16px;
+            box-sizing:border-box;
+        }
+        .rev-arrow {
+            position:absolute; top:50%; transform:translateY(-50%); z-index:5;
+            width:38px; height:38px; border-radius:50%;
+            background:var(--bg-card); border:1px solid var(--border-color);
+            color:var(--text-secondary); box-shadow:var(--shadow-soft);
+            display:flex; align-items:center; justify-content:center;
+            cursor:pointer; font-size:0.7rem; transition:all 0.3s ease;
+        }
+        .rev-arrow:hover { background:var(--nilofor-gold); color:#fff; border-color:var(--nilofor-gold); }
+        .rev-arrow.prev { right:-8px; }
+        .rev-arrow.next { left:-8px; }
+        .rev-dots { display:flex; justify-content:center; gap:6px; margin-top:18px; flex-wrap:wrap; }
+        .rev-dots button { width:8px; height:8px; border-radius:40px; background:var(--border-hover); transition:all 0.3s ease; padding:0; }
+        .rev-dots button.active { width:22px; background:var(--nilofor-gold); }
 
         /* ===== SURVEY ===== */
         .survey-card {
@@ -1610,13 +1676,16 @@
         }
 
         /* ===== Mobile Base Font & Android Layout Hardening ===== */
+        @media (max-width:768px) {
+            html { font-size:13.5px; }
+        }
         @media (max-width:480px) {
-            html { font-size:14px; }
-            body { font-size:13px; }
+            html { font-size:12.75px; }
+            body { font-size:12px; }
             input, textarea, select { font-size:16px !important; }
         }
         @media (max-width:380px) {
-            html { font-size:13.5px; }
+            html { font-size:12.25px; }
         }
         @supports (height:100dvh) {
             .cart-drawer { height:100dvh; }
@@ -1840,7 +1909,7 @@
                     <div class="ring"></div>
                     <div class="ring"></div>
                     <div class="ring"></div>
-                    <i class="fas fa-star"></i>
+                    <div class="hero-collage" id="heroCollage"></div>
                 </div>
             </div>
         </div>
@@ -1868,7 +1937,7 @@
             <div class="product-page-header">
                 <h2 class="section-title" style="margin-bottom:0;">🔍 تمام محصولات</h2>
                 <div class="filters">
-                    <select id="filterBrand"><option value="">همه برندها</option><option value="لیمون">لیمون</option><option value="پیشگامان">پیشگامان</option><option value="پیشتازان">پیشتازان</option><option value="نیلوفر">نیلوفر</option></select>
+                    <select id="filterBrand"><option value="">همه برندها</option><option value="لیمون">لیمون</option><option value="پیشگامان">پیشگامان</option><option value="پیشتازان">پیشتازان</option><option value="پارس بلور">پارس بلور</option><option value="نیلوفر">نیلوفر</option></select>
                     <select id="filterCategory" style="display:none;"><option value="">همه دسته‌ها</option><option value="بانکه و شیشه">بانکه و شیشه</option><option value="بطری">بطری</option><option value="سبد">سبد</option><option value="سرویس بهداشتی">سرویس بهداشتی</option><option value="سرویس جهیزیه">سرویس جهیزیه</option><option value="سرویس مسافرتی">سرویس مسافرتی</option><option value="سطل و ظروف بزرگ">سطل و ظروف بزرگ</option><option value="ظروف شیشه ای">ظروف شیشه ای</option><option value="ظروف فریزری">ظروف فریزری</option><option value="ظروف ماکروویو">ظروف ماکروویو</option><option value="لوازم آشپزخانه">لوازم آشپزخانه</option><option value="لیوان">لیوان</option><option value="نظم دهنده">نظم دهنده</option></select>
                     <select id="filterSort"><option value="name">مرتب‌سازی: نام</option><option value="price">قیمت</option><option value="stock">موجودی</option><option value="popular">پرفروش‌ترین</option></select>
                     <div class="price-slider-wrap">
@@ -1882,7 +1951,15 @@
                     <input type="text" id="productSearchInput" placeholder="جستجو..." style="font-size:0.7rem;" />
                 </div>
             </div>
-            <div class="category-pills" id="categoryPills"></div>
+            <div class="category-pills" id="categoryPills">
+                <button type="button" class="cat-filter-btn" id="catFilterBtn" onclick="toggleCatFilter()">
+                    <i class="fas fa-layer-group" style="font-size:0.7rem;"></i>
+                    <span id="catFilterLabel">همه دسته‌ها</span>
+                    <span class="cat-count" id="catFilterCount"></span>
+                    <i class="fas fa-chevron-down chev"></i>
+                </button>
+                <div class="cat-filter-menu" id="catFilterMenu"></div>
+            </div>
             <div id="productGridFull" class="product-grid-full">
                 <p style="grid-column:1/-1; text-align:center; padding:50px 0; color:var(--text-muted); font-size:0.95rem;">
                     <i class="fas fa-box-open" style="font-size:2.2rem; display:block; margin-bottom:12px; color:var(--nilofor-gold); opacity:0.4;"></i>
@@ -2372,6 +2449,16 @@
         }
 
         // ===== RENDER PRODUCTS =====
+        function pageWindow(cur, total) {
+            const win = [];
+            const s = Math.max(1, cur - 2);
+            const e = Math.min(total, cur + 2);
+            for (let i = s; i <= e; i++) win.push(i);
+            if (win[0] > 1) win.unshift(1);
+            if (win[win.length - 1] < total) win.push(total);
+            return win;
+        }
+
         function renderProductPage(filterBrand = '', filterCategory = '', sort = 'name', search = '', page = 1,
             priceMin = 0, priceMax = 50000000, country = '', inStock = false) {
             const container = document.getElementById('productGridFull');
@@ -2492,12 +2579,19 @@
 
             let pagHtml = '';
             if (totalPages > 1) {
-                for (let i = 1; i <= totalPages; i++) {
-                    pagHtml += `<button class="${i === page ? 'active' : ''}" data-page="${i}">${i}</button>`;
-                }
+                const pages = pageWindow(page, totalPages);
+                pagHtml += `<button class="page-nav" data-page="${page - 1}" ${page === 1 ? 'disabled' : ''} aria-label="صفحه قبل"><i class="fas fa-chevron-right"></i></button>`;
+                let prev = 0;
+                pages.forEach(p => {
+                    if (p - prev > 1) pagHtml += `<span class="page-ellipsis">…</span>`;
+                    pagHtml += `<button class="${p === page ? 'active' : ''}" data-page="${p}">${p}</button>`;
+                    prev = p;
+                });
+                pagHtml += `<button class="page-nav" data-page="${page + 1}" ${page === totalPages ? 'disabled' : ''} aria-label="صفحه بعد"><i class="fas fa-chevron-left"></i></button>`;
             }
             document.getElementById('pagination').innerHTML = pagHtml;
             document.querySelectorAll('#pagination button').forEach(btn => {
+                if (btn.disabled) return;
                 btn.addEventListener('click', function() {
                     renderProductPage(filterBrand, filterCategory, sort, search, parseInt(this.dataset
                         .page), priceMin, priceMax, country, inStock);
@@ -2582,6 +2676,7 @@
             }
             sel.value = cat || '';
             applyFilters();
+            renderCategoryPills();
             const target = document.getElementById('product-page');
             if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
@@ -2933,23 +3028,61 @@
             }
         }
 
+        let reviewSliderState = null;
+        let reviewResizeTimer = null;
         function renderReviews() {
             const grid = document.getElementById('reviewGrid');
             if (!grid) return;
+            if (reviewSliderState) { clearInterval(reviewSliderState.timer); reviewSliderState = null; }
             const approved = reviews.filter(r => r.approved);
             if (approved.length === 0) {
                 grid.innerHTML =
                     `<div style="grid-column:1/-1; text-align:center; padding:30px 0; color:var(--text-muted); font-size:0.85rem;">هنوز نظری ثبت نشده است.</div>`;
                 return;
             }
-            const show = approved.slice(-20);
+            const list = approved.slice(-20);
             const avg = approved.reduce((s, r) => s + (r.rating || 0), 0) / approved.length;
-            const summary = `<div style="grid-column:1/-1;text-align:center;margin-bottom:10px;font-size:0.75rem;color:var(--text-secondary);">⭐ میانگین امتیاز: <b style="color:var(--nilofor-gold);">${avg.toFixed(1).replace('.', '٫')}</b> از ۵ · بر اساس ${approved.length} نظر</div>`;
-            grid.innerHTML = summary + show.map((r, idx) => {
+            const cards = list.map((r) => {
                 const stars = '★'.repeat(r.rating) + '☆'.repeat(5 - r.rating);
-                return `<div class="testimonial-card animate-fade-up delay-${(idx%3)+1}"><div class="stars">${stars}</div><blockquote>${escapeHtml(r.text)}</blockquote><div class="author"><div class="avatar">${escapeHtml(r.name.charAt(0))}</div><div class="info"><h5>${escapeHtml(r.name)}</h5><p>${r.date || ''}</p></div></div></div>`;
-            }).join('');
+                return `<div class="testimonial-card"><div class="stars">${stars}</div><blockquote>${escapeHtml(r.text)}</blockquote><div class="author"><div class="avatar">${escapeHtml(r.name.charAt(0))}</div><div class="info"><h5>${escapeHtml(r.name)}</h5><p>${r.date || ''}</p></div></div></div>`;
+            });
+            const perView = window.innerWidth < 640 ? 1 : (window.innerWidth < 1100 ? 2 : 3);
+            const slides = [];
+            for (let i = 0; i < cards.length; i += perView) slides.push(cards.slice(i, i + perView));
+            const summary = `<div style="grid-column:1/-1;text-align:center;margin-bottom:14px;font-size:0.75rem;color:var(--text-secondary);">⭐ میانگین امتیاز: <b style="color:var(--nilofor-gold);">${avg.toFixed(1).replace('.', '٫')}</b> از ۵ · بر اساس ${approved.length} نظر</div>`;
+            if (slides.length === 1) {
+                grid.innerHTML = summary + `<div class="review-slider"><div class="review-track-wrap"><div class="review-track"><div class="review-slide" style="grid-template-columns:repeat(${perView},1fr);">${cards.join('')}</div></div></div></div>`;
+                return;
+            }
+            grid.innerHTML = summary +
+                `<div class="review-slider">
+                    <button type="button" class="rev-arrow prev" aria-label="قبلی"><i class="fas fa-chevron-right"></i></button>
+                    <div class="review-track-wrap">
+                        <div class="review-track">${slides.map(s => `<div class="review-slide" style="grid-template-columns:repeat(${perView},1fr);">${s.join('')}</div>`).join('')}</div>
+                    </div>
+                    <button type="button" class="rev-arrow next" aria-label="بعدی"><i class="fas fa-chevron-left"></i></button>
+                </div>
+                <div class="rev-dots">${slides.map((_, i) => `<button type="button" data-i="${i}" aria-label="اسلاید ${i + 1}"></button>`).join('')}</div>`;
+            const track = grid.querySelector('.review-track');
+            const dots = grid.querySelectorAll('.rev-dots button');
+            const slideCount = slides.length;
+            let current = 0;
+            const updateDots = () => dots.forEach((d, j) => d.classList.toggle('active', j === current));
+            const go = (i) => { current = ((i % slideCount) + slideCount) % slideCount; track.style.transform = 'translateX(-' + (current * 100) + '%)'; updateDots(); };
+            grid.querySelector('.rev-arrow.prev').addEventListener('click', () => go(current - 1));
+            grid.querySelector('.rev-arrow.next').addEventListener('click', () => go(current + 1));
+            dots.forEach(d => d.addEventListener('click', () => go(parseInt(d.dataset.i, 10))));
+            const sliderEl = grid.querySelector('.review-slider');
+            const startAuto = () => { if (reviewSliderState) clearInterval(reviewSliderState.timer); reviewSliderState = { timer: setInterval(() => go(current + 1), 5000) }; };
+            sliderEl.addEventListener('mouseenter', () => { if (reviewSliderState) clearInterval(reviewSliderState.timer); });
+            sliderEl.addEventListener('mouseleave', startAuto);
+            startAuto();
+            updateDots();
         }
+        window.addEventListener('resize', function() {
+            clearTimeout(reviewResizeTimer);
+            reviewResizeTimer = setTimeout(function() { if (document.getElementById('reviewGrid')) renderReviews(); }, 250);
+        });
 
         // ===== REVIEW FORM =====
         document.getElementById('reviewForm')?.addEventListener('submit', function(e) {
@@ -5094,6 +5227,7 @@
             if (shopLogo) updateHeaderLogo(shopLogo);
             updateSocialLinks();
             renderCategoryPills();
+            renderHeroCollage();
             renderReviews();
             renderStats();
             updateCartUI();
@@ -5136,24 +5270,59 @@
         }
 
         function renderCategoryPills() {
-            const container = document.getElementById('categoryPills');
-            if (!container) return;
-            const allCats = [...new Set(productsData.map(p => p.category))].sort();
-            const cats = ['همه دسته‌ها', ...allCats];
+            const menu = document.getElementById('catFilterMenu');
+            const label = document.getElementById('catFilterLabel');
+            const countEl = document.getElementById('catFilterCount');
             const activeCat = document.getElementById('filterCategory').value || '';
-            let html = '';
-            cats.forEach(cat => {
-                const val = cat === 'همه دسته‌ها' ? '' : cat;
-                const count = val ? productsData.filter(p => p.category === val).length : productsData.length;
-                html += `<button class="cat-pill${activeCat === val ? ' active' : ''}" data-cat="${val}" onclick="selectCategory('${val}')">${cat}<span class="count">${count}</span></button>`;
+            const allCats = [...new Set(productsData.map(p => p.category))].sort();
+            if (label) label.textContent = activeCat || 'همه دسته‌ها';
+            if (countEl) countEl.textContent = activeCat ? productsData.filter(p => p.category === activeCat).length : productsData.length;
+            if (!menu) return;
+            let html = `<button type="button" class="cat-item${activeCat === '' ? ' active' : ''}" data-cat="" onclick="selectCategory('')">همه دسته‌ها<span class="count">${productsData.length}</span></button>`;
+            allCats.forEach(cat => {
+                const count = productsData.filter(p => p.category === cat).length;
+                html += `<button type="button" class="cat-item${activeCat === cat ? ' active' : ''}" data-cat="${cat}" onclick="selectCategory('${cat}')">${cat}<span class="count">${count}</span></button>`;
             });
-            container.innerHTML = html;
+            menu.innerHTML = html;
         }
+
+        function toggleCatFilter() {
+            const btn = document.getElementById('catFilterBtn');
+            const menu = document.getElementById('catFilterMenu');
+            if (!btn || !menu) return;
+            const open = menu.classList.toggle('open');
+            btn.classList.toggle('open', open);
+        }
+
+        document.addEventListener('click', function(e) {
+            const wrap = document.getElementById('categoryPills');
+            if (wrap && !wrap.contains(e.target)) {
+                document.getElementById('catFilterMenu')?.classList.remove('open');
+                document.getElementById('catFilterBtn')?.classList.remove('open');
+            }
+        });
 
         function selectCategory(cat) {
             document.getElementById('filterCategory').value = cat;
             renderCategoryPills();
             applyFilters();
+        }
+
+        function renderHeroCollage() {
+            const wrap = document.getElementById('heroCollage');
+            if (!wrap) return;
+            if (!productsData || productsData.length === 0) return;
+            const picked = [];
+            const catList = [...new Set(productsData.map(p => p.category))];
+            for (let i = 0; i < catList.length && picked.length < 5; i++) {
+                const p = productsData.find(x => x.category === catList[i] && (x.images && x.images[0]) && !x.images[0].includes('undefined'));
+                if (p) picked.push(p);
+            }
+            if (picked.length === 0) return;
+            wrap.innerHTML = picked.map((p, i) => {
+                const src = (p.images && p.images[0]) || p.image;
+                return `<div class="collage-item c${i + 1}"><img src="${src}" alt="${escapeHtml(p.name)}" loading="eager" decoding="async" /></div>`;
+            }).join('');
         }
 
         // ===== COUNTER ANIMATION =====
@@ -5326,7 +5495,7 @@
                     resultsDiv.innerHTML = results.map(p => {
                         const fp = getFinalPrice(p);
                         const img = p.images && p.images[0] ? p.images[0] : '';
-                        return `<div style="padding:10px 14px;cursor:pointer;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border-color);" onclick="window.location.hash='#product-page';document.getElementById('filterCategory').value='';applyFilters();document.getElementById('headerSearchInput').value='';document.getElementById('liveSearchResults').style.display='none';">
+                        return `<div style="padding:10px 14px;cursor:pointer;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border-color);" onclick="window.location.hash='#product-page';document.getElementById('filterCategory').value='';applyFilters();renderCategoryPills();document.getElementById('headerSearchInput').value='';document.getElementById('liveSearchResults').style.display='none';">
                             <img src="${img}" style="width:36px;height:36px;border-radius:8px;object-fit:cover;" />
                             <div style="flex:1;min-width:0;">
                                 <div style="font-size:0.7rem;color:var(--text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${escapeHtml(p.name)}</div>
@@ -5349,6 +5518,17 @@
             });
             init();
             document.getElementById('cartDrawerOverlay')?.addEventListener('click', closeCartDrawer);
+
+            ['filterBrand', 'filterSort', 'filterCountry'].forEach(id => {
+                document.getElementById(id)?.addEventListener('change', applyFilters);
+            });
+            ['priceMin', 'priceMax'].forEach(id => {
+                document.getElementById(id)?.addEventListener('change', applyFilters);
+            });
+            document.getElementById('filterInStock')?.addEventListener('change', applyFilters);
+            document.getElementById('productSearchInput')?.addEventListener('input', function() {
+                applyFilters();
+            });
         });
 
         const GITHUB_IMG_BASE = 'https://raw.githubusercontent.com/NILOOFAR-SHOP/WEB/master/repo/uploads/';
