@@ -1937,7 +1937,7 @@
             <div class="product-page-header">
                 <h2 class="section-title" style="margin-bottom:0;">🔍 تمام محصولات</h2>
                 <div class="filters">
-                    <select id="filterBrand"><option value="">همه برندها</option><option value="لیمون">لیمون</option><option value="پیشگامان">پیشگامان</option><option value="پیشتازان">پیشتازان</option><option value="پارس بلور">پارس بلور</option><option value="نیلوفر">نیلوفر</option></select>
+                    <select id="filterBrand"><option value="">همه برندها</option></select>
                     <select id="filterCategory" style="display:none;"><option value="">همه دسته‌ها</option><option value="بانکه و شیشه">بانکه و شیشه</option><option value="بطری">بطری</option><option value="سبد">سبد</option><option value="سرویس بهداشتی">سرویس بهداشتی</option><option value="سرویس جهیزیه">سرویس جهیزیه</option><option value="سرویس مسافرتی">سرویس مسافرتی</option><option value="سطل و ظروف بزرگ">سطل و ظروف بزرگ</option><option value="ظروف شیشه ای">ظروف شیشه ای</option><option value="ظروف فریزری">ظروف فریزری</option><option value="ظروف ماکروویو">ظروف ماکروویو</option><option value="لوازم آشپزخانه">لوازم آشپزخانه</option><option value="لیوان">لیوان</option><option value="نظم دهنده">نظم دهنده</option></select>
                     <select id="filterSort"><option value="name">مرتب‌سازی: نام</option><option value="price">قیمت</option><option value="stock">موجودی</option><option value="popular">پرفروش‌ترین</option></select>
                     <div class="price-slider-wrap">
@@ -5269,12 +5269,22 @@
             } catch (e) { console.error('jsonld error:', e); }
         }
 
+        function renderBrandFilter() {
+            const sel = document.getElementById('filterBrand');
+            if (!sel) return;
+            const current = sel.value;
+            const brands = [...new Set(productsData.map(p => p.brand))].filter(Boolean).sort((a, b) => a.localeCompare(b, 'fa'));
+            sel.innerHTML = '<option value="">همه برندها</option>' + brands.map(b => `<option value="${b}">${b}</option>`).join('');
+            if (current && brands.includes(current)) sel.value = current;
+        }
+
         function renderCategoryPills() {
             const menu = document.getElementById('catFilterMenu');
             const label = document.getElementById('catFilterLabel');
             const countEl = document.getElementById('catFilterCount');
             const activeCat = document.getElementById('filterCategory').value || '';
             const allCats = [...new Set(productsData.map(p => p.category))].sort();
+            renderBrandFilter();
             if (label) label.textContent = activeCat || 'همه دسته‌ها';
             if (countEl) countEl.textContent = activeCat ? productsData.filter(p => p.category === activeCat).length : productsData.length;
             if (!menu) return;
