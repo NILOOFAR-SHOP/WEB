@@ -501,7 +501,18 @@
             overflow:hidden;
         }
         .hero .container { display:grid; grid-template-columns:1.2fr 0.8fr; gap:40px; align-items:center; position:relative; z-index:1; }
-        .hero-content { max-width:650px; }
+        .hero-content {
+            max-width:650px;
+            padding:36px 40px;
+            border-radius:26px;
+            background:var(--hero-panel, rgba(255,255,255,0.72));
+            border:1px solid var(--border-color);
+            box-shadow:var(--shadow-soft);
+            -webkit-backdrop-filter:blur(8px);
+            backdrop-filter:blur(8px);
+            position:relative; z-index:2;
+        }
+        [data-theme="dark"] .hero-content { background:rgba(44,36,28,0.78); }
         .hero-badge {
             display:inline-flex; align-items:center; gap:6px;
             padding:5px 16px 5px 12px;
@@ -621,6 +632,7 @@
 
         @media (max-width:1024px) {
             .hero .container { grid-template-columns:1fr; text-align:center; }
+            .hero-content { margin:0 auto; }
             .hero .rotating-text { margin-left:auto; margin-right:auto; }
             .hero .rotating-text .phrase { left:0; right:0; text-align:center; }
             .hero-actions { justify-content:center; }
@@ -630,6 +642,7 @@
         }
         @media (max-width:480px) {
             .hero { padding:80px 0 30px; min-height:70vh; }
+            .hero-content { padding:26px 20px; border-radius:20px; }
             .hero h1 { font-size:1.8rem; }
             .hero .rotating-text { font-size:0.85rem; min-height:60px; }
             .hero-stats .stat h3 { font-size:1.3rem; }
@@ -1214,6 +1227,22 @@
             padding:4px 0; transition:color var(--transition);
         }
         .footer-col a:hover { color:var(--nilofor-gold); }
+        .footer-contact-bar {
+            display:flex; flex-wrap:wrap; justify-content:center; align-items:center;
+            gap:10px 16px; margin:0 0 24px; padding:16px 0;
+            border-top:1px solid var(--border-color);
+            border-bottom:1px solid var(--border-color);
+        }
+        .contact-chip {
+            display:inline-flex; align-items:center; gap:7px;
+            font-size:0.72rem; color:var(--text-secondary);
+            background:var(--bg-card); border:1px solid var(--border-color);
+            border-radius:999px; padding:7px 14px;
+            box-shadow:var(--shadow-soft);
+            transition:border-color var(--transition);
+        }
+        .contact-chip:hover { border-color:var(--nilofor-gold); }
+        .contact-chip i { color:var(--nilofor-gold); font-size:0.75rem; }
         .footer-bottom {
             padding-top:16px; border-top:1px solid var(--border-color);
             display:flex; justify-content:space-between; align-items:center;
@@ -1700,6 +1729,9 @@
             .newsletter-form input { min-width:100% !important; }
             .footer { padding:20px 0 14px !important; }
             .footer-grid { grid-template-columns:1fr !important; gap:14px !important; margin-bottom:14px !important; }
+            .footer-contact-bar { gap:8px !important; padding:12px 0 !important; }
+            .contact-chip { padding:6px 10px !important; font-size:0.65rem !important; max-width:100% !important; }
+            .contact-chip span { word-break:break-word !important; }
             .trust-badges { gap:8px !important; padding:10px !important; }
             .trust-badges .trust-item { font-size:0.6rem !important; }
             .pagination { gap:3px !important; margin-top:14px !important; }
@@ -2074,13 +2106,6 @@
                 <div class="footer-brand">
                     <h3><span class="gold">نیلوفر</span></h3>
                     <p>مرجع تخصصی محصولات با کیفیت. با بیش از ۲۵ سال تجربه در خدمت شما.</p>
-                    <div class="contact-info" style="margin-top:10px;">
-                        <div class="contact-row"><i class="fas fa-store"></i> آدرس فروشگاه: مشهد، خیابان امام رضا، دانش ۱۱، سرای بلور، فروشگاه نیلوفر</div>
-                        <div class="contact-row"><i class="fas fa-phone"></i> ۰۵۱-۳۸۵۱۶۱۶۲ · ۰۵۱-۳۸۵۱۱۰۶۵</div>
-                        <div class="contact-row"><i class="fas fa-mobile-alt"></i> سفارش: ۰۹۱۵۳۱۶۵۰۹۰</div>
-                        <div class="contact-row"><i class="fas fa-user-tie"></i> مدیریت: ۰۹۱۲۴۸۳۴۴۷۶</div>
-                        <div class="contact-row"><i class="fas fa-comment"></i> پیشنهادات: ۰۹۱۵۳۱۰۴۷۲۷</div>
-                    </div>
                     <div class="contact-social-links">
                         <a href="#" class="rubika-link" id="footerRubika" target="_blank"><i class="fas fa-comment"></i> روبیکا</a>
                         <a href="#" class="instagram-link" id="footerInstagram" target="_blank"><i class="fab fa-instagram"></i> اینستاگرام</a>
@@ -2090,6 +2115,13 @@
                 </div>
                 <div class="footer-col"><h5>دسترسی سریع</h5><a href="#product-page">محصولات</a><a href="#reviews">نظرات</a><a href="#survey">نظرسنجی</a></div>
                 <div class="footer-col"><h5>خدمات</h5><a href="#" onclick="document.getElementById('consultBtn').click(); return false;">مشاوره</a><a href="#" onclick="document.getElementById('heroOrderBtn').click(); return false;">سفارش</a></div>
+            </div>
+            <div class="footer-contact-bar">
+                <div class="contact-chip"><i class="fas fa-store"></i><span>آدرس: مشهد، خیابان امام رضا، دانش ۱۱، سرای بلور، فروشگاه نیلوفر</span></div>
+                <div class="contact-chip"><i class="fas fa-phone"></i><span>۰۵۱-۳۸۵۱۶۱۶۲ · ۰۵۱-۳۸۵۱۱۰۶۵</span></div>
+                <div class="contact-chip"><i class="fas fa-mobile-alt"></i><span>سفارش: ۰۹۱۵۳۱۶۵۰۹۰</span></div>
+                <div class="contact-chip"><i class="fas fa-user-tie"></i><span>مدیریت: ۰۹۱۲۴۸۳۴۴۷۶</span></div>
+                <div class="contact-chip"><i class="fas fa-comment"></i><span>پیشنهادات: ۰۹۱۵۳۱۰۴۷۲۷</span></div>
             </div>
             <div class="trust-badges">
                 <div class="trust-item"><i class="fas fa-shield-alt"></i> <span>ضمانت کیفیت کالا</span></div>
