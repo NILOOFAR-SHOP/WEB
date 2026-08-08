@@ -1025,8 +1025,37 @@
         }
 
         /* ===== REVIEWS ===== */
-        .testimonial-grid {
-            display:grid; grid-template-columns:repeat(auto-fill, minmax(240px,1fr)); gap:20px;
+        .review-full-grid {
+            width:100%; box-sizing:border-box; padding:0 16px;
+        }
+        .review-summary {
+            text-align:center; margin-bottom:16px; font-size:0.75rem; color:var(--text-secondary);
+        }
+        .review-summary b { color:var(--nilofor-gold); }
+        .review-slider-full {
+            position:relative; width:100%; max-width:880px; margin:0 auto;
+        }
+        .review-full-viewport {
+            display:grid; overflow:hidden; border-radius:var(--radius-card);
+        }
+        .review-full-slide {
+            grid-area:1/1; min-width:0;
+            opacity:0; transform:translateY(18px) scale(0.97);
+            transition:opacity 0.55s ease, transform 0.55s ease;
+            pointer-events:none;
+        }
+        .review-full-slide.active {
+            opacity:1; transform:none; pointer-events:auto;
+        }
+        .review-card { text-align:center; }
+        @media (min-width:768px) {
+            .review-card {
+                display:grid; grid-template-columns:1fr auto; column-gap:28px; row-gap:6px; align-items:center;
+                text-align:right; padding:34px 44px;
+            }
+            .review-card .stars { grid-column:1/-1; text-align:center; margin-bottom:4px; }
+            .review-card blockquote { margin:0; -webkit-line-clamp:4; }
+            .review-card .author { margin:0; padding:0; border-top:none; }
         }
         .testimonial-card {
             background:var(--bg-card);
@@ -1077,14 +1106,6 @@
             color:var(--text-muted);
             margin:0;
         }
-        .review-slider { position:relative; }
-        .review-track-wrap { overflow:hidden; border-radius:var(--radius-card); }
-        .review-track { display:flex; transition:transform 0.6s cubic-bezier(0.22,1,0.36,1); }
-        .review-slide {
-            flex:0 0 100%; min-width:0; padding:4px;
-            display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:16px;
-            box-sizing:border-box;
-        }
         .rev-arrow {
             position:absolute; top:50%; transform:translateY(-50%); z-index:5;
             width:38px; height:38px; border-radius:50%;
@@ -1094,8 +1115,8 @@
             cursor:pointer; font-size:0.7rem; transition:all 0.3s ease;
         }
         .rev-arrow:hover { background:var(--nilofor-gold); color:#fff; border-color:var(--nilofor-gold); }
-        .rev-arrow.prev { right:-8px; }
-        .rev-arrow.next { left:-8px; }
+        .rev-arrow.prev { right:-16px; }
+        .rev-arrow.next { left:-16px; }
         .rev-dots { display:flex; justify-content:center; gap:6px; margin-top:18px; flex-wrap:wrap; }
         .rev-dots button { width:8px; height:8px; border-radius:40px; background:var(--border-hover); transition:all 0.3s ease; padding:0; }
         .rev-dots button.active { width:22px; background:var(--nilofor-gold); }
@@ -1646,7 +1667,6 @@
             .product-card-full .add-btn { width:26px !important; height:26px !important; font-size:0.6rem !important; min-width:26px !important; min-height:26px !important; }
             .product-card-full .badge-tag { font-size:0.45rem !important; padding:1px 6px !important; top:3px !important; right:3px !important; }
             .product-card-full .badge-guarantee { font-size:0.4rem !important; padding:1px 5px !important; top:3px !important; left:3px !important; }
-            .testimonial-grid { grid-template-columns:1fr 1fr !important; gap:8px !important; }
             .testimonial-card { padding:10px 8px !important; border-radius:12px !important; }
             .testimonial-card .stars { font-size:0.7rem !important; margin-bottom:4px !important; }
             .testimonial-card blockquote { font-size:0.62rem !important; line-height:1.5 !important; margin:0 !important; -webkit-line-clamp:2 !important; }
@@ -2002,8 +2022,8 @@
     <section class="section" id="reviews" style="padding-top:0;">
         <div class="container">
             <div class="section-header animate-fade-up"><div><span class="badge badge-gold">نظرات</span><h2 class="section-title">نظرات مشتریان</h2></div><button class="btn btn-gold btn-sm" id="addReviewBtn"><i class="fas fa-star"></i> ثبت نظر</button></div>
-            <div class="testimonial-grid" id="reviewGrid"></div>
         </div>
+        <div class="review-full-grid" id="reviewGrid"></div>
     </section>
 
     <!-- ===== SURVEY ===== -->
@@ -2055,20 +2075,6 @@
                 </div>
                 <div class="footer-col"><h5>دسترسی سریع</h5><a href="#product-page">محصولات</a><a href="#reviews">نظرات</a><a href="#survey">نظرسنجی</a></div>
                 <div class="footer-col"><h5>خدمات</h5><a href="#" onclick="document.getElementById('consultBtn').click(); return false;">مشاوره</a><a href="#" onclick="document.getElementById('heroOrderBtn').click(); return false;">سفارش</a></div>
-                <div class="footer-col"><h5>پیگیری سفارش</h5>
-                    <div style="display:flex;gap:6px;margin-top:6px;">
-                        <input type="text" id="trackInput" placeholder="کد پیگیری (مثل NLF-ABC123)" style="flex:1;min-width:0;padding:8px 10px;border-radius:8px;background:var(--bg-input);border:1px solid var(--border-color);color:var(--text-primary);font-size:0.7rem;" />
-                        <button class="btn btn-sm btn-gold" onclick="trackOrder()">پیگیری</button>
-                    </div>
-                    <div id="trackResult" style="font-size:0.7rem;color:var(--text-secondary);margin-top:8px;line-height:1.7;"></div>
-                </div>
-                <div class="footer-col"><h5>ارسال پیام سریع</h5>
-                    <input type="text" id="ctName" placeholder="نام شما" style="width:100%;margin-top:6px;box-sizing:border-box;padding:8px 10px;border-radius:8px;background:var(--bg-input);border:1px solid var(--border-color);color:var(--text-primary);font-size:0.7rem;" />
-                    <input type="tel" id="ctPhone" placeholder="شماره تماس" style="width:100%;margin-top:6px;box-sizing:border-box;padding:8px 10px;border-radius:8px;background:var(--bg-input);border:1px solid var(--border-color);color:var(--text-primary);font-size:0.7rem;" />
-                    <textarea id="ctMsg" rows="2" placeholder="پیام شما..." style="width:100%;margin-top:6px;box-sizing:border-box;padding:8px 10px;border-radius:8px;background:var(--bg-input);border:1px solid var(--border-color);color:var(--text-primary);font-size:0.7rem;resize:vertical;"></textarea>
-                    <button class="btn btn-gold btn-sm" onclick="submitContact()" style="width:100%;justify-content:center;margin-top:6px;">ارسال پیام</button>
-                    <div id="ctResult" style="font-size:0.7rem;margin-top:6px;color:var(--text-secondary);line-height:1.7;"></div>
-                </div>
             </div>
             <div class="trust-badges">
                 <div class="trust-item"><i class="fas fa-shield-alt"></i> <span>ضمانت کیفیت کالا</span></div>
@@ -3035,7 +3041,6 @@
         }
 
         let reviewSliderState = null;
-        let reviewResizeTimer = null;
         function renderReviews() {
             const grid = document.getElementById('reviewGrid');
             if (!grid) return;
@@ -3050,36 +3055,35 @@
             const avg = approved.reduce((s, r) => s + (r.rating || 0), 0) / approved.length;
             const cards = list.map((r) => {
                 const stars = '★'.repeat(r.rating) + '☆'.repeat(5 - r.rating);
-                return `<div class="testimonial-card"><div class="stars">${stars}</div><blockquote>${escapeHtml(r.text)}</blockquote><div class="author"><div class="avatar">${escapeHtml(r.name.charAt(0))}</div><div class="info"><h5>${escapeHtml(r.name)}</h5><p>${r.date || ''}</p></div></div></div>`;
+                return `<div class="testimonial-card review-card"><div class="stars">${stars}</div><blockquote>${escapeHtml(r.text)}</blockquote><div class="author"><div class="avatar">${escapeHtml(r.name.charAt(0))}</div><div class="info"><h5>${escapeHtml(r.name)}</h5><p>${r.date || ''}</p></div></div></div>`;
             });
-            const perView = window.innerWidth < 640 ? 1 : (window.innerWidth < 1100 ? 2 : 3);
-            const slides = [];
-            for (let i = 0; i < cards.length; i += perView) slides.push(cards.slice(i, i + perView));
-            const summary = `<div style="grid-column:1/-1;text-align:center;margin-bottom:14px;font-size:0.75rem;color:var(--text-secondary);">⭐ میانگین امتیاز: <b style="color:var(--nilofor-gold);">${avg.toFixed(1).replace('.', '٫')}</b> از ۵ · بر اساس ${approved.length} نظر</div>`;
-            if (slides.length === 1) {
-                grid.innerHTML = summary + `<div class="review-slider"><div class="review-track-wrap"><div class="review-track"><div class="review-slide" style="grid-template-columns:repeat(${perView},1fr);">${cards.join('')}</div></div></div></div>`;
+            const summary = `<div class="review-summary">⭐ میانگین امتیاز: <b>${avg.toFixed(1).replace('.', '٫')}</b> از ۵ · بر اساس ${approved.length} نظر</div>`;
+            if (cards.length === 1) {
+                grid.innerHTML = summary + `<div class="review-slider-full"><div class="review-full-viewport"><div class="review-full-slide active">${cards[0]}</div></div></div>`;
                 return;
             }
             grid.innerHTML = summary +
-                `<div class="review-slider">
+                `<div class="review-slider-full">
                     <button type="button" class="rev-arrow prev" aria-label="قبلی"><i class="fas fa-chevron-right"></i></button>
-                    <div class="review-track-wrap">
-                        <div class="review-track">${slides.map(s => `<div class="review-slide" style="grid-template-columns:repeat(${perView},1fr);">${s.join('')}</div>`).join('')}</div>
-                    </div>
+                    <div class="review-full-viewport">${cards.map((c, i) => `<div class="review-full-slide${i === 0 ? ' active' : ''}">${c}</div>`).join('')}</div>
                     <button type="button" class="rev-arrow next" aria-label="بعدی"><i class="fas fa-chevron-left"></i></button>
                 </div>
-                <div class="rev-dots">${slides.map((_, i) => `<button type="button" data-i="${i}" aria-label="اسلاید ${i + 1}"></button>`).join('')}</div>`;
-            const track = grid.querySelector('.review-track');
+                <div class="rev-dots">${cards.map((_, i) => `<button type="button" data-i="${i}" aria-label="نظر ${i + 1}"></button>`).join('')}</div>`;
+            const slidesEls = Array.from(grid.querySelectorAll('.review-full-slide'));
             const dots = grid.querySelectorAll('.rev-dots button');
-            const slideCount = slides.length;
+            const slideCount = cards.length;
             let current = 0;
             const updateDots = () => dots.forEach((d, j) => d.classList.toggle('active', j === current));
-            const go = (i) => { current = ((i % slideCount) + slideCount) % slideCount; track.style.transform = 'translateX(-' + (current * 100) + '%)'; updateDots(); };
+            const go = (i) => {
+                current = ((i % slideCount) + slideCount) % slideCount;
+                slidesEls.forEach((s, j) => s.classList.toggle('active', j === current));
+                updateDots();
+            };
             grid.querySelector('.rev-arrow.prev').addEventListener('click', () => go(current - 1));
             grid.querySelector('.rev-arrow.next').addEventListener('click', () => go(current + 1));
             dots.forEach(d => d.addEventListener('click', () => go(parseInt(d.dataset.i, 10))));
-            const sliderEl = grid.querySelector('.review-slider');
-            const startAuto = () => { if (reviewSliderState) clearInterval(reviewSliderState.timer); reviewSliderState = { timer: setInterval(() => go(current + 1), 5000) }; };
+            const sliderEl = grid.querySelector('.review-slider-full');
+            const startAuto = () => { if (reviewSliderState) clearInterval(reviewSliderState.timer); reviewSliderState = { timer: setInterval(() => go(current + 1), 2000) }; };
             sliderEl.addEventListener('mouseenter', () => { if (reviewSliderState) clearInterval(reviewSliderState.timer); });
             sliderEl.addEventListener('mouseleave', startAuto);
             startAuto();
@@ -3237,47 +3241,6 @@
         });
 
         // ===== TRACK ORDER =====
-        async function trackOrder() {
-            const code = (document.getElementById('trackInput').value || '').trim().toUpperCase();
-            const res = document.getElementById('trackResult');
-            if (!code) { res.innerHTML = '<span style="color:#ef4444;">کد پیگیری را وارد کنید.</span>'; return; }
-            const local = orders.find(o => String(o.code || '').toUpperCase() === code);
-            if (local) {
-                res.innerHTML = `<span style="color:#22c55e;">✅ سفارش <b>${local.code}</b> · وضعیت: ${escapeHtml(local.status || 'جدید')}</span><br><span>تاریخ: ${local.date || ''} · مبلغ: ${formatPrice(local.total)}</span>`;
-                return;
-            }
-            res.innerHTML = '<span>در حال جستجو...</span>';
-            try {
-                const r = await fetch(API_BASE + '/orders/track?code=' + encodeURIComponent(code));
-                if (r.status === 404) { res.innerHTML = '<span style="color:#ef4444;">سفارشی با این کد یافت نشد.</span>'; return; }
-                if (!r.ok) throw new Error('HTTP ' + r.status);
-                const o = await r.json();
-                res.innerHTML = `<span style="color:#22c55e;">✅ سفارش <b>${escapeHtml(o.code)}</b> · وضعیت: ${escapeHtml(o.status)}</span><br><span>تاریخ: ${o.date || ''} · مبلغ: ${formatPrice(o.total)}</span>`;
-            } catch (e) {
-                res.innerHTML = '<span style="color:#ef4444;">خطا در ارتباط با سرور. بعداً تلاش کنید.</span>';
-            }
-        }
-
-        // ===== QUICK CONTACT =====
-        async function submitContact() {
-            const name = document.getElementById('ctName').value.trim();
-            const phone = normalizePhone(document.getElementById('ctPhone').value.trim());
-            const msg = document.getElementById('ctMsg').value.trim();
-            const res = document.getElementById('ctResult');
-            if (!name || !msg) { res.innerHTML = '<span style="color:#ef4444;">نام و پیام الزامی است.</span>'; return; }
-            if (phone && !isValidIranPhone(phone)) { res.innerHTML = '<span style="color:#ef4444;">شماره موبایل معتبر نیست.</span>'; return; }
-            const c = { id: generateId(), name, phone, message: msg, date: getPersianDate(), createdAt: Date.now() };
-            contacts.push(c);
-            localStorage.setItem('nilofor_contacts', JSON.stringify(contacts));
-            try {
-                await fetch(API_BASE + '/contacts', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(c) });
-            } catch (e) {}
-            res.innerHTML = '<span style="color:#22c55e;">✅ پیام شما ثبت شد. به زودی پاسخ می‌دهیم.</span>';
-            document.getElementById('ctName').value = '';
-            document.getElementById('ctPhone').value = '';
-            document.getElementById('ctMsg').value = '';
-        }
-
         // ===== PRODUCT SHARE =====
         function getProductShareUrl(productId) {
             return location.origin + location.pathname + '#p=' + encodeURIComponent(productId);
