@@ -2141,9 +2141,9 @@
 
     <!-- ===== MODALS ===== -->
     <div id="loginModal" class="modal"><div class="modal-content"><span class="close-modal">&times;</span><h3><i class="fas fa-user"></i> ورود / ثبت‌نام</h3><form id="loginForm"><div class="form-group"><label class="field-label"><i class="fas fa-phone"></i> شماره موبایل *</label><input type="tel" id="loginPhone" placeholder="۰۹۱۲۳۴۵۶۷۸۹" required /></div><div class="form-group" id="otpSection" style="display:none;"><label class="field-label"><i class="fas fa-key"></i> کد تایید *</label><input type="text" id="loginOtp" placeholder="کد ۶ رقمی" maxlength="6" /></div><button type="submit" class="btn btn-gold" style="width:100%; justify-content:center;"><i class="fas fa-paper-plane"></i> ارسال کد تایید</button><div id="loginResult" style="margin-top:14px; text-align:center;"></div></form></div></div>
-    <div id="orderModal" class="modal"><div class="modal-content"><span class="close-modal">&times;</span><h3><i class="fas fa-shopping-cart"></i> ثبت سفارش</h3><form id="orderForm"><div class="form-row-2"><div class="form-group"><label class="field-label"><i class="fas fa-user"></i> نام کامل *</label><input type="text" id="orderName" placeholder="نام و نام خانوادگی" required /></div><div class="form-group"><label class="field-label"><i class="fas fa-phone"></i> شماره تماس *</label><input type="tel" id="orderPhone" placeholder="۰۹۱۲۳۴۵۶۷۸۹" required /></div></div><div class="form-row-2"><div class="form-group"><label class="field-label"><i class="fas fa-envelope"></i> ایمیل</label><input type="email" id="orderEmail" placeholder="example@email.com" /></div><div class="form-group"><label class="field-label"><i class="fab fa-instagram"></i> اینستاگرام</label><input type="text" id="orderInstagram" placeholder="نام کاربری" /></div></div><div class="form-row-2"><div class="form-group"><label class="field-label"><i class="fas fa-tag"></i> نوع سفارش *</label><select id="orderType" required><option value="product">خرید محصول</option><option value="consultation">مشاوره</option></select></div><div class="form-group"><label class="field-label"><i class="fas fa-box"></i> نام محصول</label><input type="text" id="orderProductName" placeholder="نام محصول" /></div></div><div class="form-group"><label class="field-label"><i class="fas fa-sort-numeric-up"></i> تعداد</label><input type="number" id="orderQuantity" min="1" value="1" /></div><div class="form-group"><label class="field-label"><i class="fas fa-truck"></i> روش ارسال</label><select id="orderShipping"><option value="post">پست (۵۰,۰۰۰ تومان)</option><option value="tipax">تیپاکس (۷۰,۰۰۰ تومان)</option><option value="motobike">پیک موتوری (۱۰۰,۰۰۰ تومان)</option></select></div><div class="form-group"><label class="field-label"><i class="fas fa-credit-card"></i> روش پرداخت</label><select id="orderPayment"><option value="online">پرداخت آنلاین</option><option value="card">کارت به کارت</option><option value="cod">پرداخت در محل</option></select></div><div class="form-group"><label class="field-label"><i class="fas fa-comment"></i> توضیحات</label><textarea id="orderMessage" rows="3" placeholder="توضیحات تکمیلی..."></textarea></div><div class="checkbox-group"><input type="checkbox" id="orderAgree" required /><label for="orderAgree">شرایط و قوانین را می‌پذیرم</label></div><button type="submit" class="btn btn-gold" style="width:100%; justify-content:center;"><i class="fas fa-check"></i> ثبت سفارش</button><div id="orderResult" style="margin-top:14px; text-align:center;"></div></form></div></div>
+    <div id="orderModal" class="modal"><div class="modal-content"><span class="close-modal">&times;</span><h3><i class="fas fa-shopping-cart"></i> ثبت سفارش</h3><form id="orderForm"><div class="form-row-2"><div class="form-group"><label class="field-label"><i class="fas fa-user"></i> نام کامل *</label><input type="text" id="orderName" placeholder="نام و نام خانوادگی" required /></div><div class="form-group"><label class="field-label"><i class="fas fa-phone"></i> شماره تماس *</label><input type="tel" id="orderPhone" placeholder="۰۹۱۲۳۴۵۶۷۸۹" required /></div></div><div class="form-row-2"><div class="form-group"><label class="field-label"><i class="fas fa-envelope"></i> ایمیل</label><input type="email" id="orderEmail" placeholder="example@email.com" /></div><div class="form-group"><label class="field-label"><i class="fab fa-instagram"></i> اینستاگرام</label><input type="text" id="orderInstagram" placeholder="نام کاربری" /></div></div><div class="form-row-2"><div class="form-group"><label class="field-label"><i class="fas fa-tag"></i> نوع سفارش *</label><select id="orderType" required><option value="product">خرید محصول</option><option value="consultation">مشاوره</option></select></div><div class="form-group"><label class="field-label"><i class="fas fa-box"></i> نام محصول</label><input type="text" id="orderProductName" placeholder="نام محصول" /></div></div><div class="form-group"><label class="field-label"><i class="fas fa-sort-numeric-up"></i> تعداد</label><input type="number" id="orderQuantity" min="1" value="1" /></div><div class="form-group"><label class="field-label"><i class="fas fa-truck"></i> روش ارسال</label><select id="orderShipping"><option value="post">پست (۵۰,۰۰۰ تومان)</option><option value="tipax">تیپاکس (۷۰,۰۰۰ تومان)</option><option value="motobike">پیک موتوری (۱۰۰,۰۰۰ تومان)</option></select></div><div class="form-group"><label class="field-label"><i class="fas fa-credit-card"></i> روش پرداخت</label><select id="orderPayment"><option value="online">پرداخت آنلاین</option><option value="card">کارت به کارت</option><option value="cod">پرداخت در محل</option></select></div><div class="form-row-2"><div class="form-group"><label class="field-label"><i class="fas fa-map-marker-alt"></i> استان *</label><select id="orderProvince" required><option value="">انتخاب استان...</option><option>اردبیل</option><option>اصفهان</option><option>البرز</option><option>ایلام</option><option>آذربایجان شرقی</option><option>آذربایجان غربی</option><option>بوشهر</option><option>تهران</option><option>چهارمحال و بختیاری</option><option>خراسان جنوبی</option><option>خراسان رضوی</option><option>خراسان شمالی</option><option>خوزستان</option><option>زنجان</option><option>سمنان</option><option>سیستان و بلوچستان</option><option>فارس</option><option>قزوین</option><option>قم</option><option>کردستان</option><option>کرمان</option><option>کرمانشاه</option><option>کهگیلویه و بویراحمد</option><option>گلستان</option><option>گیلان</option><option>لرستان</option><option>مازندران</option><option>مرکزی</option><option>هرمزگان</option><option>همدان</option><option>یزد</option></select></div><div class="form-group"><label class="field-label"><i class="fas fa-city"></i> شهر *</label><input type="text" id="orderCity" placeholder="نام شهر" required /></div></div><div class="form-group"><label class="field-label"><i class="fas fa-home"></i> آدرس کامل *</label><textarea id="orderAddress" rows="2" placeholder="خیابان، کوچه، پلاک، واحد..." required></textarea></div><div class="form-row-2"><div class="form-group"><label class="field-label"><i class="fas fa-mail-bulk"></i> کد پستی</label><input type="text" id="orderPostalCode" placeholder="کد پستی ۱۰ رقمی" maxlength="10" inputmode="numeric" /></div><div class="form-group"><label class="field-label"><i class="fas fa-user-tie"></i> گیرنده</label><input type="text" id="orderRecipient" placeholder="نام تحویل گیرنده (پیش‌فرض: خودتان)" /></div></div><div class="form-group"><label class="field-label"><i class="fas fa-comment"></i> توضیحات</label><textarea id="orderMessage" rows="3" placeholder="توضیحات تکمیلی..."></textarea></div><div class="checkbox-group"><input type="checkbox" id="orderAgree" required /><label for="orderAgree">شرایط و قوانین را می‌پذیرم</label></div><button type="submit" class="btn btn-gold" style="width:100%; justify-content:center;"><i class="fas fa-check"></i> ثبت سفارش</button><div id="orderResult" style="margin-top:14px; text-align:center;"></div></form></div></div>
     <div id="reviewModal" class="modal"><div class="modal-content"><span class="close-modal">&times;</span><h3><i class="fas fa-star"></i> ثبت نظر</h3><form id="reviewForm"><div class="form-group"><label class="field-label"><i class="fas fa-user"></i> نام</label><input type="text" id="reviewName" placeholder="نام شما" required /></div><div class="form-group"><label class="field-label">امتیاز</label><div class="star-rating" id="starRating"><span data-value="1">☆</span><span data-value="2">☆</span><span data-value="3">☆</span><span data-value="4">☆</span><span data-value="5">☆</span></div></div><div class="form-group"><label class="field-label"><i class="fas fa-comment"></i> نظر شما</label><textarea id="reviewText" rows="3" placeholder="نظر خود را بنویسید..." required></textarea></div><div class="checkbox-group"><input type="checkbox" id="reviewAgree" required /><label for="reviewAgree">شرایط و قوانین را می‌پذیرم</label></div><button type="submit" class="btn btn-gold" style="width:100%; justify-content:center;"><i class="fas fa-paper-plane"></i> ثبت نظر</button><div id="reviewResult" style="margin-top:14px; text-align:center;"></div></form></div></div>
-    <div id="cartModal" class="modal"><div class="modal-content"><span class="close-modal">&times;</span><h3><i class="fas fa-shopping-bag"></i> سبد خرید</h3><div id="cartContent"><p style="color:var(--text-muted); text-align:center; padding:24px 0;">سبد خرید شما خالی است.</p></div><div id="cartTotal" style="display:none; margin-top:14px; padding-top:14px; border-top:1px solid var(--border-color);"><div style="display:flex; justify-content:space-between; font-weight:700; font-size:1.1rem;"><span>جمع کل:</span><span id="cartTotalAmount" class="text-gold">۰</span></div><div style="display:flex; justify-content:space-between; font-size:0.8rem; color:var(--text-muted);"><span>هزینه ارسال:</span><span id="cartShippingAmount">۰</span></div><div style="display:flex; justify-content:space-between; font-size:0.8rem; color:var(--text-muted);"><span>مالیات (۹٪):</span><span id="cartTaxAmount">۰</span></div><div style="display:flex; justify-content:space-between; font-weight:700; font-size:1.1rem; border-top:1px solid var(--border-color); padding-top:6px; margin-top:6px;"><span>قابل پرداخت:</span><span id="cartFinalAmount" class="text-gold">۰</span></div><div class="form-group" style="margin-top:10px;"><label class="field-label">کد تخفیف</label><div style="display:flex;gap:6px;"><input type="text" id="couponInput" placeholder="کد تخفیف" style="flex:1; font-size:0.75rem;" /><button class="btn btn-sm btn-gold" onclick="applyCoupon()">اعمال</button></div><div id="couponMsg" style="font-size:0.7rem;color:var(--text-muted);"></div></div><button class="btn btn-gold" style="width:100%; justify-content:center; margin-top:10px;" id="checkoutBtn"><i class="fas fa-arrow-left"></i> نهایی کردن</button></div></div></div>
+    <div id="cartModal" class="modal"><div class="modal-content"><span class="close-modal">&times;</span><h3><i class="fas fa-shopping-bag"></i> سبد خرید</h3><div id="cartContent"><p style="color:var(--text-muted); text-align:center; padding:24px 0;">سبد خرید شما خالی است.</p></div><div id="cartTotal" style="display:none; margin-top:14px; padding-top:14px; border-top:1px solid var(--border-color);"><div style="font-size:0.8rem; color:var(--text-secondary); text-align:center; padding:8px 0; line-height:1.8;"><i class="fas fa-phone" style="color:var(--nilofor-gold);"></i> مبلغ نهایی سفارش پس از <b>استعلام قیمت</b> اعلام می‌شود.<br/><span style="font-size:0.68rem; color:var(--text-muted);">کارشناسان نیلوفر با شما تماس می‌گیرند.</span></div><button class="btn btn-gold" style="width:100%; justify-content:center; margin-top:12px;" id="checkoutBtn"><i class="fas fa-arrow-left"></i> ثبت سفارش</button></div></div></div>
     <div id="productDetailModal" class="modal product-detail-modal"><div class="modal-content"><span class="close-modal">&times;</span><div id="productDetailContent"></div></div></div>
     <div id="wishlistModal" class="modal"><div class="modal-content"><span class="close-modal">&times;</span><h3><i class="fas fa-heart"></i> لیست علاقه‌مندی‌ها</h3><div id="wishlistContent"><p style="color:var(--text-muted); text-align:center; padding:24px 0;">هیچ محصولی در لیست علاقه‌مندی‌ها نیست.</p></div></div></div>
     <div id="surveyModal" class="modal"><div class="modal-content"><span class="close-modal">&times;</span><h3><i class="fas fa-poll"></i> نظرسنجی رضایت مشتری</h3><form id="surveyForm"><div class="form-group"><label class="field-label">از خرید خود چقدر راضی هستید؟</label><div class="survey-stars" id="surveyStars"><span data-value="1">☆</span><span data-value="2">☆</span><span data-value="3">☆</span><span data-value="4">☆</span><span data-value="5">☆</span></div></div><div class="form-group"><label class="field-label"><i class="fas fa-comment"></i> پیشنهادات شما</label><textarea id="surveyText" rows="3" placeholder="نظر یا پیشنهاد خود را بنویسید..."></textarea></div><button type="submit" class="btn btn-gold" style="width:100%; justify-content:center;"><i class="fas fa-paper-plane"></i> ارسال نظرسنجی</button><div id="surveyResultModal" style="margin-top:14px; text-align:center;"></div></form></div></div>
@@ -2602,7 +2602,7 @@
                         `<div class="image-nav">${p.images.map((_, idx) => `<span class="${idx===0?'active':''}" data-img="${idx}"></span>`).join('')}</div>`;
                 }
 
-                const canAddToCart = (p.stock > 0 && p.showPrice !== false);
+                const canAddToCart = (p.stock > 0);
                 const addBtnDisabled = !canAddToCart ? 'disabled style="opacity:0.5;cursor:not-allowed;"' : '';
 
                 return `<div class="product-card-full" data-id="${p.id}" style="animation-delay:${idx * 0.05}s;">
@@ -2797,7 +2797,6 @@
             const product = productsData.find(p => p.id === productId);
             if (!product) return showToast('محصول یافت نشد', 'error');
             if (product.stock <= 0) return showToast('این محصول موجود نیست', 'error');
-            if (product.showPrice === false) return showToast('برای این محصول استعلام قیمت لازم است', 'error');
             const existing = cart.find(item => item.id === productId);
             const price = getFinalPrice(product);
             if (existing) {
@@ -2839,8 +2838,7 @@
         function updateCartUI() {
             const count = cart.reduce((s, i) => s + i.qty, 0);
             document.getElementById('cartCount').textContent = count;
-            const total = cart.reduce((s, i) => s + i.qty * i.price, 0);
-            document.getElementById('cartMiniPrice').textContent = total > 0 ? formatPrice(total) : '';
+            document.getElementById('cartMiniPrice').textContent = count > 0 ? 'استعلام قیمت' : '';
             renderMiniCart();
         }
 
@@ -2854,7 +2852,7 @@
                 total += item.qty * item.price;
                 html += `<div class="mini-cart-item"><span>${escapeHtml(item.name)}</span><div class="qty"><button onclick="changeQty('${item.id}',-1)">-</button><span>${item.qty}</span><button onclick="changeQty('${item.id}',1)">+</button><button onclick="removeFromCart('${item.id}')" style="color:#ef4444;background:none;border:none;font-size:0.7rem;"><i class="fas fa-trash"></i></button></div></div>`;
             });
-            html += `<div class="mini-cart-total"><span>جمع</span><span class="gold">${formatPrice(total)}</span></div>`;
+            html += `<div class="mini-cart-total"><span>جمع</span><span class="gold">استعلام قیمت</span></div>`;
             html +=
                 `<button class="btn btn-sm btn-gold" style="margin-top:6px;width:100%;" onclick="document.getElementById('cartToggle').click();">مشاهده سبد</button>`;
             el.innerHTML = html;
@@ -2885,40 +2883,21 @@
             let html = '',
                 subtotal = 0;
             cart.forEach(item => {
-                subtotal += item.qty * item.price;
-                html += `<div data-cart-item="${item.id}" style="display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px solid var(--border-color); transition:all 0.3s ease;">
+                subtotal += item.qty * item.price;                html += `<div data-cart-item="${item.id}" style="display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px solid var(--border-color); transition:all 0.3s ease;">
                         <div>
                             <div style="font-weight:600; color:var(--text-primary); font-size:0.8rem;">${escapeHtml(item.name)}</div>
                             <div style="display:flex; align-items:center; gap:10px; margin-top:3px;">
                                 <button class="btn-icon" onclick="changeQty('${item.id}', -1)" style="color:var(--text-primary); font-size:0.7rem; min-width:28px; min-height:28px;"><i class="fas fa-minus"></i></button>
                                 <span style="color:var(--text-primary); font-weight:600; min-width:26px; text-align:center; font-size:0.8rem;">${item.qty}</span>
                                 <button class="btn-icon" onclick="changeQty('${item.id}', 1)" style="color:var(--text-primary); font-size:0.7rem; min-width:28px; min-height:28px;"><i class="fas fa-plus"></i></button>
-                                <span style="color:var(--text-muted); font-size:0.7rem;">${formatPrice(item.price)} × ${item.qty}</span>
+                                <span style="color:var(--text-muted); font-size:0.7rem;">استعلام قیمت × ${item.qty}</span>
                             </div>
                         </div>
                         <button class="btn-icon" onclick="removeFromCart('${item.id}', true)" style="color:#ef4444; font-size:0.8rem; min-width:34px; min-height:34px;"><i class="fas fa-trash"></i></button>
                     </div>`;
             });
-            let couponDiscount = 0;
-            const couponCode = document.getElementById('couponInput')?.value?.trim() || '';
-            if (couponCode) { const result = applyCouponCode(subtotal, couponCode); if (result.valid) couponDiscount =
-                    result.discount; }
-            const shipping = getShippingCost(subtotal);
-            const tax = getTax(subtotal);
-            const total = subtotal + shipping + tax - couponDiscount;
-            html += `
-                <div style="margin-top:12px; display:flex; gap:6px; flex-wrap:wrap;">
-                    <input type="text" id="couponInput" placeholder="کد تخفیف" style="flex:1; min-width:100px; padding:6px 12px; border-radius:60px; background:var(--bg-input); border:1px solid var(--border-color); color:var(--text-primary); min-height:34px; font-size:0.7rem;" />
-                    <button class="btn btn-gold btn-sm" onclick="applyCoupon()">اعمال</button>
-                </div>
-                <div id="couponMsg" style="margin-top:5px; font-size:0.65rem; color:var(--text-muted);"></div>
-            `;
             content.innerHTML = html;
             totalDiv.style.display = 'block';
-            document.getElementById('cartTotalAmount').textContent = formatPrice(subtotal);
-            document.getElementById('cartShippingAmount').textContent = formatPrice(shipping);
-            document.getElementById('cartTaxAmount').textContent = formatPrice(tax);
-            document.getElementById('cartFinalAmount').textContent = formatPrice(total);
         }
 
         function applyCoupon() {
@@ -3215,12 +3194,23 @@
             const quantity = document.getElementById('orderQuantity').value || 1;
             const shipping = document.getElementById('orderShipping').value;
             const payment = document.getElementById('orderPayment').value;
+            const province = document.getElementById('orderProvince').value;
+            const city = document.getElementById('orderCity').value.trim();
+            const address = document.getElementById('orderAddress').value.trim();
+            const postalCode = document.getElementById('orderPostalCode').value.trim();
+            const recipient = document.getElementById('orderRecipient').value.trim() || name;
             const msg = document.getElementById('orderMessage').value.trim();
             const agree = document.getElementById('orderAgree').checked;
 
-            if (!name || !phone || !agree) {
+            if (!name || !phone || !province || !city || !address || !agree) {
                 document.getElementById('orderResult').innerHTML =
-                    '<span style="color:#ef4444;">لطفاً همه فیلدهای ضروری را پر کنید.</span>';
+                    '<span style="color:#ef4444;">لطفاً نام، شماره تماس، استان، شهر، آدرس و شرایط را کامل کنید.</span>';
+                return;
+            }
+
+            if (postalCode && !/^\d{10}$/.test(postalCode)) {
+                document.getElementById('orderResult').innerHTML =
+                    '<span style="color:#ef4444;">کد پستی باید ۱۰ رقم باشد.</span>';
                 return;
             }
 
@@ -3246,6 +3236,11 @@
                 phone,
                 email,
                 instagram,
+                province,
+                city,
+                address,
+                postalCode,
+                recipient,
                 type,
                 productName,
                 quantity: parseInt(quantity),
@@ -3258,7 +3253,7 @@
                 tax,
                 couponDiscount,
                 total,
-                status: 'جدید',
+                status: 'منتظر استعلام قیمت',
                 date: getPersianDate(),
                 createdAt: Date.now()
             };
@@ -3274,7 +3269,7 @@
             updateCartUI();
 
             document.getElementById('orderResult').innerHTML =
-                `<span style="color:#22c55e;">✅ سفارش ثبت شد. کد پیگیری: <b>${order.code || ''}</b></span>`;
+                `<span style="color:#22c55e;">✅ درخواست سفارش ثبت شد. کد پیگیری: <b>${order.code || ''}</b><br><span style="font-size:0.7rem;">کارشناسان ما برای اعلام قیمت نهایی و هماهنگی ارسال با شما تماس می‌گیرند.</span></span>`;
             this.reset();
             renderStats();
             setTimeout(() => { closeAllModals();
@@ -3372,7 +3367,7 @@
             const specsHtml = product.specs && Object.keys(product.specs).length > 0 ?
                 Object.entries(product.specs).map(([k,v]) => `<div class="spec-item"><span class="label">${escapeHtml(k)}:</span><span class="value">${escapeHtml(v)}</span></div>`).join('') : '';
             const guaHtml = product.guarantee ? '<div style="color:#22c55e;font-size:0.7rem;margin-top:6px;"><i class="fas fa-shield-alt"></i> گارانتی سلامت کالا</div>' : '';
-            const cartBtn = (product.stock > 0 && product.showPrice !== false) ?
+            const cartBtn = (product.stock > 0) ?
                 `<button class="btn btn-gold" onclick="addToCart('${product.id}'); showToast('به سبد خرید اضافه شد','success');" style="justify-content:center;"><i class="fas fa-shopping-cart" style="margin-left:6px;"></i>افزودن به سبد خرید</button>` :
                 `<button class="btn btn-gold" onclick="submitInquiry('${product.id}')" style="justify-content:center;"><i class="fas fa-phone" style="margin-left:6px;"></i>استعلام قیمت</button>`;
             const inquiryForm = (product.inquiryEnabled || product.showPrice === false || (product.stock||0)<=0) ?
@@ -3510,7 +3505,7 @@
             if (orders.length === 0) { content.innerHTML = '<p style="color:var(--text-muted);">هیچ سفارشی ثبت نشده.</p>';
                 return; }
             content.innerHTML =
-                `<h3 style="color:var(--text-primary);margin-bottom:14px;font-size:0.95rem;">📦 مدیریت سفارشات (${orders.length})</h3><div style="overflow-x:auto;"><table class="admin-table"><thead><tr><th>شناسه</th><th>مشتری</th><th>تماس</th><th>تعداد</th><th>مبلغ</th><th>وضعیت</th><th>تاریخ</th><th>عملیات</th></tr></thead><tbody>${orders.map(o=>`<tr><td>${o.code||('#'+o.id.slice(0,8))}</td><td>${escapeHtml(o.customer||'ناشناس')}</td><td>${escapeHtml(o.phone||'')}</td><td>${o.items?o.items.reduce((s,i)=>s+i.qty,0):0}</td><td>${formatPrice(o.total||0)}</td><td><select onchange="window.updateOrderStatus('${o.id}',this.value)" style="background:var(--bg-input);border:1px solid var(--border-color);border-radius:8px;padding:3px 6px;color:var(--text-primary);font-size:0.6rem;"><option value="جدید" ${o.status==='جدید'?'selected':''}>جدید</option><option value="در حال پردازش" ${o.status==='در حال پردازش'?'selected':''}>در حال پردازش</option><option value="ارسال شده" ${o.status==='ارسال شده'?'selected':''}>ارسال شده</option><option value="تحویل داده شد" ${o.status==='تحویل داده شد'?'selected':''}>تحویل داده شد</option><option value="لغو شده" ${o.status==='لغو شده'?'selected':''}>لغو شده</option></select></td><td>${o.date||''}</td><td><button class="btn-icon" onclick="window.deleteOrder('${o.id}')" style="color:#ef4444;font-size:0.8rem;min-width:34px;min-height:34px;"><i class="fas fa-trash"></i></button></td></tr>`).join('')}</tbody></table></div>`;
+                `<h3 style="color:var(--text-primary);margin-bottom:14px;font-size:0.95rem;">📦 مدیریت سفارشات (${orders.length})</h3><div style="overflow-x:auto;"><table class="admin-table"><thead><tr><th>شناسه</th><th>مشتری</th><th>تماس</th><th>تعداد</th><th>مبلغ</th><th>وضعیت</th><th>تاریخ</th><th>عملیات</th></tr></thead><tbody>${orders.map(o=>`<tr><td>${o.code||('#'+o.id.slice(0,8))}</td><td>${escapeHtml(o.customer||'ناشناس')}</td><td>${escapeHtml(o.phone||'')}</td><td>${o.items?o.items.reduce((s,i)=>s+i.qty,0):0}</td><td>${formatPrice(o.total||0)}</td><td><select onchange="window.updateOrderStatus('${o.id}',this.value)" style="background:var(--bg-input);border:1px solid var(--border-color);border-radius:8px;padding:3px 6px;color:var(--text-primary);font-size:0.6rem;"><option value="منتظر استعلام قیمت" ${o.status==='منتظر استعلام قیمت'?'selected':''}>منتظر استعلام قیمت</option><option value="جدید" ${o.status==='جدید'?'selected':''}>جدید</option><option value="در حال پردازش" ${o.status==='در حال پردازش'?'selected':''}>در حال پردازش</option><option value="ارسال شده" ${o.status==='ارسال شده'?'selected':''}>ارسال شده</option><option value="تحویل داده شد" ${o.status==='تحویل داده شد'?'selected':''}>تحویل داده شد</option><option value="لغو شده" ${o.status==='لغو شده'?'selected':''}>لغو شده</option></select></td><td>${o.date||''}</td><td><button class="btn-icon" onclick="window.deleteOrder('${o.id}')" style="color:#ef4444;font-size:0.8rem;min-width:34px;min-height:34px;"><i class="fas fa-trash"></i></button></td></tr>`).join('')}</tbody></table></div>`;
         }
         window.updateOrderStatus = function(id, status) { const o = orders.find(o => o.id === id); if (o) { o.status =
                 status;
@@ -5401,7 +5396,7 @@
             cart.forEach(item => {
                 const product = productsData.find(p => p.id === item.id);
                 if (!product) return;
-                const price = product.price || 0;
+                const price = getFinalPrice(product);
                 const itemTotal = price * item.qty;
                 subtotal += itemTotal;
                 const img = (product.images && product.images[0]) ? product.images[0] : '';
@@ -5410,7 +5405,7 @@
                         ${img ? `<img src="${img}" onerror="this.style.display='none'" />` : `<div style="width:56px;height:56px;border-radius:10px;background:var(--bg-secondary);display:flex;align-items:center;justify-content:center;">📦</div>`}
                         <div class="item-info">
                             <div class="item-name">${escapeHtml(product.name)}</div>
-                            <div class="item-price">${formatPrice(price)} تومان</div>
+                            <div class="item-price">استعلام قیمت</div>
                             <div class="qty-control">
                                 <button class="qty-btn" onclick="updateCartItem('${item.id}', ${item.qty - 1})">−</button>
                                 <span class="qty-num">${item.qty}</span>
@@ -5420,20 +5415,11 @@
                         <button class="remove-btn" onclick="updateCartItem('${item.id}', 0)"><i class="fas fa-trash"></i></button>
                     </div>`;
             });
-            const shipping = subtotal >= (parseInt(localStorage.getItem('nilofor_free_shipping_threshold')) || 5000000) ? 0 : (parseInt(localStorage.getItem('nilofor_shipping_cost')) || 50000);
-            const tax = Math.round(subtotal * ((parseInt(localStorage.getItem('nilofor_tax_rate')) || 9) / 100));
-            const freeThreshold = parseInt(localStorage.getItem('nilofor_free_shipping_threshold')) || 5000000;
-            const total = subtotal + shipping + tax;
-            const shipProgress = Math.min(100, Math.round((subtotal / freeThreshold) * 100));
-            const remaining = freeThreshold - subtotal;
-            const shipBarHtml = shipping === 0
-                ? `<div class="ship-bar-free"><i class="fas fa-check-circle"></i> ارسال رایگان فعال شد</div>`
-                : `<div class="ship-bar-wrap"><div class="ship-bar-track"><div class="ship-bar-fill" style="width:${shipProgress}%"></div></div><div class="ship-bar-msg">${formatPrice(remaining)} تومان تا <strong>ارسال رایگان</strong></div></div>`;
             itemsEl.innerHTML = itemsHtml;
             footerEl.innerHTML = `
-                ${shipBarHtml}
-                <div class="cart-drawer-total"><span>جمع کل:</span><span style="color:var(--nilofor-gold);">${formatPrice(total)} تومان</span></div>
-                <button class="btn btn-gold" style="width:100%;" onclick="closeCartDrawer(); renderCartModal(); openModal('cart');">نهایی کردن خرید</button>
+                <div class="ship-bar-free"><i class="fas fa-phone"></i> مبلغ نهایی پس از استعلام قیمت اعلام می‌شود</div>
+                <div class="cart-drawer-total"><span>وضعیت:</span><span style="color:var(--nilofor-gold);">استعلام قیمت</span></div>
+                <button class="btn btn-gold" style="width:100%;" onclick="closeCartDrawer(); renderCartModal(); openModal('cart');">ادامه و ثبت سفارش</button>
             `;
         }
 
