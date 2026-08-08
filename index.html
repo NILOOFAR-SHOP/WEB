@@ -1026,100 +1026,115 @@
 
         /* ===== REVIEWS ===== */
         .review-full-grid {
-            width:100%; box-sizing:border-box; padding:0 16px;
+            width:100%; box-sizing:border-box; padding:0 20px; text-align:center;
         }
         .review-summary {
-            text-align:center; margin-bottom:16px; font-size:0.75rem; color:var(--text-secondary);
+            display:inline-flex; align-items:center; gap:6px;
+            margin:0 0 22px; padding:8px 22px;
+            background:linear-gradient(135deg, rgba(212,175,55,0.12), rgba(212,175,55,0.04));
+            border:1px solid rgba(212,175,55,0.35);
+            border-radius:999px;
+            font-size:0.78rem; color:var(--text-secondary);
         }
-        .review-summary b { color:var(--nilofor-gold); }
+        .review-summary b { color:var(--nilofor-gold); font-size:0.85rem; }
         .review-slider-full {
-            position:relative; width:100%; max-width:880px; margin:0 auto;
+            position:relative; width:100%; max-width:860px; margin:0 auto;
         }
         .review-full-viewport {
-            display:grid; overflow:hidden; border-radius:var(--radius-card);
+            display:grid; border-radius:22px; overflow:hidden;
+            background:var(--bg-card); box-shadow:var(--shadow-soft);
         }
         .review-full-slide {
             grid-area:1/1; min-width:0;
-            opacity:0; transform:translateY(18px) scale(0.97);
+            opacity:0; transform:translateY(20px) scale(0.96);
             transition:opacity 0.55s ease, transform 0.55s ease;
             pointer-events:none;
         }
         .review-full-slide.active {
             opacity:1; transform:none; pointer-events:auto;
         }
-        .review-card { text-align:center; }
-        @media (min-width:768px) {
-            .review-card {
-                display:grid; grid-template-columns:1fr auto; column-gap:28px; row-gap:6px; align-items:center;
-                text-align:right; padding:34px 44px;
-            }
-            .review-card .stars { grid-column:1/-1; text-align:center; margin-bottom:4px; }
-            .review-card blockquote { margin:0; -webkit-line-clamp:4; }
-            .review-card .author { margin:0; padding:0; border-top:none; }
-        }
-        .testimonial-card {
-            background:var(--bg-card);
-            border-radius:var(--radius-card);
-            padding:22px 20px;
+        .review-card {
+            position:relative; text-align:center;
+            padding:34px 26px;
             border:1px solid var(--border-color);
+            border-radius:22px;
             box-shadow:var(--shadow-soft);
+            background:linear-gradient(180deg, rgba(212,175,55,0.06), rgba(212,175,55,0) 130px), var(--bg-card);
             transition:all var(--transition);
         }
-        .testimonial-card:hover {
-            transform:translateY(-4px);
-            box-shadow:var(--shadow-hover);
+        .review-card:hover {
             border-color:var(--nilofor-gold);
+            box-shadow:var(--shadow-hover);
         }
-        .testimonial-card .stars {
-            color:#facc15;
-            font-size:0.8rem;
-            letter-spacing:2px;
-            margin-bottom:6px;
+        .review-card::before {
+            content:"❝";
+            position:absolute; top:4px; right:26px;
+            font-size:70px; line-height:1; font-family:Georgia, serif;
+            color:rgba(212,175,55,0.18); pointer-events:none;
         }
-        .testimonial-card blockquote {
-            font-size:0.8rem;
-            color:var(--text-secondary);
-            line-height:1.7;
-            font-style:italic;
-            display:-webkit-box;
-            -webkit-line-clamp:3;
-            -webkit-box-orient:vertical;
-            overflow:hidden;
+        .review-card::after {
+            content:"";
+            position:absolute; top:0; left:0; right:0; height:4px;
+            background:linear-gradient(90deg, var(--nilofor-gold), rgba(212,175,55,0.12));
+            pointer-events:none;
         }
-        .testimonial-card .author {
-            display:flex; align-items:center; gap:10px;
-            margin-top:12px; padding-top:12px;
-            border-top:1px solid var(--border-color);
+        .review-card .stars {
+            position:relative; z-index:1;
+            color:#fbbf24; font-size:1.05rem; letter-spacing:3px;
+            text-shadow:0 1px 3px rgba(251,191,36,0.35);
+            margin-bottom:10px;
         }
-        .testimonial-card .author .avatar {
-            width:34px; height:34px; border-radius:50%;
-            background:var(--nilofor-gold);
-            display:flex; align-items:center; justify-content:center;
-            font-weight:600; font-size:0.8rem; color:#fff;
-        }
-        .testimonial-card .author .info h5 {
-            font-size:0.75rem; font-weight:600;
+        .review-card blockquote {
+            position:relative; z-index:1;
+            font-size:0.95rem; line-height:1.9;
             color:var(--text-primary);
+            font-style:normal;
+            display:-webkit-box; -webkit-line-clamp:4; -webkit-box-orient:vertical; overflow:hidden;
         }
-        .testimonial-card .author .info p {
-            font-size:0.6rem;
-            color:var(--text-muted);
-            margin:0;
+        .review-card .author {
+            position:relative; z-index:1; justify-content:center;
+        }
+        .review-card .author .avatar {
+            width:44px; height:44px; border-radius:50%;
+            background:linear-gradient(135deg, var(--nilofor-gold), #b8860b);
+            color:#fff; font-size:0.95rem; font-weight:700;
+            border:2px solid rgba(255,255,255,0.9);
+            box-shadow:0 3px 10px rgba(212,175,55,0.35);
+        }
+        .review-card .author .info h5 { font-size:0.85rem; }
+        .review-card .author .info p { font-size:0.65rem; }
+        @media (min-width:768px) {
+            .review-card {
+                display:grid; grid-template-columns:1fr auto; column-gap:32px; row-gap:10px; align-items:center;
+                text-align:right; padding:38px 48px;
+            }
+            .review-card .stars { grid-column:1/-1; text-align:center; margin-bottom:6px; }
+            .review-card blockquote { margin:0; -webkit-line-clamp:5; }
+            .review-card .author { margin:0; padding:0; border-top:none; }
         }
         .rev-arrow {
-            position:absolute; top:50%; transform:translateY(-50%); z-index:5;
-            width:38px; height:38px; border-radius:50%;
-            background:var(--bg-card); border:1px solid var(--border-color);
-            color:var(--text-secondary); box-shadow:var(--shadow-soft);
+            position:absolute; top:50%; transform:translateY(-50%); z-index:6;
+            width:42px; height:42px; border-radius:50%;
+            background:rgba(255,255,255,0.88);
+            border:1px solid var(--border-color);
+            color:var(--text-secondary);
+            box-shadow:0 4px 14px rgba(0,0,0,0.12);
             display:flex; align-items:center; justify-content:center;
-            cursor:pointer; font-size:0.7rem; transition:all 0.3s ease;
+            cursor:pointer; font-size:0.75rem;
+            transition:all 0.3s ease;
         }
-        .rev-arrow:hover { background:var(--nilofor-gold); color:#fff; border-color:var(--nilofor-gold); }
-        .rev-arrow.prev { right:-16px; }
-        .rev-arrow.next { left:-16px; }
-        .rev-dots { display:flex; justify-content:center; gap:6px; margin-top:18px; flex-wrap:wrap; }
-        .rev-dots button { width:8px; height:8px; border-radius:40px; background:var(--border-hover); transition:all 0.3s ease; padding:0; }
-        .rev-dots button.active { width:22px; background:var(--nilofor-gold); }
+        .rev-arrow:hover { background:var(--nilofor-gold); color:#fff; border-color:var(--nilofor-gold); transform:translateY(-50%) scale(1.08); }
+        .rev-arrow.prev { right:-12px; }
+        .rev-arrow.next { left:-12px; }
+        .rev-dots { display:flex; justify-content:center; gap:7px; margin-top:20px; flex-wrap:wrap; }
+        .rev-dots button {
+            width:9px; height:9px; border-radius:40px;
+            background:var(--border-hover);
+            border:1px solid transparent;
+            transition:all 0.3s ease; padding:0; cursor:pointer;
+        }
+        .rev-dots button:hover { background:rgba(212,175,55,0.5); }
+        .rev-dots button.active { width:26px; background:var(--nilofor-gold); border-color:rgba(212,175,55,0.6); }
 
         /* ===== SURVEY ===== */
         .survey-card {
@@ -1667,13 +1682,13 @@
             .product-card-full .add-btn { width:26px !important; height:26px !important; font-size:0.6rem !important; min-width:26px !important; min-height:26px !important; }
             .product-card-full .badge-tag { font-size:0.45rem !important; padding:1px 6px !important; top:3px !important; right:3px !important; }
             .product-card-full .badge-guarantee { font-size:0.4rem !important; padding:1px 5px !important; top:3px !important; left:3px !important; }
-            .testimonial-card { padding:10px 8px !important; border-radius:12px !important; }
-            .testimonial-card .stars { font-size:0.7rem !important; margin-bottom:4px !important; }
-            .testimonial-card blockquote { font-size:0.62rem !important; line-height:1.5 !important; margin:0 !important; -webkit-line-clamp:2 !important; }
-            .testimonial-card .author { margin-top:8px !important; padding-top:8px !important; gap:8px !important; }
-            .testimonial-card .author .avatar { width:26px !important; height:26px !important; font-size:0.7rem !important; }
-            .testimonial-card .author .info h5 { font-size:0.65rem !important; }
-            .testimonial-card .author .info p { font-size:0.55rem !important; }
+            .testimonial-card { padding:18px 16px !important; border-radius:18px !important; }
+            .testimonial-card .stars { font-size:0.9rem !important; margin-bottom:6px !important; }
+            .testimonial-card blockquote { font-size:0.8rem !important; line-height:1.7 !important; margin:0 !important; -webkit-line-clamp:3 !important; }
+            .testimonial-card .author { margin-top:10px !important; padding-top:10px !important; gap:10px !important; }
+            .testimonial-card .author .avatar { width:36px !important; height:36px !important; font-size:0.8rem !important; }
+            .testimonial-card .author .info h5 { font-size:0.75rem !important; }
+            .testimonial-card .author .info p { font-size:0.62rem !important; }
             .features-grid { grid-template-columns:1fr 1fr !important; gap:8px !important; }
             .feature-card { padding:14px 8px !important; border-radius:12px !important; }
             .feature-card .icon { font-size:1.5rem !important; }
@@ -2018,14 +2033,6 @@
         </div>
     </section>
 
-    <!-- ===== REVIEWS ===== -->
-    <section class="section" id="reviews" style="padding-top:0;">
-        <div class="container">
-            <div class="section-header animate-fade-up"><div><span class="badge badge-gold">نظرات</span><h2 class="section-title">نظرات مشتریان</h2></div><button class="btn btn-gold btn-sm" id="addReviewBtn"><i class="fas fa-star"></i> ثبت نظر</button></div>
-        </div>
-        <div class="review-full-grid" id="reviewGrid"></div>
-    </section>
-
     <!-- ===== SURVEY ===== -->
     <section class="section" id="survey" style="padding-top:0;">
         <div class="container">
@@ -2039,6 +2046,14 @@
                 <div id="surveyResult" style="margin-top:10px; color:var(--text-muted); font-size:0.75rem;"></div>
             </div>
         </div>
+    </section>
+
+    <!-- ===== REVIEWS ===== -->
+    <section class="section" id="reviews" style="padding-top:0;">
+        <div class="container">
+            <div class="section-header animate-fade-up"><div><span class="badge badge-gold">نظرات</span><h2 class="section-title">نظرات مشتریان</h2></div><button class="btn btn-gold btn-sm" id="addReviewBtn"><i class="fas fa-star"></i> ثبت نظر</button></div>
+        </div>
+        <div class="review-full-grid" id="reviewGrid"></div>
     </section>
 
     <!-- ===== NEWSLETTER ===== -->
