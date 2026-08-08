@@ -117,7 +117,8 @@
         input, textarea, select { font-family:inherit; outline:none; -webkit-appearance:none; appearance:none; touch-action:manipulation; font-size:14px !important; color:var(--input-text); background:var(--bg-input); }
         .container { max-width:1320px; margin:0 auto; padding:0 20px; width:100%; }
         .section { padding:70px 0; position:relative; z-index:1; }
-        .section-header { display:flex; align-items:center; justify-content:center; margin-bottom:36px; flex-wrap:wrap; gap:12px; flex-direction:column; text-align:center; }
+        .section-header { position:relative; display:flex; align-items:center; justify-content:center; margin-bottom:36px; flex-wrap:wrap; gap:12px; flex-direction:column; text-align:center; }
+        .section-header::after { content:''; width:64px; height:3px; border-radius:3px; background:linear-gradient(90deg, transparent, #f5c518, #d99a00, transparent); margin-top:2px; }
         .section-header .btn { margin-top:8px; }
         .section-title { font-size:clamp(1.5rem,3.5vw,2.2rem); font-weight:700; letter-spacing:-0.03em; line-height:1.1; color:var(--text-primary); }
         .section-title .gold { color:var(--nilofor-gold); }
@@ -1646,9 +1647,9 @@
             gap:18px; margin-top:14px;
         }
         .feature-card {
-            background:var(--bg-card);
-            border-radius:var(--radius-card);
-            padding:28px 16px;
+            background:linear-gradient(180deg, rgba(245,197,24,.05), transparent 45%), var(--bg-card);
+            border-radius:20px;
+            padding:30px 16px 26px;
             text-align:center;
             border:1px solid var(--border-color);
             transition:all var(--transition);
@@ -1662,6 +1663,11 @@
             background:linear-gradient(90deg, transparent, var(--nilofor-gold), transparent);
             opacity:0; transition:all var(--transition);
         }
+        .feature-card::after {
+            content:''; position:absolute; width:130px; height:130px; border-radius:50%;
+            background:radial-gradient(circle, rgba(245,197,24,.08), transparent 70%);
+            top:-46px; left:-46px; pointer-events:none;
+        }
         .feature-card:hover {
             transform:translateY(-6px);
             border-color:var(--nilofor-gold);
@@ -1669,16 +1675,16 @@
         }
         .feature-card:hover::before { opacity:1; }
         .feature-card .icon {
-            width:62px; height:62px; border-radius:50%;
+            width:70px; height:70px; border-radius:50%;
             display:flex; align-items:center; justify-content:center;
-            font-size:1.35rem; color:#fff; margin:0 auto 14px;
+            font-size:1.5rem; color:#fff; margin:0 auto 16px;
             background:linear-gradient(135deg, #f5c518, #d99a00);
-            box-shadow:0 8px 18px rgba(217,154,0,.28);
+            box-shadow:0 0 0 8px rgba(245,197,24,.12), 0 10px 22px rgba(217,154,0,.3);
             transition:all var(--transition);
         }
-        .feature-card:hover .icon { transform:scale(1.1) rotate(-6deg); box-shadow:0 10px 22px rgba(217,154,0,.4); }
-        .feature-card h4 { font-size:0.85rem; font-weight:700; color:var(--text-primary); }
-        .feature-card p { font-size:0.7rem; color:var(--text-muted); margin:4px 0 0; line-height:1.7; }
+        .feature-card:hover .icon { transform:scale(1.08) rotate(-6deg); box-shadow:0 0 0 8px rgba(245,197,24,.18), 0 12px 26px rgba(217,154,0,.4); }
+        .feature-card h4 { font-size:0.9rem; font-weight:700; color:var(--text-primary); }
+        .feature-card p { font-size:0.72rem; color:var(--text-muted); margin:5px 0 0; line-height:1.8; }
 
         /* RTL Fixes */
         .admin-table th, .admin-table td { text-align:right; }
@@ -1704,6 +1710,11 @@
             .scroll-indicator { display:none !important; }
             .marquee { display:none !important; }
             .section-header { margin-bottom:14px !important; }
+            .features-grid { grid-template-columns:repeat(auto-fill,minmax(120px,1fr)); gap:10px !important; }
+            .feature-card { padding:18px 10px 16px !important; border-radius:16px !important; }
+            .feature-card .icon { width:54px; height:54px; font-size:1.2rem; margin-bottom:10px; box-shadow:0 0 0 6px rgba(245,197,24,.12), 0 8px 16px rgba(217,154,0,.28); }
+            .feature-card h4 { font-size:0.78rem !important; }
+            .feature-card p { font-size:0.62rem !important; line-height:1.6 !important; }
             .section-title { font-size:1.1rem !important; }
             .product-page-header { flex-direction:column !important; align-items:flex-start !important; gap:6px !important; }
             .product-page-header .filters { gap:4px !important; }
