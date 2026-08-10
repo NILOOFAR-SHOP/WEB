@@ -1167,6 +1167,7 @@
             border:1px solid var(--border-color);
             text-align:center;
             box-shadow:var(--shadow-soft);
+            max-width:540px; margin:0 auto;
         }
         .survey-card .emoji-rating {
             display:flex; gap:14px; justify-content:center;
@@ -1187,10 +1188,12 @@
             border-radius:var(--radius-card);
             padding:36px 30px;
             border:1px solid var(--border-color);
-            display:flex; align-items:center; justify-content:space-between;
-            flex-wrap:wrap; gap:20px;
+            display:flex; flex-direction:column; align-items:center; justify-content:center;
+            text-align:center;
+            flex-wrap:wrap; gap:14px;
             border-color:rgba(200,169,106,0.12);
             box-shadow:var(--shadow-soft);
+            max-width:760px; margin:0 auto;
         }
         .newsletter-content h3 {
             font-size:1.1rem; font-weight:700; margin-bottom:3px;
@@ -1198,7 +1201,7 @@
         }
         .newsletter-content h3 .gold { color:var(--nilofor-gold); }
         .newsletter-content p { color:var(--text-secondary); margin:0; font-size:0.8rem; }
-        .newsletter-form { display:flex; gap:10px; flex-wrap:wrap; }
+        .newsletter-form { display:flex; gap:10px; flex-wrap:wrap; justify-content:center; }
         .newsletter-form input {
             padding:10px 18px; border-radius:60px;
             border:1px solid var(--border-color);
