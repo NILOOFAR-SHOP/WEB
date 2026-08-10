@@ -37,29 +37,29 @@
     <style>
         /* ===== CSS VARIABLES ===== */
         :root {
-            --bg-primary: #fbf7f0;
-            --bg-secondary: #f5efe6;
+            --bg-primary: #faf9f6;
+            --bg-secondary: #f2f0ea;
             --bg-card: #ffffff;
-            --bg-input: rgba(0, 0, 0, 0.04);
+            --bg-input: rgba(28, 23, 17, 0.045);
             --bg-hover: rgba(200, 169, 106, 0.10);
-            --text-primary: #3d2c1b;
-            --text-secondary: #6b5a4a;
-            --text-muted: #a3907e;
-            --border-color: #e8ddd0;
-            --border-hover: #d4c4b2;
-            --shadow-color: rgba(61, 44, 27, 0.08);
-            --shadow-soft: 0 8px 40px rgba(61, 44, 27, 0.05);
-            --shadow-hover: 0 20px 60px rgba(61, 44, 27, 0.10);
+            --text-primary: #221b12;
+            --text-secondary: #5d5347;
+            --text-muted: #9c9184;
+            --border-color: #eae4da;
+            --border-hover: #d6ccbc;
+            --shadow-color: rgba(28, 23, 17, 0.06);
+            --shadow-soft: 0 2px 6px rgba(28,23,17,0.03), 0 16px 48px rgba(28,23,17,0.05);
+            --shadow-hover: 0 4px 12px rgba(28,23,17,0.05), 0 28px 72px rgba(28,23,17,0.10);
             --toast-bg: #22c55e;
-            --scrollbar-track: #f0e8de;
-            --scrollbar-thumb: rgba(200, 169, 106, 0.3);
-            --badge-bg: rgba(200, 169, 106, 0.12);
+            --scrollbar-track: #efe9df;
+            --scrollbar-thumb: rgba(200, 169, 106, 0.35);
+            --badge-bg: rgba(200, 169, 106, 0.14);
             --badge-text: #6b5a4a;
-            --btn-bg: #3d2c1b;
-            --btn-text: #fbf7f0;
-            --input-text: #3d2c1b;
+            --btn-bg: #221b12;
+            --btn-text: #faf9f6;
+            --input-text: #221b12;
             --modal-bg: #ffffff;
-            --admin-bg: #f5efe6;
+            --admin-bg: #f2f0ea;
             --glow-color: rgba(200, 169, 106, 0.06);
             --particle-color: rgba(200, 169, 106, 0.10);
             --nilofor-gold: #c8a96a;
@@ -69,26 +69,26 @@
             --radius-btn: 60px;
         }
         [data-theme="dark"] {
-            --bg-primary: #1a1510;
-            --bg-secondary: #241e17;
-            --bg-card: #2c241c;
-            --bg-input: rgba(255, 255, 255, 0.04);
+            --bg-primary: #131110;
+            --bg-secondary: #1c1916;
+            --bg-card: #221e1a;
+            --bg-input: rgba(255, 255, 255, 0.045);
             --bg-hover: rgba(200, 169, 106, 0.15);
-            --text-primary: #f0ebe4;
-            --text-secondary: #c4b8aa;
-            --text-muted: #8f7e6b;
-            --border-color: rgba(255, 255, 255, 0.06);
-            --border-hover: rgba(255, 255, 255, 0.12);
-            --shadow-color: rgba(0, 0, 0, 0.3);
-            --shadow-soft: 0 8px 40px rgba(0, 0, 0, 0.3);
-            --shadow-hover: 0 20px 60px rgba(0, 0, 0, 0.5);
+            --text-primary: #f1ece4;
+            --text-secondary: #c6bbad;
+            --text-muted: #93887b;
+            --border-color: rgba(255, 255, 255, 0.07);
+            --border-hover: rgba(255, 255, 255, 0.14);
+            --shadow-color: rgba(0, 0, 0, 0.4);
+            --shadow-soft: 0 8px 40px rgba(0, 0, 0, 0.35);
+            --shadow-hover: 0 24px 64px rgba(0, 0, 0, 0.55);
             --badge-bg: rgba(200, 169, 106, 0.15);
-            --badge-text: #c4b8aa;
-            --btn-bg: #f0ebe4;
-            --btn-text: #1a1510;
-            --input-text: #f0ebe4;
-            --modal-bg: #2c241c;
-            --admin-bg: #1a1510;
+            --badge-text: #c6bbad;
+            --btn-bg: #f1ece4;
+            --btn-text: #131110;
+            --input-text: #f1ece4;
+            --modal-bg: #221e1a;
+            --admin-bg: #131110;
             --glow-color: rgba(200, 169, 106, 0.04);
             --particle-color: rgba(200, 169, 106, 0.06);
         }
@@ -96,7 +96,12 @@
         html { scroll-behavior:smooth; -webkit-text-size-adjust:100%; overflow-x:hidden; }
         body {
             font-family: 'Vazirmatn','Inter',system-ui,-apple-system,sans-serif;
-            background:var(--bg-primary);
+            background-color:var(--bg-primary);
+            background-image:
+                radial-gradient(1100px 700px at 88% -8%, rgba(200,169,106,0.10), transparent 60%),
+                radial-gradient(900px 650px at -12% 26%, rgba(200,169,106,0.06), transparent 55%),
+                radial-gradient(800px 600px at 50% 110%, rgba(200,169,106,0.05), transparent 60%);
+            background-attachment:fixed;
             color:var(--text-primary);
             line-height:1.6;
             overflow-x:hidden;
@@ -110,6 +115,8 @@
         ::-webkit-scrollbar-track { background:var(--scrollbar-track); }
         ::-webkit-scrollbar-thumb { background:var(--scrollbar-thumb); border-radius:20px; }
         ::-webkit-scrollbar-thumb:hover { background:rgba(200,169,106,0.5); }
+        ::selection { background:rgba(200,169,106,0.28); color:var(--text-primary); }
+        :focus-visible { outline:2px solid var(--nilofor-gold); outline-offset:2px; }
         a { text-decoration:none; color:inherit; }
         ul { list-style:none; }
         img { max-width:100%; display:block; height:auto; border-radius:12px; }
@@ -292,8 +299,13 @@
         .btn-outline { background:transparent; color:var(--text-primary); border:1px solid var(--border-color); box-shadow:none; }
         .btn-outline:hover { background:var(--bg-hover); border-color:var(--nilofor-gold); transform:translateY(-2px); }
         .btn-sm { padding:8px 20px; font-size:0.7rem; min-height:34px; }
-        .btn-gold { background:var(--nilofor-gold); color:#fff; }
-        .btn-gold:hover { transform:translateY(-3px); box-shadow:0 12px 40px rgba(200,169,106,0.3); }
+        .btn-gold {
+            background:linear-gradient(135deg, #dfb95c 0%, var(--nilofor-gold) 55%, #b08f43 100%);
+            color:#fff; border:none;
+            box-shadow:0 4px 16px rgba(200,169,106,0.28);
+        }
+        .btn-gold:hover { transform:translateY(-3px); box-shadow:0 14px 40px rgba(200,169,106,0.42); }
+        .btn-gold:active { transform:translateY(-1px); box-shadow:0 6px 20px rgba(200,169,106,0.3); }
         .btn-icon { background:none; border:none; font-size:1rem; cursor:pointer; color:var(--text-primary); transition:all 0.3s; padding:4px 8px; touch-action:manipulation; }
         .btn-icon:hover { transform:scale(1.1); color:var(--nilofor-gold); }
 
@@ -657,22 +669,25 @@
 
         /* ===== MARQUEE ===== */
         .marquee {
-            padding:18px 0;
-            border-top:1px solid var(--border-color);
-            border-bottom:1px solid var(--border-color);
+            padding:20px 0;
             overflow:hidden;
-            background:var(--bg-secondary);
+            background:linear-gradient(90deg, transparent, rgba(200,169,106,0.07), transparent);
+            border-top:1px solid transparent;
+            border-bottom:1px solid transparent;
         }
         .marquee-track {
-            display:flex; gap:40px;
+            display:flex; gap:48px;
             animation:slideMarquee 35s linear infinite;
             width:max-content;
         }
         .marquee-track .brand {
-            font-weight:500; font-size:0.8rem;
+            font-weight:600; font-size:0.8rem;
             color:var(--text-secondary);
             white-space:nowrap; letter-spacing:0.5px;
-            opacity:0.5; transition:opacity var(--transition);
+            opacity:0.6; transition:opacity var(--transition);
+        }
+        .marquee-track .brand::after {
+            content:'•'; margin-right:48px; color:var(--nilofor-gold); opacity:0.5;
         }
         .marquee-track .brand:hover { opacity:1; color:var(--text-primary); }
         .marquee-track .brand .gold { color:var(--nilofor-gold); }
@@ -726,24 +741,24 @@
             display:grid; grid-template-columns:repeat(auto-fill, minmax(230px,1fr)); gap:24px;
         }
         .product-card-full {
-            background:var(--bg-card); border-radius:18px;
-            padding:14px; border:1.5px solid var(--border-color);
+            background:var(--bg-card); border-radius:20px;
+            padding:14px; border:1px solid var(--border-color);
             transition:all 0.4s cubic-bezier(0.22,1,0.36,1);
             cursor:pointer;
             position:relative;
-            box-shadow:0 1px 3px rgba(0,0,0,0.02), 0 4px 12px rgba(0,0,0,0.03);
+            box-shadow:0 1px 2px rgba(0,0,0,0.02), 0 4px 16px rgba(0,0,0,0.03);
             overflow:hidden;
         }
         .product-card-full::before {
-            content:''; position:absolute; inset:0; border-radius:18px;
-            background:linear-gradient(135deg, rgba(200,169,106,0.03), transparent 60%);
+            content:''; position:absolute; inset:0; border-radius:20px;
+            background:linear-gradient(135deg, rgba(200,169,106,0.05), transparent 60%);
             opacity:0; transition:opacity 0.4s ease;
             pointer-events:none; z-index:0;
         }
         .product-card-full:hover {
             transform:translateY(-8px);
-            border-color:var(--nilofor-gold);
-            box-shadow:0 4px 8px rgba(0,0,0,0.04), 0 12px 40px rgba(200,169,106,0.1), 0 20px 60px rgba(61,44,27,0.06);
+            border-color:rgba(200,169,106,0.5);
+            box-shadow:0 4px 8px rgba(0,0,0,0.04), 0 16px 44px rgba(200,169,106,0.12), 0 24px 70px rgba(28,23,17,0.07);
         }
         .product-card-full:hover::before { opacity:1; }
         .product-card-full .product-images {
@@ -1980,7 +1995,7 @@
     <!-- ===== SHIPPING INFO ===== -->
     <div class="shipping-info" id="shippingInfo">
         <span class="close-shipping" id="closeShipping">&times;</span>
-        <p style="margin:6px 0;">🚚 ارسال به سراسر کشور</p>
+        <p style="margin:6px 0;"><i class="fas fa-truck" style="color:var(--nilofor-gold);margin-left:6px;"></i>ارسال به سراسر کشور</p>
         <p style="font-size:0.7rem; color:var(--text-muted); margin-top:3px;">هزینه ارسال بر عهده مشتری · ارسال از طریق پست، تیپاکس یا باربری</p>
     </div>
 
@@ -1991,9 +2006,9 @@
                 <div class="hero-badge"><span class="dot"></span> فروشگاه نیلوفر · از ۱۳۷۸</div>
                 <h1>زیبایی <br /><span class="highlight">در هر جزئیات</span></h1>
                 <div class="rotating-text">
-                    <span class="phrase">✨ <span class="gold">ظروف لیمون</span>، کیفیت و زیبایی در کنار هم</span>
-                    <span class="phrase">🌟 <span class="gold">سرویس جهیزیه</span>، انتخابی برای یک عمر زیبایی</span>
-                    <span class="phrase">💎 <span class="gold">سرویس بهداشتی</span>، هنر و کاربردی بودن</span>
+                    <span class="phrase"><i class="fas fa-star" style="color:var(--nilofor-gold);font-size:0.8em;margin-left:6px;"></i><span class="gold">ظروف لیمون</span>، کیفیت و زیبایی در کنار هم</span>
+                    <span class="phrase"><i class="fas fa-star" style="color:var(--nilofor-gold);font-size:0.8em;margin-left:6px;"></i><span class="gold">سرویس جهیزیه</span>، انتخابی برای یک عمر زیبایی</span>
+                    <span class="phrase"><i class="fas fa-gem" style="color:var(--nilofor-gold);font-size:0.8em;margin-left:6px;"></i><span class="gold">سرویس بهداشتی</span>، هنر و کاربردی بودن</span>
                 </div>
                 <div class="hero-actions">
                     <a href="#product-page" class="btn btn-gold"><i class="fas fa-arrow-left"></i> مشاهده محصولات</a>
@@ -2126,7 +2141,7 @@
     <section class="section" style="padding-top:0;">
         <div class="container">
             <div class="newsletter animate-fade-up">
-                <div class="newsletter-content"><h3>📬 از تخفیف‌ها <span class="gold">باخبر شوید</span></h3><p>اولین نفری باشید که از جدیدترین محصولات مطلع می‌شوید.</p></div>
+                <div class="newsletter-content"><h3><i class="fas fa-envelope-open-text" style="color:var(--nilofor-gold);margin-left:8px;"></i>از تخفیف‌ها <span class="gold">باخبر شوید</span></h3><p>اولین نفری باشید که از جدیدترین محصولات مطلع می‌شوید.</p></div>
                 <form class="newsletter-form" id="newsletterForm"><input type="email" id="newsletterEmail" placeholder="ایمیل خود را وارد کنید" /><button type="submit" class="btn btn-gold">عضویت</button></form>
                 <div id="newsletterMsg" style="width:100%; text-align:center; margin-top:10px; font-size:0.8rem;"></div>
             </div>
@@ -2192,21 +2207,21 @@
     <div id="adminPanel" class="admin-panel">
         <div class="admin-header"><h2><i class="fas fa-chart-line"></i> پنل مدیریت <span class="gold">نیلوفر</span></h2><span class="admin-close" id="adminClose">&times;</span></div>
         <div class="admin-tabs" id="adminTabs">
-            <div class="admin-tab active" data-tab="dashboard">📊 داشبورد</div>
-            <div class="admin-tab" data-tab="orders">📦 سفارشات</div>
-            <div class="admin-tab" data-tab="products">🛒 محصولات</div>
-            <div class="admin-tab" data-tab="inventory">📦 انبار</div>
+            <div class="admin-tab active" data-tab="dashboard"><i class="fas fa-chart-bar" style="margin-left:6px;"></i>داشبورد</div>
+            <div class="admin-tab" data-tab="orders"><i class="fas fa-clipboard-list" style="margin-left:6px;"></i>سفارشات</div>
+            <div class="admin-tab" data-tab="products"><i class="fas fa-box-open" style="margin-left:6px;"></i>محصولات</div>
+            <div class="admin-tab" data-tab="inventory"><i class="fas fa-warehouse" style="margin-left:6px;"></i>انبار</div>
             <div class="admin-tab" data-tab="prices">💰 قیمت‌ها</div>
-            <div class="admin-tab" data-tab="reviews">⭐ نظرات</div>
+            <div class="admin-tab" data-tab="reviews"><i class="fas fa-star" style="margin-left:6px;"></i>نظرات</div>
             <div class="admin-tab" data-tab="inquiries">📋 استعلام‌ها</div>
             <div class="admin-tab" data-tab="contacts">✉️ پیام‌ها</div>
             <div class="admin-tab" data-tab="settings">⚙️ تنظیمات</div>
             <div class="admin-tab" data-tab="backup">💾 بکاپ</div>
             <div class="admin-tab" data-tab="csv">📄 CSV</div>
-            <div class="admin-tab" data-tab="reports">📈 گزارش‌ها</div>
+            <div class="admin-tab" data-tab="reports"><i class="fas fa-chart-line" style="margin-left:6px;"></i>گزارش‌ها</div>
             <div class="admin-tab" data-tab="import">📥 واردات محصولات</div>
             <div class="admin-tab" data-tab="sync">🔄 همگام‌سازی</div>
-            <div class="admin-tab" data-tab="product-detail">📝 جزییات محصولات</div>
+            <div class="admin-tab" data-tab="product-detail"><i class="fas fa-edit" style="margin-left:6px;"></i>جزییات محصولات</div>
         </div>
         <div id="adminContent" class="admin-content-scroll"><p style="color:var(--text-muted);">بارگذاری...</p></div>
     </div>
@@ -3522,7 +3537,7 @@
                     </div>
                 </div>
                 <div style="background:var(--bg-card);border-radius:12px;padding:14px;border:1px solid var(--border-color);margin-bottom:14px;box-shadow:var(--shadow-soft);">
-                    <h4 style="color:var(--text-primary);font-size:0.85rem;">📈 محصولات پرفروش</h4>
+                    <h4 style="color:var(--text-primary);font-size:0.85rem;"><i class="fas fa-chart-line" style="margin-left:6px;color:var(--nilofor-gold);"></i>محصولات پرفروش</h4>
                     ${topProducts.length===0?'<p style="color:var(--text-muted); font-size:0.75rem;">هنوز فروشی ثبت نشده.</p>':topProducts.map(p=>`<div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--border-color);font-size:0.75rem;"><span>${escapeHtml(p.name)}</span><span style="color:var(--nilofor-gold);">${p.soldCount||0} فروش</span></div>`).join('')}
                 </div>
                 <div style="background:var(--bg-card);border-radius:12px;padding:14px;border:1px solid var(--border-color);box-shadow:var(--shadow-soft);">
@@ -3538,7 +3553,7 @@
             if (orders.length === 0) { content.innerHTML = '<p style="color:var(--text-muted);">هیچ سفارشی ثبت نشده.</p>';
                 return; }
             content.innerHTML =
-                `<h3 style="color:var(--text-primary);margin-bottom:14px;font-size:0.95rem;">📦 مدیریت سفارشات (${orders.length})</h3><div style="overflow-x:auto;"><table class="admin-table"><thead><tr><th>شناسه</th><th>مشتری</th><th>تماس</th><th>تعداد</th><th>مبلغ</th><th>وضعیت</th><th>تاریخ</th><th>عملیات</th></tr></thead><tbody>${orders.map(o=>`<tr><td>${o.code||('#'+o.id.slice(0,8))}</td><td>${escapeHtml(o.customer||'ناشناس')}</td><td>${escapeHtml(o.phone||'')}</td><td>${o.items?o.items.reduce((s,i)=>s+i.qty,0):0}</td><td>${formatPrice(o.total||0)}</td><td><select onchange="window.updateOrderStatus('${o.id}',this.value)" style="background:var(--bg-input);border:1px solid var(--border-color);border-radius:8px;padding:3px 6px;color:var(--text-primary);font-size:0.6rem;"><option value="منتظر استعلام قیمت" ${o.status==='منتظر استعلام قیمت'?'selected':''}>منتظر استعلام قیمت</option><option value="جدید" ${o.status==='جدید'?'selected':''}>جدید</option><option value="در حال پردازش" ${o.status==='در حال پردازش'?'selected':''}>در حال پردازش</option><option value="ارسال شده" ${o.status==='ارسال شده'?'selected':''}>ارسال شده</option><option value="تحویل داده شد" ${o.status==='تحویل داده شد'?'selected':''}>تحویل داده شد</option><option value="لغو شده" ${o.status==='لغو شده'?'selected':''}>لغو شده</option></select></td><td>${o.date||''}</td><td><button class="btn-icon" onclick="window.deleteOrder('${o.id}')" style="color:#ef4444;font-size:0.8rem;min-width:34px;min-height:34px;"><i class="fas fa-trash"></i></button></td></tr>`).join('')}</tbody></table></div>`;
+                `<h3 style="color:var(--text-primary);margin-bottom:14px;font-size:0.95rem;"><i class="fas fa-clipboard-list" style="margin-left:8px;color:var(--nilofor-gold);"></i>مدیریت سفارشات (${orders.length})</h3><div style="overflow-x:auto;"><table class="admin-table"><thead><tr><th>شناسه</th><th>مشتری</th><th>تماس</th><th>تعداد</th><th>مبلغ</th><th>وضعیت</th><th>تاریخ</th><th>عملیات</th></tr></thead><tbody>${orders.map(o=>`<tr><td>${o.code||('#'+o.id.slice(0,8))}</td><td>${escapeHtml(o.customer||'ناشناس')}</td><td>${escapeHtml(o.phone||'')}</td><td>${o.items?o.items.reduce((s,i)=>s+i.qty,0):0}</td><td>${formatPrice(o.total||0)}</td><td><select onchange="window.updateOrderStatus('${o.id}',this.value)" style="background:var(--bg-input);border:1px solid var(--border-color);border-radius:8px;padding:3px 6px;color:var(--text-primary);font-size:0.6rem;"><option value="منتظر استعلام قیمت" ${o.status==='منتظر استعلام قیمت'?'selected':''}>منتظر استعلام قیمت</option><option value="جدید" ${o.status==='جدید'?'selected':''}>جدید</option><option value="در حال پردازش" ${o.status==='در حال پردازش'?'selected':''}>در حال پردازش</option><option value="ارسال شده" ${o.status==='ارسال شده'?'selected':''}>ارسال شده</option><option value="تحویل داده شد" ${o.status==='تحویل داده شد'?'selected':''}>تحویل داده شد</option><option value="لغو شده" ${o.status==='لغو شده'?'selected':''}>لغو شده</option></select></td><td>${o.date||''}</td><td><button class="btn-icon" onclick="window.deleteOrder('${o.id}')" style="color:#ef4444;font-size:0.8rem;min-width:34px;min-height:34px;"><i class="fas fa-trash"></i></button></td></tr>`).join('')}</tbody></table></div>`;
         }
         window.updateOrderStatus = function(id, status) { const o = orders.find(o => o.id === id); if (o) { o.status =
                 status;
@@ -3601,7 +3616,7 @@
                                 <td>
                                     <button class="btn btn-sm btn-gold" onclick="window.quickUpdateStockAdmin('${p.id}')" style="padding:2px 6px;font-size:0.5rem;">ذخیره</button>
                                     <button class="btn btn-sm btn-outline" onclick="window.deleteProductAdmin('${p.id}')" style="color:#ef4444;border-color:#ef4444;padding:2px 6px;font-size:0.5rem;">×</button>
-                                    <button class="btn btn-sm btn-outline" onclick="window.openProductDetailEdit('${p.id}')" style="padding:2px 6px;font-size:0.5rem;border-color:var(--nilofor-gold);color:var(--nilofor-gold);">📝</button>
+                                    <button class="btn btn-sm btn-outline" onclick="window.openProductDetailEdit('${p.id}')" style="padding:2px 6px;font-size:0.5rem;border-color:var(--nilofor-gold);color:var(--nilofor-gold);"><i class="fas fa-edit"></i></button>
                                 </td>
                             </tr>
                         `).join('')}
@@ -3720,7 +3735,7 @@
                 .brand.includes(searchTerm));
 
             content.innerHTML = `
-                <h3 style="color:var(--text-primary);font-size:0.95rem;margin-bottom:14px;">📝 ویرایش جزییات محصولات</h3>
+                <h3 style="color:var(--text-primary);font-size:0.95rem;margin-bottom:14px;"><i class="fas fa-edit" style="margin-left:8px;color:var(--nilofor-gold);"></i>ویرایش جزییات محصولات</h3>
                 <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:14px;">
                     <input type="text" id="detailSearch" placeholder="جستجو..." value="${searchTerm}" style="flex:1;min-width:160px;padding:8px 14px;border-radius:60px;background:var(--bg-input);border:1px solid var(--border-color);color:var(--text-primary);font-size:0.75rem;min-height:34px;" oninput="renderProductDetailEdit()" />
                     <button class="btn btn-gold btn-sm" onclick="renderProductDetailEdit()"><i class="fas fa-search"></i></button>
@@ -3731,7 +3746,7 @@
                         <div style="background:var(--bg-card);border-radius:12px;padding:14px;margin-bottom:12px;border:1px solid var(--border-color);box-shadow:var(--shadow-soft);">
                             <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:8px;">
                                 <div style="display:flex;align-items:center;gap:10px;">
-                                    ${p.image?`<img src="${p.image}" style="width:40px;height:40px;object-fit:cover;border-radius:8px;" onerror="this.style.display='none';" />`:'📦'}
+                                    ${p.image?`<img src="${p.image}" style="width:40px;height:40px;object-fit:cover;border-radius:8px;" onerror="this.style.display='none';" />`:'<i class="fas fa-box-open" style="opacity:0.35;"></i>'}
                                     <div><strong style="font-size:0.85rem;">${escapeHtml(p.name)}</strong> <span style="color:var(--text-muted);font-size:0.7rem;">(${escapeHtml(p.brand)})</span></div>
                                 </div>
                                 <button class="btn btn-sm btn-outline" onclick="window.toggleDetailEdit('${p.id}')" style="border-color:var(--nilofor-gold);color:var(--nilofor-gold);font-size:0.6rem;">${document.getElementById('detail_'+p.id)?.style?.display !== 'none' ? 'بستن' : 'ویرایش'}</button>
@@ -3893,7 +3908,7 @@
             const brands = [...new Set(productsData.map(p => p.brand))];
 
             content.innerHTML = `
-                <h3 style="color:var(--text-primary);font-size:0.95rem;margin-bottom:14px;">📦 مدیریت انبار</h3>
+                <h3 style="color:var(--text-primary);font-size:0.95rem;margin-bottom:14px;"><i class="fas fa-warehouse" style="margin-left:8px;color:var(--nilofor-gold);"></i>مدیریت انبار</h3>
                 <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;">
                     <input type="text" id="invSearch" placeholder="جستجو..." value="${searchTerm}" style="flex:1;min-width:140px;padding:8px 14px;border-radius:60px;background:var(--bg-input);border:1px solid var(--border-color);color:var(--text-primary);font-size:0.75rem;min-height:34px;" oninput="renderInventoryAdmin()" />
                     <select id="invBrand" onchange="renderInventoryAdmin()" style="padding:8px 14px;border-radius:60px;background:var(--bg-input);border:1px solid var(--border-color);color:var(--text-primary);font-size:0.75rem;min-height:34px;"><option value="">همه برندها</option>${brands.map(b=>`<option value="${b}" ${b===brandFilter?'selected':''}>${b}</option>`).join('')}</select>
@@ -3968,7 +3983,7 @@
                 '<p style="color:var(--text-muted);">هیچ نظری ثبت نشده.</p>' :
                 `<div style="overflow-x:auto;"><table class="admin-table"><thead><tr><th>نام</th><th>امتیاز</th><th>نظر</th><th>تاریخ</th><th>عملیات</th></tr></thead><tbody>${reviews.map(r=>`<tr><td>${escapeHtml(r.name)}</td><td>${'★'.repeat(r.rating)}</td><td style="max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${escapeHtml(r.text)}">${escapeHtml(r.text.substring(0,40))}${r.text.length>40?'...':''}</td><td>${r.date||''}</td><td><button class="btn-icon" onclick="window.deleteReviewAdmin('${r.id}')" style="color:#ef4444;font-size:0.8rem;min-width:34px;min-height:34px;"><i class="fas fa-trash"></i></button></td></tr>`).join('')}</tbody></table></div>`;
             content.innerHTML =
-                `<h3 style="color:var(--text-primary);font-size:0.95rem;margin-bottom:14px;">⭐ مدیریت نظرات (${reviews.length})</h3>
+                `<h3 style="color:var(--text-primary);font-size:0.95rem;margin-bottom:14px;"><i class="fas fa-star" style="margin-left:8px;color:var(--nilofor-gold);"></i>مدیریت نظرات (${reviews.length})</h3>
                 <button class="btn btn-gold btn-sm" onclick="toggleAddReviewAdmin()" style="margin-bottom:12px;"><i class="fas fa-plus"></i> افزودن نظر</button>
                 <div id="addReviewAdminBox" style="display:none;margin-bottom:14px;padding:12px;border:1px solid var(--border-color);border-radius:10px;background:var(--bg-input);">
                     <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px;">
@@ -4107,7 +4122,7 @@
                     </div>
 
                     <div style="background:var(--bg-card);border-radius:12px;padding:14px;margin:14px 0;border:1px solid var(--border-color);box-shadow:var(--shadow-soft);">
-                        <h4 style="color:var(--text-primary);font-size:0.8rem;margin-bottom:6px;">📱 پیامک اتوماتیک سفارش</h4>
+                        <h4 style="color:var(--text-primary);font-size:0.8rem;margin-bottom:6px;"><i class="fas fa-mobile-alt" style="margin-left:6px;color:var(--nilofor-gold);"></i>پیامک اتوماتیک سفارش</h4>
                         <p style="color:var(--text-muted);font-size:0.72rem;margin-bottom:10px;">اتصال به سیستم پیامکی خودتان. با ثبت هر سفارش، پیامک اطلاع به مدیر و تاییدیه به مشتری ارسال می‌شود.</p>
                         <label style="display:flex;align-items:center;gap:8px;color:var(--text-primary);font-size:0.8rem;margin-bottom:12px;cursor:pointer;">
                             <input type="checkbox" id="smsEnabled" ${smsEnabled?'checked':''} /> فعال‌سازی ارسال پیامک خودکار
@@ -5046,7 +5061,7 @@
                 renderStats();
 
                 if (resultDiv) resultDiv.innerHTML = '✅ همگام‌سازی با موفقیت انجام شد.';
-                showToast('📦 محصولات به‌روزرسانی شدند', 'gold');
+                showToast('محصولات به‌روزرسانی شدند', 'gold');
 
             } catch (error) {
                 console.error('❌ خطا در همگام‌سازی:', error);
@@ -5435,7 +5450,7 @@
                 const img = (product.images && product.images[0]) ? product.images[0] : '';
                 itemsHtml += `
                     <div class="cart-drawer-item">
-                        ${img ? `<img src="${img}" onerror="this.style.display='none'" />` : `<div style="width:56px;height:56px;border-radius:10px;background:var(--bg-secondary);display:flex;align-items:center;justify-content:center;">📦</div>`}
+                        ${img ? `<img src="${img}" onerror="this.style.display='none'" />` : `<div style="width:56px;height:56px;border-radius:10px;background:var(--bg-secondary);display:flex;align-items:center;justify-content:center;color:var(--text-muted);"><i class="fas fa-box-open"></i></div>`}
                         <div class="item-info">
                             <div class="item-name">${escapeHtml(product.name)}</div>
                             <div class="item-price">استعلام قیمت</div>
