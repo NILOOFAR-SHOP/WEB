@@ -3321,6 +3321,10 @@
             cart = [];
             localStorage.setItem('nilofor_cart', JSON.stringify(cart));
             updateCartUI();
+            syncCartToServer();
+            renderCartDrawer();
+            renderCartModal();
+            closeCartDrawer();
 
             document.getElementById('orderResult').innerHTML =
                 `<span style="color:#22c55e;">✅ درخواست سفارش ثبت شد. کد پیگیری: <b>${order.code || ''}</b><br><span style="font-size:0.7rem;">کارشناسان ما برای اعلام قیمت نهایی و هماهنگی ارسال با شما تماس می‌گیرند.</span></span>`;
