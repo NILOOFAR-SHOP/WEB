@@ -122,6 +122,12 @@
         img { max-width:100%; display:block; height:auto; border-radius:12px; }
         button { cursor:pointer; border:none; background:none; font-family:inherit; -webkit-appearance:none; appearance:none; touch-action:manipulation; }
         input, textarea, select { font-family:inherit; outline:none; -webkit-appearance:none; appearance:none; touch-action:manipulation; font-size:14px !important; color:var(--input-text); background:var(--bg-input); }
+        /* روی موبایل/تبلت ورودی‌ها ۱۶px باشند تا زوم خودکار iOS فعال نشود و خوانایی حفظ شود */
+        @media (hover:none) and (pointer:coarse) {
+            input[type="text"], input[type="tel"], input[type="email"], input[type="number"], input[type="password"], input[type="search"], textarea {
+                font-size:16px !important;
+            }
+        }
         .container { max-width:1320px; margin:0 auto; padding:0 20px; width:100%; }
         .section { padding:70px 0; position:relative; z-index:1; }
         .section-header { position:relative; display:flex; align-items:center; justify-content:center; margin-bottom:36px; flex-wrap:wrap; gap:12px; flex-direction:column; text-align:center; }
@@ -262,22 +268,36 @@
 
         /* ===== LIVE SEARCH ===== */
         .live-search-results {
-            position:absolute; top:100%; left:0; right:0;
+            position:absolute; top:calc(100% + 6px); left:0; right:0;
             background:var(--bg-card); border:1px solid var(--border-color);
-            border-radius:14px; margin-top:4px;
-            max-height:300px; overflow-y:auto; z-index:100;
-            box-shadow:var(--shadow-hover); display:none;
+            border-radius:14px;
+            max-height:min(360px, 70vh); overflow-y:auto; z-index:1200;
+            box-shadow:0 16px 44px rgba(0,0,0,0.18); display:none;
+            overscroll-behavior:contain;
         }
         .live-search-results.show { display:block; }
         .live-search-item {
-            display:flex; align-items:center; gap:10px; padding:10px 14px;
+            display:flex; align-items:center; gap:12px; padding:12px 14px;
             cursor:pointer; transition:background 0.2s;
+            -webkit-tap-highlight-color:transparent;
         }
-        .live-search-item:hover { background:var(--bg-hover); }
-        .live-search-item img { width:40px; height:40px; border-radius:8px; object-fit:cover; }
-        .live-search-item .search-name { font-size:0.75rem; flex:1; }
-        .live-search-item .search-price { font-size:0.7rem; color:var(--nilofor-gold); font-weight:600; }
-        .live-search-empty { padding:14px; text-align:center; color:var(--text-muted); font-size:0.75rem; }
+        .live-search-item:hover,
+        .live-search-item:active { background:var(--bg-hover); }
+        .live-search-item img {
+            width:42px; height:42px; border-radius:10px; object-fit:cover;
+            flex-shrink:0; background:var(--bg-secondary);
+        }
+        .live-search-item .search-name {
+            font-size:0.78rem; font-weight:500; flex:1; min-width:0;
+            white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+        }
+        .live-search-item .search-price { font-size:0.7rem; color:var(--nilofor-gold); font-weight:600; white-space:nowrap; }
+        .live-search-empty { padding:16px; text-align:center; color:var(--text-muted); font-size:0.8rem; }
+        @media (max-width:480px) {
+            .live-search-item { padding:14px 12px; gap:10px; }
+            .live-search-item .search-name { font-size:0.8rem; }
+            .live-search-item .search-price { font-size:0.72rem; }
+        }
         .btn {
             display:inline-flex; align-items:center; justify-content:center; gap:8px;
             padding:10px 28px; border-radius:var(--radius-btn);
@@ -394,25 +414,6 @@
         .header-search input { background:transparent; border:none; padding:8px 12px; color:var(--text-primary); font-size:0.8rem; width:100%; min-height:34px; }
         .header-search input::placeholder { color:var(--text-muted); font-size:0.75rem; }
         .header-search button { background:transparent; border:none; color:var(--text-secondary); padding:4px; font-size:0.85rem; cursor:pointer; touch-action:manipulation; min-height:34px; min-width:34px; }
-        .header-search .autocomplete {
-            position:absolute; top:110%; left:0; right:0;
-            background:var(--bg-card);
-            border:1px solid var(--border-color);
-            border-radius:14px;
-            padding:6px 0;
-            max-height:180px;
-            overflow-y:auto;
-            z-index:100;
-            display:none;
-        }
-        .header-search .autocomplete.show { display:block; }
-        .header-search .autocomplete div {
-            padding:6px 14px;
-            cursor:pointer;
-            color:var(--text-primary);
-            font-size:0.75rem;
-        }
-        .header-search .autocomplete div:hover { background:var(--bg-hover); }
 
         .header-actions { display:flex; align-items:center; gap:4px; flex-wrap:wrap; }
         .header-actions .nav-item {
@@ -485,7 +486,7 @@
             .header-actions .nav-item { padding:2px 5px; font-size:0.5rem; min-height:22px; gap:2px; }
             .header-actions .nav-item i { font-size:0.65rem; }
             .header-actions .nav-item .count { width:12px; height:12px; font-size:0.4rem; }
-            .header-search input { font-size:0.7rem; padding:5px 8px; min-height:28px; }
+            .header-search input { font-size:0.85rem; padding:8px 12px; min-height:36px; }
         }
 
         .theme-toggle {
@@ -1040,26 +1041,31 @@
         }
         @media (max-width:768px) {
             .product-detail-grid { grid-template-columns:1fr; }
-            .product-grid-full { grid-template-columns:repeat(auto-fill, minmax(155px,1fr)); gap:14px; }
-            .product-card-full { padding:12px; }
-            .product-card-full .product-images { height:120px; }
-            .product-card-full h4 { font-size:0.7rem; }
+            .product-grid-full { grid-template-columns:repeat(auto-fill, minmax(160px,1fr)); gap:12px; }
+            .product-card-full { padding:10px; }
+            .product-card-full .product-images { height:auto; aspect-ratio:1/1; }
+            .product-card-full h4 { font-size:0.78rem; }
             .product-page-header .filters select,
             .product-page-header .filters input {
-                font-size:0.65rem; padding:5px 10px; min-height:30px;
+                font-size:0.7rem; padding:6px 12px; min-height:34px;
             }
             .product-page-header .filters .price-slider-wrap input[type="range"] { width:70px; }
         }
         @media (max-width:480px) {
             .product-grid-full { grid-template-columns:1fr 1fr; gap:10px; }
-            .product-card-full { padding:8px; }
-            .product-card-full .product-images { height:90px; }
-            .product-card-full h4 { font-size:0.6rem; }
-            .product-card-full .brand { font-size:0.55rem; }
-            .product-card-full .price { font-size:0.7rem; }
-            .product-card-full .add-btn { width:28px; height:28px; font-size:0.6rem; min-width:28px; min-height:28px; }
-            .product-card-full .inquiry-btn { font-size:0.5rem; padding:2px 8px; min-height:22px; }
+            .product-card-full { padding:8px; border-radius:14px; }
+            .product-card-full .product-images { height:auto; aspect-ratio:1/1; border-radius:10px; }
+            .product-card-full h4 { font-size:0.72rem; line-height:1.4; }
+            .product-card-full .brand { font-size:0.6rem; }
+            .product-card-full .price { font-size:0.78rem; }
+            .product-card-full .add-btn { width:30px; height:30px; font-size:0.65rem; min-width:30px; min-height:30px; }
+            .product-card-full .inquiry-btn { font-size:0.58rem; padding:3px 10px; min-height:26px; }
+            .product-card-full .stock-badge { font-size:0.55rem; padding:1px 7px; }
+            .product-card-full .view-count { font-size:0.5rem; }
+            .product-card-full .product-code { font-size:0.5rem; }
             .product-page-header .section-title { font-size:1rem; }
+            .product-page-header .filters { gap:8px; }
+            .product-page-header .filters .price-slider-wrap { width:100%; justify-content:space-between; }
         }
 
         /* ===== REVIEWS ===== */
@@ -1973,7 +1979,6 @@
             <div class="header-search">
                 <input type="text" id="headerSearchInput" placeholder="جستجوی محصولات ..." autocomplete="off" />
                 <button id="headerSearchBtn"><i class="fas fa-search"></i></button>
-                <div class="autocomplete" id="autocompleteList"></div>
             </div>
             <div class="header-actions">
                 <button class="nav-item" id="loginBtn"><i class="fas fa-user"></i> <span class="label">ورود</span></button>
@@ -5531,36 +5536,76 @@
         // ===== LIVE SEARCH =====
         function initLiveSearch() {
             const searchInput = document.getElementById('headerSearchInput');
+            const searchBtn = document.getElementById('headerSearchBtn');
             if (!searchInput) return;
             let resultsDiv = document.getElementById('liveSearchResults');
             if (!resultsDiv) {
                 resultsDiv = document.createElement('div');
                 resultsDiv.id = 'liveSearchResults';
-                resultsDiv.style.cssText = 'position:absolute;top:100%;left:0;right:0;background:var(--bg-card);border-radius:0 0 12px 12px;box-shadow:0 8px 24px rgba(0,0,0,0.3);z-index:1000;max-height:300px;overflow-y:auto;display:none;';
-                searchInput.parentElement.style.position = 'relative';
+                resultsDiv.className = 'live-search-results';
                 searchInput.parentElement.appendChild(resultsDiv);
             }
-            searchInput.addEventListener('input', function() {
-                const q = this.value.trim();
-                if (q.length < 1) { resultsDiv.style.display = 'none'; return; }
-                const results = productsData.filter(p => p.name.includes(q) || p.code.includes(q) || p.brand.includes(q)).slice(0, 8);
-                if (results.length === 0) { resultsDiv.innerHTML = '<div style="padding:12px;color:var(--text-muted);font-size:0.7rem;">نتیجه‌ای یافت نشد</div>'; }
-                else {
-                    resultsDiv.innerHTML = results.map(p => {
+
+            const hideResults = function() { resultsDiv.classList.remove('show'); };
+
+            function goToResults(q) {
+                q = (q || '').trim();
+                const ps = document.getElementById('productSearchInput');
+                if (ps) ps.value = q;
+                document.getElementById('filterCategory').value = '';
+                applyFilters();
+                renderCategoryPills();
+                hideResults();
+                searchInput.value = '';
+                const target = document.getElementById('product-page');
+                if (q && target) { if (target.scrollIntoView) target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+            }
+
+            function runSearch() {
+                const q = searchInput.value.trim();
+                if (!q) { hideResults(); return; }
+                const lower = q.toLowerCase();
+                const results = productsData.filter(function(p) {
+                    return (p.name && p.name.toLowerCase().includes(lower)) ||
+                        (p.code && p.code.toLowerCase().includes(lower)) ||
+                        (p.brand && p.brand.toLowerCase().includes(lower));
+                }).slice(0, 8);
+                if (results.length === 0) {
+                    resultsDiv.innerHTML = '<div class="live-search-empty">نتیجه‌ای یافت نشد</div>';
+                } else {
+                    resultsDiv.innerHTML = results.map(function(p) {
                         const fp = getFinalPrice(p);
-                        const img = p.images && p.images[0] ? p.images[0] : '';
-                        return `<div style="padding:10px 14px;cursor:pointer;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border-color);" onclick="window.location.hash='#product-page';document.getElementById('filterCategory').value='';applyFilters();renderCategoryPills();document.getElementById('headerSearchInput').value='';document.getElementById('liveSearchResults').style.display='none';">
-                            <img src="${img}" style="width:36px;height:36px;border-radius:8px;object-fit:cover;" />
+                        const img = (p.images && p.images[0]) ? p.images[0] : (p.image || '/images/no-image.svg');
+                        return `<div class="live-search-item" data-id="${p.id}">
+                            <img src="${img}" alt="${escapeHtml(p.name)}" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='/images/no-image.svg';" />
                             <div style="flex:1;min-width:0;">
-                                <div style="font-size:0.7rem;color:var(--text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${escapeHtml(p.name)}</div>
-                                <div style="font-size:0.6rem;color:var(--nilofor-gold);">${(p.showPrice !== false && fp > 0) ? formatPrice(fp) + ' تومان' : 'استعلام قیمت'}</div>
+                                <div class="search-name">${escapeHtml(p.name)}</div>
+                                <div class="search-price">${(p.showPrice !== false && fp > 0) ? formatPrice(fp) + ' تومان' : 'استعلام قیمت'}</div>
                             </div>
                         </div>`;
                     }).join('');
                 }
-                resultsDiv.style.display = 'block';
+                resultsDiv.classList.add('show');
+            }
+
+            searchInput.addEventListener('input', runSearch);
+            searchInput.addEventListener('focus', function() { if (searchInput.value.trim()) runSearch(); });
+            searchInput.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') { e.preventDefault(); goToResults(this.value); this.blur(); }
             });
-            searchInput.addEventListener('blur', () => setTimeout(() => resultsDiv.style.display = 'none', 200));
+            if (searchBtn) {
+                searchBtn.addEventListener('click', function() { goToResults(searchInput.value); searchInput.blur(); });
+            }
+            resultsDiv.addEventListener('click', function(e) {
+                const item = e.target.closest('.live-search-item');
+                if (!item) return;
+                const id = item.dataset.id;
+                searchInput.value = '';
+                hideResults();
+                searchInput.blur();
+                if (id) showProductDetail(id);
+            });
+            searchInput.addEventListener('blur', function() { setTimeout(hideResults, 200); });
         }
 
         document.addEventListener('DOMContentLoaded', function() {
