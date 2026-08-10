@@ -2406,7 +2406,7 @@
 
         function getFinalPrice(product) {
             if (!product) return 0;
-            const profit = product.profitPercent || 200;
+            const profit = product.profitPercent ?? 200;
             const base = product.priceIRR || 0;
             if (profit > 0) return Math.round(base * (1 + profit / 100));
             return base;
@@ -3577,18 +3577,20 @@
         function renderProductsAdmin() {
             const content = document.getElementById('adminContent');
             const searchTerm = document.getElementById('adminProductSearch')?.value?.trim() || '';
+            const existingForm = document.getElementById('addProductForm');
+            const addFormOpen = existingForm ? existingForm.style.display !== 'none' : false;
             let filtered = productsData;
             if (searchTerm) filtered = filtered.filter(p => p.name.includes(searchTerm) || p.brand.includes(searchTerm) || p
                 .code.includes(searchTerm));
 
             let html = `
                 <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:14px;">
-                    <input type="text" id="adminProductSearch" placeholder="جستجو..." value="${searchTerm}" style="flex:1;min-width:160px;padding:8px 14px;border-radius:60px;background:var(--bg-input);border:1px solid var(--border-color);color:var(--text-primary);font-size:0.75rem;min-height:34px;" />
+                    <input type="text" id="adminProductSearch" placeholder="جستجو..." value="${searchTerm}" style="flex:1;min-width:160px;padding:8px 14px;border-radius:60px;background:var(--bg-input);border:1px solid var(--border-color);color:var(--text-primary);font-size:0.75rem;min-height:34px;" oninput="renderProductsAdmin()" />
                     <button class="btn btn-gold btn-sm" onclick="renderProductsAdmin()"><i class="fas fa-search"></i> جستجو</button>
                     <button class="btn btn-gold btn-sm" onclick="window.showAddProductForm()"><i class="fas fa-plus"></i> افزودن</button>
                     <button class="btn btn-sm" style="background:#ef4444;color:#fff;" onclick="window.deleteAllProducts()"><i class="fas fa-trash-alt"></i> حذف همه</button>
                 </div>
-                <div id="addProductForm" style="display:none;background:var(--bg-card);border-radius:12px;padding:14px;margin-bottom:14px;border:1px solid var(--border-color);">
+                <div id="addProductForm" style="display:${addFormOpen ? 'block' : 'none'};background:var(--bg-card);border-radius:12px;padding:14px;margin-bottom:14px;border:1px solid var(--border-color);">
                     <h4 style="margin-bottom:10px;color:var(--text-primary);font-size:0.85rem;">➕ محصول جدید</h4>
                     <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
                         <div><input type="text" id="newProductName" placeholder="نام محصول" style="width:100%;padding:8px 12px;border-radius:12px;background:var(--bg-input);border:1px solid var(--border-color);color:var(--text-primary);font-size:0.75rem;" /></div>
@@ -3599,7 +3601,7 @@
                         <div><input type="file" id="newProductImageFile" accept="image/*" style="width:100%;padding:8px 12px;border-radius:12px;background:var(--bg-input);border:1px solid var(--border-color);color:var(--text-primary);font-size:0.75rem;" /></div>
                         <div><input type="text" id="newProductTag" placeholder="برچسب" style="width:100%;padding:8px 12px;border-radius:12px;background:var(--bg-input);border:1px solid var(--border-color);color:var(--text-primary);font-size:0.75rem;" /></div>
                         <div><input type="number" id="newProductStock" placeholder="موجودی" style="width:100%;padding:8px 12px;border-radius:12px;background:var(--bg-input);border:1px solid var(--border-color);color:var(--text-primary);font-size:0.75rem;" /></div>
-                        <div><input type="number" id="newProductPrice" placeholder="قیمت (تومان)" style="width:100%;padding:8px 12px;border-radius:12px;background:var(--bg-input);border:1px solid var(--border-color);color:var(--text-primary);font-size:0.75rem;" /></div>
+                        <div><input type="number" id="newProductPrice" placeholder="قیمت فروش (تومان)" style="width:100%;padding:8px 12px;border-radius:12px;background:var(--bg-input);border:1px solid var(--border-color);color:var(--text-primary);font-size:0.75rem;" /></div>
                         <div><input type="text" id="newProductDesc" placeholder="توضیحات (اختیاری)" style="width:100%;padding:8px 12px;border-radius:12px;background:var(--bg-input);border:1px solid var(--border-color);color:var(--text-primary);font-size:0.75rem;" /></div>
                     </div>
                     <div style="margin-top:10px;display:flex;gap:8px;">
@@ -3642,7 +3644,7 @@
                 renderProductsAdmin();
                 applyFilters();
                 renderInventoryAdmin();
-                setTimeout(() => document.getElementById('adminProductResult').innerHTML = '', 1500); }
+                setTimeout(() => { const r = document.getElementById('adminProductResult'); if (r) r.innerHTML = ''; }, 1500); }
         };
         window.deleteProductAdmin = function(id) { if (!confirm('حذف محصول؟')) return;
             productsData = productsData.filter(p => p.id !== id);
@@ -3650,6 +3652,8 @@
             renderProductsAdmin();
             applyFilters();
             renderStats();
+            renderCategoryPills();
+            renderInventoryAdmin();
             showToast('محصول حذف شد'); };
         window.showAddProductForm = function() {
             const form = document.getElementById('addProductForm');
@@ -3693,7 +3697,7 @@
                 category,
                 code: code || '',
                 priceIRR: price,
-                profitPercent: 200,
+                profitPercent: 0,
                 stock: stock,
                 inquiryEnabled: false,
                 showPrice: true,
@@ -3713,8 +3717,13 @@
             applyFilters();
             renderStats();
             renderInventoryAdmin();
-            setTimeout(() => { document.getElementById('addProductForm').style.display = 'none';
-                document.getElementById('addProductResult').innerHTML = ''; }, 1500);
+            renderCategoryPills();
+            setTimeout(() => {
+                const f = document.getElementById('addProductForm');
+                if (f) f.style.display = 'none';
+                const r = document.getElementById('addProductResult');
+                if (r) r.innerHTML = '';
+            }, 1500);
         }
 
         // ----- حذف همه محصولات (ریست) -----
@@ -3727,6 +3736,7 @@
             applyFilters();
             renderStats();
             renderInventoryAdmin();
+            renderCategoryPills();
             renderPriceManagement();
             showToast('✅ همه محصولات حذف شدند.', 'gold');
         };
@@ -3754,7 +3764,7 @@
                                     ${p.image?`<img src="${p.image}" style="width:40px;height:40px;object-fit:cover;border-radius:8px;" onerror="this.style.display='none';" />`:'<i class="fas fa-box-open" style="opacity:0.35;"></i>'}
                                     <div><strong style="font-size:0.85rem;">${escapeHtml(p.name)}</strong> <span style="color:var(--text-muted);font-size:0.7rem;">(${escapeHtml(p.brand)})</span></div>
                                 </div>
-                                <button class="btn btn-sm btn-outline" onclick="window.toggleDetailEdit('${p.id}')" style="border-color:var(--nilofor-gold);color:var(--nilofor-gold);font-size:0.6rem;">${document.getElementById('detail_'+p.id)?.style?.display !== 'none' ? 'بستن' : 'ویرایش'}</button>
+                                <button class="btn btn-sm btn-outline" onclick="window.toggleDetailEdit('${p.id}')" style="border-color:var(--nilofor-gold);color:var(--nilofor-gold);font-size:0.6rem;">ویرایش</button>
                             </div>
                             <div id="detail_${p.id}" style="display:none;padding-top:10px;border-top:1px solid var(--border-color);">
                                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
@@ -3762,7 +3772,7 @@
                                     <div><label style="font-size:0.65rem;color:var(--text-muted);">برند</label><input type="text" id="edit_brand_${p.id}" value="${escapeHtml(p.brand)}" style="width:100%;padding:6px 10px;border-radius:8px;background:var(--bg-input);border:1px solid var(--border-color);color:var(--text-primary);font-size:0.7rem;" /></div>
                                     <div><label style="font-size:0.65rem;color:var(--text-muted);">دسته</label><input type="text" id="edit_category_${p.id}" value="${escapeHtml(p.category)}" style="width:100%;padding:6px 10px;border-radius:8px;background:var(--bg-input);border:1px solid var(--border-color);color:var(--text-primary);font-size:0.7rem;" /></div>
                                     <div><label style="font-size:0.65rem;color:var(--text-muted);">کد محصول</label><input type="text" id="edit_code_${p.id}" value="${escapeHtml(p.code||'')}" style="width:100%;padding:6px 10px;border-radius:8px;background:var(--bg-input);border:1px solid var(--border-color);color:var(--text-primary);font-size:0.7rem;" /></div>
-                                    <div><label style="font-size:0.65rem;color:var(--text-muted);">قیمت (تومان)</label><input type="number" id="edit_price_${p.id}" value="${p.priceIRR||0}" style="width:100%;padding:6px 10px;border-radius:8px;background:var(--bg-input);border:1px solid var(--border-color);color:var(--text-primary);font-size:0.7rem;" /></div>
+                                    <div><label style="font-size:0.65rem;color:var(--text-muted);">قیمت فروش (تومان)</label><input type="number" id="edit_price_${p.id}" value="${getFinalPrice(p)||0}" min="0" style="width:100%;padding:6px 10px;border-radius:8px;background:var(--bg-input);border:1px solid var(--border-color);color:var(--text-primary);font-size:0.7rem;" /></div>
                                     <div><label style="font-size:0.65rem;color:var(--text-muted);">موجودی</label><input type="number" id="edit_stock_${p.id}" value="${p.stock||0}" min="0" style="width:100%;padding:6px 10px;border-radius:8px;background:var(--bg-input);border:1px solid var(--border-color);color:var(--text-primary);font-size:0.7rem;" /></div>
                                     <div style="grid-column:1/-1;">
                                         <label style="font-size:0.65rem;color:var(--text-muted);">برچسب (tag)</label>
@@ -3787,6 +3797,10 @@
                                             <input type="file" id="edit_image_file_${p.id}" accept="image/*" style="flex:1;padding:4px;border-radius:8px;background:var(--bg-input);border:1px solid var(--border-color);color:var(--text-primary);font-size:0.7rem;" />
                                         </div>
                                     </div>
+                                    <div style="grid-column:1/-1;display:flex;gap:20px;flex-wrap:wrap;margin-top:6px;">
+                                        <label style="display:flex;align-items:center;gap:6px;font-size:0.7rem;color:var(--text-primary);cursor:pointer;"><input type="checkbox" id="edit_showprice_${p.id}" ${p.showPrice !== false ? 'checked' : ''} style="accent-color:var(--nilofor-gold);width:16px;height:16px;" /> نمایش قیمت</label>
+                                        <label style="display:flex;align-items:center;gap:6px;font-size:0.7rem;color:var(--text-primary);cursor:pointer;"><input type="checkbox" id="edit_inquiry_${p.id}" ${p.inquiryEnabled ? 'checked' : ''} style="accent-color:var(--nilofor-gold);width:16px;height:16px;" /> فعال‌سازی فرم استعلام قیمت</label>
+                                    </div>
                                     <div style="grid-column:1/-1;display:flex;gap:8px;flex-wrap:wrap;margin-top:6px;">
                                         <button class="btn btn-gold btn-sm" onclick="window.saveProductDetail('${p.id}')"><i class="fas fa-save"></i> ذخیره تغییرات</button>
                                         <button class="btn btn-outline btn-sm" onclick="window.toggleDetailEdit('${p.id}')">بستن</button>
@@ -3802,7 +3816,12 @@
 
         window.toggleDetailEdit = function(id) {
             const el = document.getElementById('detail_' + id);
-            if (el) el.style.display = el.style.display === 'none' ? 'block' : 'none';
+            if (!el) return;
+            const open = el.style.display === 'none';
+            el.style.display = open ? 'block' : 'none';
+            const header = el.previousElementSibling;
+            const btn = header ? header.querySelector('button') : null;
+            if (btn) btn.textContent = open ? 'بستن' : 'ویرایش';
         };
 
         window.saveProductDetail = function(id) {
@@ -3821,6 +3840,8 @@
             const longDesc = document.getElementById('edit_longdesc_' + id).value.trim();
             const specsText = document.getElementById('edit_specs_' + id).value.trim();
             const imagesText = document.getElementById('edit_images_' + id).value.trim();
+            const showPriceEl = document.getElementById('edit_showprice_' + id);
+            const inquiryEl = document.getElementById('edit_inquiry_' + id);
 
             if (!name || !brand || !category) {
                 document.getElementById('detail_result_' + id).innerHTML =
@@ -3866,6 +3887,7 @@
                 p.category = category;
                 p.code = code;
                 p.priceIRR = price;
+                p.profitPercent = 0;
                 p.stock = stock;
                 p.tag = tag;
                 p.description = desc;
@@ -3874,15 +3896,19 @@
                 p.images = images;
                 p.image = images[0] || '';
                 p.guarantee = true;
+                if (showPriceEl) p.showPrice = showPriceEl.checked;
+                if (inquiryEl) p.inquiryEnabled = inquiryEl.checked;
 
                 saveProductsData();
                 document.getElementById('detail_result_' + id).innerHTML =
                     '<span style="color:#22c55e;">✅ تغییرات ذخیره شد.</span>';
                 setTimeout(() => {
-                    document.getElementById('detail_result_' + id).innerHTML = '';
+                    const r = document.getElementById('detail_result_' + id);
+                    if (r) r.innerHTML = '';
                 }, 3000);
                 applyFilters();
                 renderStats();
+                renderCategoryPills();
             }
         };
 
@@ -3895,7 +3921,7 @@
             setTimeout(() => {
                 window.toggleDetailEdit(id);
                 const el = document.getElementById('detail_' + id);
-                if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                if (el && el.scrollIntoView) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }, 300);
         };
 
@@ -3945,7 +3971,7 @@
                     '<span style="color:#22c55e;">✅ موجودی به‌روز شد.</span>';
                 renderInventoryAdmin();
                 applyFilters();
-                setTimeout(() => document.getElementById('stockUpdateResult').innerHTML = '', 2000); }
+                setTimeout(() => { const r = document.getElementById('stockUpdateResult'); if (r) r.innerHTML = ''; }, 2000); }
         };
 
         // ===== PRICES ADMIN =====
@@ -3957,7 +3983,7 @@
                     <table class="admin-table"><thead><tr><th>محصول</th><th>برند</th><th>قیمت (تومان)</th><th>سود %</th><th>قیمت نهایی</th><th>عملیات</th></tr></thead><tbody>
                         ${productsData.slice(0,200).map(p => {
                             const final = getFinalPrice(p);
-                            return `<tr><td style="font-size:0.6rem;">${escapeHtml(p.name)}</td><td style="font-size:0.6rem;">${escapeHtml(p.brand)}</td><td><input type="number" class="base-price-input" data-id="${p.id}" value="${p.priceIRR||0}" step="1000" style="width:80px;padding:3px 5px;border-radius:6px;background:var(--bg-input);border:1px solid var(--border-color);color:var(--text-primary);font-size:0.6rem;" /></td><td><input type="number" class="profit-input" data-id="${p.id}" value="${p.profitPercent||200}" style="width:44px;padding:3px 5px;border-radius:6px;background:var(--bg-input);border:1px solid var(--border-color);color:var(--text-primary);font-size:0.6rem;" /></td><td><span class="final-price" data-id="${p.id}" style="color:var(--nilofor-gold);font-size:0.65rem;">${formatPrice(final)}</span></td><td><button class="btn btn-sm btn-gold" onclick="window.updatePrice('${p.id}')" style="padding:2px 8px;font-size:0.55rem;">ذخیره</button></td></tr>`;
+                            return `<tr><td style="font-size:0.6rem;">${escapeHtml(p.name)}</td><td style="font-size:0.6rem;">${escapeHtml(p.brand)}</td><td><input type="number" class="base-price-input" data-id="${p.id}" value="${p.priceIRR||0}" step="1000" style="width:80px;padding:3px 5px;border-radius:6px;background:var(--bg-input);border:1px solid var(--border-color);color:var(--text-primary);font-size:0.6rem;" /></td><td><input type="number" class="profit-input" data-id="${p.id}" value="${p.profitPercent ?? 200}" style="width:44px;padding:3px 5px;border-radius:6px;background:var(--bg-input);border:1px solid var(--border-color);color:var(--text-primary);font-size:0.6rem;" /></td><td><span class="final-price" data-id="${p.id}" style="color:var(--nilofor-gold);font-size:0.65rem;">${formatPrice(final)}</span></td><td><button class="btn btn-sm btn-gold" onclick="window.updatePrice('${p.id}')" style="padding:2px 8px;font-size:0.55rem;">ذخیره</button></td></tr>`;
                         }).join('')}
                     </tbody></table>
                 </div>
@@ -3969,7 +3995,11 @@
             const profitInput = document.querySelector(`.profit-input[data-id="${id}"]`);
             if (!priceInput) return;
             const price = parseInt(priceInput.value) || 0;
-            const profit = parseInt(profitInput?.value) || 200;
+            let profit = 200;
+            if (profitInput && profitInput.value !== '') {
+                const parsed = parseInt(profitInput.value);
+                if (!isNaN(parsed)) profit = parsed;
+            }
             const p = productsData.find(p => p.id === id);
             if (p) { p.priceIRR = price;
                 p.profitPercent = profit;
@@ -3978,7 +4008,7 @@
                     '<span style="color:#22c55e;">✅ قیمت به‌روز شد.</span>';
                 renderPriceManagement();
                 applyFilters();
-                setTimeout(() => document.getElementById('priceUpdateResult').innerHTML = '', 2000); }
+                setTimeout(() => { const r = document.getElementById('priceUpdateResult'); if (r) r.innerHTML = ''; }, 2000); }
         };
 
         // ===== REVIEWS ADMIN =====
