@@ -2592,8 +2592,7 @@
             const end = Math.min(start + perPage, total);
             const pageItems = filtered.slice(start, end);
 
-            document.getElementById('priceRangeDisplay').textContent =
-                `${formatPrice(priceMin)} - ${formatPrice(priceMax)}`;
+            document.getElementById('priceRangeDisplay').textContent = 'استعلام قیمت';
 
             if (pageItems.length === 0) {
                 container.innerHTML =
@@ -2753,7 +2752,7 @@
         function applyFilters() {
             const p = getFilterParams();
             renderProductPage(p.brand, p.cat, p.sort, p.search, 1, p.pMin, p.pMax, p.country, p.inStock);
-            document.getElementById('priceRangeDisplay').textContent = `${formatPrice(p.pMin)} - ${formatPrice(p.pMax)}`;
+            document.getElementById('priceRangeDisplay').textContent = 'استعلام قیمت';
         }
 
         function scrollToTop() {
@@ -5536,7 +5535,7 @@
                             <img src="${img}" style="width:36px;height:36px;border-radius:8px;object-fit:cover;" />
                             <div style="flex:1;min-width:0;">
                                 <div style="font-size:0.7rem;color:var(--text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${escapeHtml(p.name)}</div>
-                                <div style="font-size:0.6rem;color:var(--nilofor-gold);">${formatPrice(fp)} تومان</div>
+                                <div style="font-size:0.6rem;color:var(--nilofor-gold);">${(p.showPrice !== false && fp > 0) ? formatPrice(fp) + ' تومان' : 'استعلام قیمت'}</div>
                             </div>
                         </div>`;
                     }).join('');
