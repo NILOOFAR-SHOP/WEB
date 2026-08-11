@@ -2311,7 +2311,7 @@
         const GITHUB_USER = 'NILOOFAR-SHOP';
         const GITHUB_REPO = 'WEB';
         const BRANCH = 'master';
-        const PRODUCTS_URL = `https://raw.githubusercontent.com/${GITHUB_USER}/${GITHUB_REPO}/${BRANCH}/repo/data/products.json`;
+        const PRODUCTS_URL = `https://raw.githubusercontent.com/${GITHUB_USER}/${GITHUB_REPO}/${BRANCH}/data/products.json`;
 
         // ===== STATE =====
         let productsData = [];
@@ -2491,10 +2491,8 @@
                     if (res.ok) {
                         const ghProducts = await res.json();
                         if (Array.isArray(ghProducts) && ghProducts.length > 0) {
-                            // ذخیره در سرور
-                            for (const p of ghProducts) await apiSaveProduct(p);
                             statusDot.className = 'dot green';
-                            statusText.textContent = ghProducts.length + ' محصول از گیت‌هاب بارگذاری و ذخیره شد';
+                            statusText.textContent = ghProducts.length + ' محصول از گیت‌هاب بارگذاری شد';
                             return normalizeProducts(ghProducts);
                         }
                     }
@@ -5266,9 +5264,11 @@
         async function init() {
             try {
             const preload = window.__PRELOAD__;
+            let apiAvailable = false;
 
             if (preload && preload.products && preload.products.length > 0) {
                 // Instant: use server-embedded data
+                apiAvailable = true;
                 productsData = normalizeProducts(preload.products);
                 localStorage.setItem('nilofor_products_v2', JSON.stringify(productsData));
 
@@ -5298,6 +5298,7 @@
             } else {
                 // Fallback: load via API
                 const [settings, serverProducts] = await Promise.all([apiGetSettings(), apiGetProducts()]);
+                apiAvailable = !!settings;
                 if (settings && settings.social_links) { socialLinks = { ...socialLinks, ...settings.social_links }; }
                 if (settings && settings.shop_logo && !settings.shop_logo.startsWith('data:')) { shopLogo = settings.shop_logo; }
                 if (settings && settings.hero_image && !settings.hero_image.startsWith('data:')) { heroImage = settings.hero_image; }
@@ -5306,7 +5307,13 @@
                     productsData = normalizeProducts(serverProducts);
                     localStorage.setItem('nilofor_products_v2', JSON.stringify(productsData));
                 } else {
-                    loadInitialProducts();
+                    const ghProducts = await fetchProductsFromGitHub();
+                    if (ghProducts && ghProducts.length) {
+                        productsData = ghProducts;
+                        localStorage.setItem('nilofor_products_v2', JSON.stringify(productsData));
+                    } else {
+                        loadInitialProducts();
+                    }
                 }
                 loadSampleReviews();
             }
@@ -5315,7 +5322,7 @@
             injectProductJsonLd();
 
             // === IMMEDIATE RENDER (no waiting) ===
-            if (heroImage) { const h = document.querySelector('.hero'); if (h) h.style.background = 'url(' + heroImage + ') center/cover no-repeat, radial-gradient(ellipse at 70% 20%, rgba(200,169,106,0.06), transparent 60%), radial-gradient(ellipse at 30% 80%, rgba(200,169,106,0.04), transparent 50%), #0d0d0d'; }
+            if (heroImage) { const h = document.querySelector('.hero'); if (h) { const heroUrl = (apiAvailable || !heroImage.startsWith('/uploads/')) ? heroImage : GITHUB_IMG_BASE + heroImage.replace(/^\/uploads\//, ''); h.style.background = 'url(' + heroUrl + ') center/cover no-repeat, radial-gradient(ellipse at 70% 20%, rgba(200,169,106,0.06), transparent 60%), radial-gradient(ellipse at 30% 80%, rgba(200,169,106,0.04), transparent 50%), #0d0d0d'; } }
             if (shopLogo) updateHeaderLogo(shopLogo);
             updateSocialLinks();
             renderCategoryPills();
@@ -5664,13 +5671,13 @@
             });
         });
 
-        const GITHUB_IMG_BASE = 'https://raw.githubusercontent.com/NILOOFAR-SHOP/WEB/master/repo/uploads/';
+        const GITHUB_IMG_BASE = 'https://raw.githubusercontent.com/NILOOFAR-SHOP/WEB/master/uploads/';
         document.addEventListener('error', function(e) {
             const el = e.target;
             if (el.tagName !== 'IMG' || el.dataset.fb) return;
             el.dataset.fb = '1';
             const src = el.getAttribute('src') || '';
-            const match = src.match(/\/uploads\/(limon_[^/?]+)/);
+            const match = src.match(/\/uploads\/([^/?]+)/);
             if (match) {
                 el.src = GITHUB_IMG_BASE + match[1];
             } else if (!src.includes(GITHUB_IMG_BASE)) {
