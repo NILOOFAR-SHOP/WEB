@@ -2897,7 +2897,7 @@
 
         function updateCartUI() {
             const count = cart.reduce((s, i) => s + i.qty, 0);
-            document.getElementById('cartCount').textContent = count;
+            document.getElementById('cartCount').textContent = count || '۰';
             document.getElementById('cartMiniPrice').textContent = count > 0 ? 'استعلام قیمت' : '';
             renderMiniCart();
         }
